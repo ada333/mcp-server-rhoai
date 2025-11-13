@@ -1,2 +1,2 @@
 # mcp-server-RHOAI
-This project is meant as a bachelors thesis about MCP servers in RHOAI
+This project aims to implement MCP servers working with RHOAI.

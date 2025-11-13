@@ -5,6 +5,7 @@ This project aims to implement MCP servers working with RHOAI and is used as a b
 - Compile the main.go function (in repo -> go build -o any_name)
 - In Cursor press Ctrl + Shift + P and type in Open MCP Settings
 - Click on New MCP server
+  
 Example code you can add to make new MCP server (the command is path to the binary you build):
 ```
 {

@@ -3,41 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
-	"path/filepath"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 )
-
-type PodsOutput struct {
-	Pods string `json:"pods" jsonschema_description:"the list of pods"`
-}
-
-type WorkbenchesOutput struct {
-	Workbenches string `json:"workbenches" jsonschema_description:"the list of workbenches"`
-}
-
-type WorkBenchesInput struct {
-	Namespace string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
-}
-
-func LogIntoClusterClientSet() (*kubernetes.Clientset, error) {
-	kubeconfigPath := filepath.Join(os.Getenv("HOME"), ".kube", "config")
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load kubeconfig: %v", err)
-	}
-	clientset, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to log into cluster: %v", err)
-	}
-	return clientset, nil
-}
 
 func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
 	clientset, err := LogIntoClusterClientSet()
@@ -56,19 +26,6 @@ func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesIn
 		msg += fmt.Sprintf("- %s (%s)\n", pod.Name, pod.Status.Phase)
 	}
 	return nil, PodsOutput{Pods: msg}, nil
-}
-
-func LogIntoClusterDynamic() (*dynamic.DynamicClient, error) {
-	kubeconfigPath := filepath.Join(os.Getenv("HOME"), ".kube", "config")
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to load kubeconfig: %v", err)
-	}
-	dyn, err := dynamic.NewForConfig(config)
-	if err != nil {
-		return nil, fmt.Errorf("failed to log into cluster: %v", err)
-	}
-	return dyn, nil
 }
 
 func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
@@ -92,7 +49,7 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBe
 	return nil, WorkbenchesOutput{Workbenches: msg}, nil
 }
 
-func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input struct{ Namespace string }) (*mcp.CallToolResult, WorkbenchesOutput, error) {
+func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
 	clientset, err := LogIntoClusterClientSet()
 	if err != nil {
 		return nil, WorkbenchesOutput{}, err
@@ -121,6 +78,6 @@ func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input str
 	return nil, WorkbenchesOutput{Workbenches: workbenches}, nil
 }
 
-func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input struct{ Namespace string }) (*mcp.CallToolResult, string, error) {
+func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, string, error) {
 	return nil, "Workbench enabled", nil
 }

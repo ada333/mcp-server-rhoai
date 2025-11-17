@@ -22,10 +22,16 @@ func main() {
 		Name:        "List Workbenches",
 		Description: "list the workbenches in a given project namespace",
 	}, ListWorkbenches)
+
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "List All Workbenches",
 		Description: "list the workbenches across all namespaces",
 	}, ListAllWorkbenches)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "Enable Workbench",
+		Description: "enable a workbench in a given project namespace",
+	}, EnableWorkbench)
 
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)

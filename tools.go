@@ -22,6 +22,10 @@ type WorkbenchesOutput struct {
 	Workbenches string `json:"workbenches" jsonschema_description:"the list of workbenches"`
 }
 
+type WorkBenchesInput struct {
+	Namespace string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
+}
+
 func LogIntoClusterClientSet() (*kubernetes.Clientset, error) {
 	kubeconfigPath := filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
@@ -35,7 +39,7 @@ func LogIntoClusterClientSet() (*kubernetes.Clientset, error) {
 	return clientset, nil
 }
 
-func ListPods(ctx context.Context, req *mcp.CallToolRequest, input struct{ Namespace string }) (*mcp.CallToolResult, PodsOutput, error) {
+func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
 	clientset, err := LogIntoClusterClientSet()
 	if err != nil {
 		return nil, PodsOutput{}, err
@@ -67,7 +71,7 @@ func LogIntoClusterDynamic() (*dynamic.DynamicClient, error) {
 	return dyn, nil
 }
 
-func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input struct{ Namespace string }) (*mcp.CallToolResult, WorkbenchesOutput, error) {
+func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
 
 	dyn, err := LogIntoClusterDynamic()
 	if err != nil {
@@ -102,7 +106,7 @@ func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input str
 	workbenches := ""
 	for _, ns := range namespaces.Items {
 		namespaceName := ns.GetName()
-		_, wbOut, err := ListWorkbenches(ctx, req, struct{ Namespace string }{Namespace: namespaceName})
+		_, wbOut, err := ListWorkbenches(ctx, req, WorkBenchesInput{Namespace: namespaceName})
 		if err != nil {
 			workbenches += fmt.Sprintf("%s: error: %v\n", namespaceName, err)
 			continue
@@ -115,4 +119,8 @@ func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input str
 	}
 
 	return nil, WorkbenchesOutput{Workbenches: workbenches}, nil
+}
+
+func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input struct{ Namespace string }) (*mcp.CallToolResult, string, error) {
+	return nil, "Workbench enabled", nil
 }

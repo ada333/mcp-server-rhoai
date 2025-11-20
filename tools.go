@@ -7,7 +7,10 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	k8stypes "k8s.io/apimachinery/pkg/types"
 )
+
+var workbenchesGVR = schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
 
 func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
 	clientset, err := LogIntoClusterClientSet()
@@ -35,8 +38,7 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBe
 		return nil, WorkbenchesOutput{}, err
 	}
 
-	gvr := schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
-	notebooks, err := dyn.Resource(gvr).Namespace(input.Namespace).List(ctx, metav1.ListOptions{})
+	notebooks, err := dyn.Resource(workbenchesGVR).Namespace(input.Namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
 		return nil, WorkbenchesOutput{}, fmt.Errorf("failed to list workbenches: %v", err)
 	}
@@ -50,34 +52,38 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBe
 }
 
 func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
-	clientset, err := LogIntoClusterClientSet()
+	_, workbenches, err := ListWorkbenches(ctx, req, WorkBenchesInput{Namespace: ""})
 	if err != nil {
 		return nil, WorkbenchesOutput{}, err
 	}
-
-	namespaces, err := clientset.CoreV1().Namespaces().List(ctx, metav1.ListOptions{})
-	if err != nil {
-		return nil, WorkbenchesOutput{}, fmt.Errorf("failed to list namespaces: %v", err)
-	}
-
-	workbenches := ""
-	for _, ns := range namespaces.Items {
-		namespaceName := ns.GetName()
-		_, wbOut, err := ListWorkbenches(ctx, req, WorkBenchesInput{Namespace: namespaceName})
-		if err != nil {
-			workbenches += fmt.Sprintf("%s: error: %v\n", namespaceName, err)
-			continue
-		}
-		if wbOut.Workbenches == "" {
-			workbenches += fmt.Sprintf("%s: none\n", namespaceName)
-			continue
-		}
-		workbenches += fmt.Sprintf("%s:\n%s", namespaceName, wbOut.Workbenches)
-	}
-
-	return nil, WorkbenchesOutput{Workbenches: workbenches}, nil
+	return nil, WorkbenchesOutput{Workbenches: workbenches.Workbenches}, nil
 }
 
-func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, string, error) {
-	return nil, "Workbench enabled", nil
+func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input WorkbenchToggleInput) (*mcp.CallToolResult, string, error) {
+	dyn, err := LogIntoClusterDynamic()
+	if err != nil {
+		return nil, "", err
+	}
+
+	state := "running"
+	action := "enabled"
+	if input.Disable {
+		state = "stopped"
+		action = "disabled"
+	}
+
+	patch := fmt.Sprintf(`{"metadata":{"annotations":{"notebooks.kubeflow.org/notebook-state":"%s"}}}`, state)
+
+	_, err = dyn.Resource(workbenchesGVR).Namespace(input.Namespace).Patch(
+		ctx,
+		input.WorkbenchName,
+		k8stypes.MergePatchType,
+		[]byte(patch),
+		metav1.PatchOptions{},
+	)
+	if err != nil {
+		return nil, "", fmt.Errorf("failed to %s workbench %q: %v", action, input.WorkbenchName, err)
+	}
+
+	return nil, fmt.Sprintf("Workbench %s %s", input.WorkbenchName, action), nil
 }

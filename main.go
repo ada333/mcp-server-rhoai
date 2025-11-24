@@ -29,9 +29,9 @@ func main() {
 	}, ListAllWorkbenches)
 
 	mcp.AddTool(server, &mcp.Tool{
-		Name:        "Enable Workbench",
-		Description: "enable a workbench in a given project namespace",
-	}, EnableWorkbench)
+		Name:        "Change Workbench Status",
+		Description: "change the status of a workbench with given namein a given project namespace",
+	}, ChangeWorkbenchStatus)
 
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)

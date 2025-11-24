@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -12,7 +14,7 @@ import (
 
 var workbenchesGVR = schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
 
-func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
+func ListPods(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
 	clientset, err := LogIntoClusterClientSet()
 	if err != nil {
 		return nil, PodsOutput{}, err
@@ -31,16 +33,16 @@ func ListPods(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesIn
 	return nil, PodsOutput{Pods: msg}, nil
 }
 
-func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
+func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListWorkbenchesResult, error) {
 
 	dyn, err := LogIntoClusterDynamic()
 	if err != nil {
-		return nil, WorkbenchesOutput{}, err
+		return nil, ListWorkbenchesResult{}, err
 	}
 
 	notebooks, err := dyn.Resource(workbenchesGVR).Namespace(input.Namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
-		return nil, WorkbenchesOutput{}, fmt.Errorf("failed to list workbenches: %v", err)
+		return nil, ListWorkbenchesResult{}, fmt.Errorf("failed to list workbenches: %v", err)
 	}
 
 	msg := ""
@@ -48,42 +50,49 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBe
 		name := nb.GetName()
 		msg += fmt.Sprintf("- %s\n", name)
 	}
-	return nil, WorkbenchesOutput{Workbenches: msg}, nil
+	return nil, ListWorkbenchesResult{Workbenches: msg}, nil
 }
 
-func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input WorkBenchesInput) (*mcp.CallToolResult, WorkbenchesOutput, error) {
-	_, workbenches, err := ListWorkbenches(ctx, req, WorkBenchesInput{Namespace: ""})
+func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListWorkbenchesResult, error) {
+	_, workbenches, err := ListWorkbenches(ctx, req, ListWorkbenchesInput{Namespace: ""})
 	if err != nil {
-		return nil, WorkbenchesOutput{}, err
+		return nil, ListWorkbenchesResult{}, err
 	}
-	return nil, WorkbenchesOutput{Workbenches: workbenches.Workbenches}, nil
+	return nil, ListWorkbenchesResult{Workbenches: workbenches.Workbenches}, nil
 }
 
-func EnableWorkbench(ctx context.Context, req *mcp.CallToolRequest, input WorkbenchToggleInput) (*mcp.CallToolResult, string, error) {
+func ChangeWorkbenchStatus(ctx context.Context, req *mcp.CallToolRequest, input ChangeWorkbenchStatusInput) (*mcp.CallToolResult, ChangeWorkbenchStatusOutput, error) {
 	dyn, err := LogIntoClusterDynamic()
 	if err != nil {
-		return nil, "", err
+		return nil, ChangeWorkbenchStatusOutput{}, err
 	}
 
-	state := "running"
-	action := "enabled"
-	if input.Disable {
-		state = "stopped"
-		action = "disabled"
+	patchObj := map[string]interface{}{}
+	annotations := map[string]interface{}{}
+	if input.Status == Stopped {
+		annotations["kubeflow-resource-stopped"] = time.Now().UTC().Format(time.RFC3339)
+	} else {
+		annotations["kubeflow-resource-stopped"] = nil
+	}
+	patchObj["metadata"] = map[string]interface{}{
+		"annotations": annotations,
 	}
 
-	patch := fmt.Sprintf(`{"metadata":{"annotations":{"notebooks.kubeflow.org/notebook-state":"%s"}}}`, state)
+	patchBytes, err := json.Marshal(patchObj)
+	if err != nil {
+		return nil, ChangeWorkbenchStatusOutput{}, fmt.Errorf("failed to marshal patch: %v", err)
+	}
 
 	_, err = dyn.Resource(workbenchesGVR).Namespace(input.Namespace).Patch(
 		ctx,
 		input.WorkbenchName,
 		k8stypes.MergePatchType,
-		[]byte(patch),
+		patchBytes,
 		metav1.PatchOptions{},
 	)
 	if err != nil {
-		return nil, "", fmt.Errorf("failed to %s workbench %q: %v", action, input.WorkbenchName, err)
+		return nil, ChangeWorkbenchStatusOutput{}, fmt.Errorf("failed to %s workbench %s: %v", input.Status, input.WorkbenchName, err)
 	}
 
-	return nil, fmt.Sprintf("Workbench %s %s", input.WorkbenchName, action), nil
+	return nil, ChangeWorkbenchStatusOutput{Message: fmt.Sprintf("Workbench %s is %s", input.WorkbenchName, input.Status)}, nil
 }

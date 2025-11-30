@@ -18,9 +18,10 @@ type ChangeWorkbenchStatusInput struct {
 	Status        WorkbenchStatus `json:"status" jsonschema_description:"the status of the workbench"`
 }
 
-type ChangeWorkbenchStatusOutput struct {
-	Message string `json:"message" jsonschema_description:"the message of the status change"`
+type WorkbenchOutput struct {
+	Message string `json:"message" jsonschema_description:"the message with result of workbench change"`
 }
+
 type WorkbenchStatus int
 
 const (
@@ -38,4 +39,15 @@ func (s WorkbenchStatus) String() string {
 	default:
 		return "unknown"
 	}
+}
+
+type CreateWorkbenchInput struct {
+	Namespace     string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
+	WorkbenchName string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
+	Description   string `json:"description" jsonschema_description:"the description of the workbench"`
+	// what else?? - image, hardware profile, storage
+}
+
+type ListImagesOutput struct {
+	Images string `json:"images" jsonschema_description:"the list of images"`
 }

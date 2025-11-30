@@ -1,0 +1,13 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck     # Forces you to handle errors (e.g., in _ = func())
+    - govet        # The official Go tool for finding subtle bugs
+    - ineffassign  # Detects assignments that are never used
+    - staticcheck  # A massive set of static analysis checks (the industry standard)
+    - unused       # Finds unused constants, variables, functions, and types

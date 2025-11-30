@@ -28,3 +28,16 @@ Example code you can add to make new MCP server (the command is path to the bina
 
 (to use the tools operating with OpenShift cluster you need to be logged in)
 
+
+## Linting
+
+This repository uses golangci-lint.
+
+- Install:
+  - Using Go: `go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest`
+  - Or see `https://golangci-lint.run` for other options.
+- Run locally:
+  - With Make: `make lint`
+  - Directly: `golangci-lint run`
+
+Configuration is in `.golangci.yml`.

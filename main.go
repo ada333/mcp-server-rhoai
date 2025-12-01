@@ -32,12 +32,12 @@ func main() {
 		Name:        "Change Workbench Status",
 		Description: "change the status of a workbench with given namein a given project namespace",
 	}, ChangeWorkbenchStatus)
-	/*
-		mcp.AddTool(server, &mcp.Tool{
-			Name:        "List Images",
-			Description: "list the images in a given project namespace",
-		}, ListImages)
-	*/
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "List Images",
+		Description: "list the images in a given project namespace",
+	}, ListImages)
+
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)
 	}

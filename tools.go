@@ -145,7 +145,13 @@ func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkben
 
 	msg := ""
 	for _, image := range images.Items {
-		msg += fmt.Sprintf("- %s\n", image.GetName())
+		techName := image.GetName()
+		annotations := image.GetAnnotations()
+		displayName := annotations["opendatahub.io/notebook-image-name"]
+		if displayName == "" {
+			displayName = techName
+		}
+		msg += fmt.Sprintf("- UI Name: %s | ID: %s\n", displayName, techName)
 	}
 	return nil, ListImagesOutput{Images: msg}, nil
 }

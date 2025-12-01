@@ -4,6 +4,8 @@ import "k8s.io/apimachinery/pkg/runtime/schema"
 
 var workbenchesGVR = schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
 
+var pvcGVR = schema.GroupVersionResource{Group: "", Version: "v1", Resource: "persistentvolumeclaims"}
+
 type PodsOutput struct {
 	Pods string `json:"pods" jsonschema_description:"the list of pods"`
 }
@@ -48,8 +50,8 @@ func (s WorkbenchStatus) String() string {
 type CreateWorkbenchInput struct {
 	Namespace     string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
 	WorkbenchName string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
-	Description   string `json:"description" jsonschema_description:"the description of the workbench"`
-	// what else?? - image, hardware profile, storage
+	Image         string `json:"image" jsonschema_description:"the image of the workbench"`
+	ImageURL      string `json:"imageURL" jsonschema_description:"the image URL"`
 }
 
 type ListImagesOutput struct {

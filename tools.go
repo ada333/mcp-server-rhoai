@@ -8,6 +8,7 @@ import (
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8stypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/dynamic"
@@ -125,10 +126,7 @@ func ChangeWorkbenchStatus(ctx context.Context, req *mcp.CallToolRequest, input 
 	return nil, WorkbenchOutput{Message: fmt.Sprintf("Workbench %s is %s", input.WorkbenchName, input.Status)}, nil
 }
 
-func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input CreateWorkbenchInput) (*mcp.CallToolResult, WorkbenchOutput, error) {
-	return nil, WorkbenchOutput{Message: fmt.Sprintf("Workbench %s created", input.WorkbenchName)}, nil
-}
-
+// Lists image-display-name for every image in the cluster
 func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListImagesOutput, error) {
 	dyn, err := getDynamicClient()
 	if err != nil {
@@ -136,7 +134,7 @@ func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkben
 	}
 
 	imagesGVR := schema.GroupVersionResource{Group: "image.openshift.io", Version: "v1", Resource: "imagestreams"}
-	images, err := dyn.Resource(imagesGVR).Namespace(input.Namespace).List(ctx, metav1.ListOptions{
+	images, err := dyn.Resource(imagesGVR).Namespace("redhat-ods-applications").List(ctx, metav1.ListOptions{
 		LabelSelector: "opendatahub.io/notebook-image=true",
 	})
 	if err != nil {
@@ -145,13 +143,26 @@ func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkben
 
 	msg := ""
 	for _, image := range images.Items {
-		techName := image.GetName()
 		annotations := image.GetAnnotations()
 		displayName := annotations["opendatahub.io/notebook-image-name"]
-		if displayName == "" {
-			displayName = techName
+
+		repoURL, found, err := unstructured.NestedString(image.Object, "status", "dockerImageRepository")
+		if !found || err != nil {
+			repoURL = "URL not available"
 		}
-		msg += fmt.Sprintf("- UI Name: %s | ID: %s\n", displayName, techName)
+
+		tagsRaw, _, _ := unstructured.NestedSlice(image.Object, "spec", "tags")
+
+		versions := ""
+		for _, t := range tagsRaw {
+			tagMap, ok := t.(map[string]interface{})
+			if ok {
+				tagName, _ := tagMap["name"].(string)
+				versions += fmt.Sprintf("%s \n", tagName)
+			}
+		}
+
+		msg += fmt.Sprintf("Image: %s\n URL: %s\n Versions: %s\n", displayName, repoURL, versions)
 	}
 	return nil, ListImagesOutput{Images: msg}, nil
 }

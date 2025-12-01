@@ -38,6 +38,11 @@ func main() {
 		Description: "list the images in a given project namespace",
 	}, ListImages)
 
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "Create Workbench",
+		Description: "create a new workbench with given name, image and image URL in a given project namespace",
+	}, CreateWorkbench)
+
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)
 	}

@@ -11,12 +11,17 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8stypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/kubernetes"
 )
 
-var workbenchesGVR = schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
+// indirection to allow tests to inject a fake clientset
+var getClientSet = func() (kubernetes.Interface, error) { return LogIntoClusterClientSet() }
+
+// indirection to allow tests to inject a fake dynamic client
+var getDynamicClient = func() (dynamic.Interface, error) { return LogIntoClusterDynamic() }
 
 func ListPods(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, PodsOutput, error) {
-	clientset, err := LogIntoClusterClientSet()
+	clientset, err := getClientSet()
 	if err != nil {
 		return nil, PodsOutput{}, err
 	}
@@ -36,7 +41,7 @@ func ListPods(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbench
 
 func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListWorkbenchesResult, error) {
 
-	dyn, err := LogIntoClusterDynamic()
+	dyn, err := getDynamicClient()
 	if err != nil {
 		return nil, ListWorkbenchesResult{}, err
 	}
@@ -62,7 +67,7 @@ func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input Lis
 	return nil, ListWorkbenchesResult{Workbenches: workbenches.Workbenches}, nil
 }
 
-func IsWorkbenchStopped(ctx context.Context, dyn *dynamic.DynamicClient, namespace, workbenchName string) (bool, error) {
+func IsWorkbenchStopped(ctx context.Context, dyn dynamic.Interface, namespace, workbenchName string) (bool, error) {
 	current, err := dyn.Resource(workbenchesGVR).Namespace(namespace).Get(ctx, workbenchName, metav1.GetOptions{})
 	if err != nil {
 		return false, fmt.Errorf("failed to get workbench %s: %v", workbenchName, err)
@@ -78,7 +83,7 @@ func IsWorkbenchStopped(ctx context.Context, dyn *dynamic.DynamicClient, namespa
 }
 
 func ChangeWorkbenchStatus(ctx context.Context, req *mcp.CallToolRequest, input ChangeWorkbenchStatusInput) (*mcp.CallToolResult, WorkbenchOutput, error) {
-	dyn, err := LogIntoClusterDynamic()
+	dyn, err := getDynamicClient()
 	if err != nil {
 		return nil, WorkbenchOutput{}, err
 	}
@@ -126,7 +131,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 }
 
 func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListImagesOutput, error) {
-	dyn, err := LogIntoClusterDynamic()
+	dyn, err := getDynamicClient()
 	if err != nil {
 		return nil, ListImagesOutput{}, err
 	}

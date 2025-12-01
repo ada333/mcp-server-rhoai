@@ -1,5 +1,9 @@
 package main
 
+import "k8s.io/apimachinery/pkg/runtime/schema"
+
+var workbenchesGVR = schema.GroupVersionResource{Group: "kubeflow.org", Version: "v1", Resource: "notebooks"}
+
 type PodsOutput struct {
 	Pods string `json:"pods" jsonschema_description:"the list of pods"`
 }

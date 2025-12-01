@@ -14,10 +14,9 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-// indirection to allow tests to inject a fake clientset
+// variables used for mocking in tests
 var getClientSet = func() (kubernetes.Interface, error) { return LogIntoClusterClientSet() }
 
-// indirection to allow tests to inject a fake dynamic client
 var getDynamicClient = func() (dynamic.Interface, error) { return LogIntoClusterDynamic() }
 
 func ListPods(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, PodsOutput, error) {

@@ -7,6 +7,7 @@ import (
 	"context"
 	"strings"
 	"testing"
+	"time"
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -120,6 +121,58 @@ func TestListAllWorkbenches(t *testing.T) {
 
 // TODO
 func TestChangeWorkbenchStatus(t *testing.T) {
+	orig := getDynamicClient
+	defer func() { getDynamicClient = orig }()
+
+	scheme := runtime.NewScheme()
+	stoppedWorkbench := newUnstructuredWorkbench("StoppedWorkbench", "ns1")
+	stoppedWorkbench.SetAnnotations(map[string]string{
+		"kubeflow-resource-stopped": time.Now().UTC().Format(time.RFC3339),
+	})
+	runningWorkbench := newUnstructuredWorkbench("RunningWorkbench", "ns1")
+
+	client := dynamicfake.NewSimpleDynamicClient(scheme,
+		stoppedWorkbench,
+		runningWorkbench,
+	)
+
+	getDynamicClient = func() (dynamic.Interface, error) {
+		return client, nil
+	}
+
+	// tests all the combinations of status changes
+	// maybe checking the annotations would be better than output message
+	_, out, err := ChangeWorkbenchStatus(context.Background(), nil, ChangeWorkbenchStatusInput{Namespace: "ns1", WorkbenchName: "StoppedWorkbench", Status: Stopped})
+	if err != nil {
+		t.Fatalf("ChangeWorkbenchStatus returned error: %v", err)
+	}
+	if out.Message != "Workbench StoppedWorkbench is already stopped" {
+		t.Errorf("expected StoppedWorkbench is already stopped, got: %q", out.Message)
+	}
+
+	_, out, err = ChangeWorkbenchStatus(context.Background(), nil, ChangeWorkbenchStatusInput{Namespace: "ns1", WorkbenchName: "RunningWorkbench", Status: Running})
+	if err != nil {
+		t.Fatalf("ChangeWorkbenchStatus returned error: %v", err)
+	}
+	if out.Message != "Workbench RunningWorkbench is already running" {
+		t.Errorf("expected RunningWorkbench is already running, got: %q", out.Message)
+	}
+
+	_, out, err = ChangeWorkbenchStatus(context.Background(), nil, ChangeWorkbenchStatusInput{Namespace: "ns1", WorkbenchName: "StoppedWorkbench", Status: Running})
+	if err != nil {
+		t.Fatalf("ChangeWorkbenchStatus returned error: %v", err)
+	}
+	if out.Message != "Workbench StoppedWorkbench is running" {
+		t.Errorf("expected StoppedWorkbench is running, got: %q", out.Message)
+	}
+
+	_, out, err = ChangeWorkbenchStatus(context.Background(), nil, ChangeWorkbenchStatusInput{Namespace: "ns1", WorkbenchName: "RunningWorkbench", Status: Stopped})
+	if err != nil {
+		t.Fatalf("ChangeWorkbenchStatus returned error: %v", err)
+	}
+	if out.Message != "Workbench RunningWorkbench is stopped" {
+		t.Errorf("expected RunningWorkbench is stopped, got: %q", out.Message)
+	}
 }
 
 // TODO

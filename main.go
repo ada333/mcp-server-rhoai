@@ -50,6 +50,15 @@ func main() {
 		MIMEType:    "application/json",
 	}, ImagesResourceHandler)
 
+	server.AddPrompt(&mcp.Prompt{
+		Name:        "create-workbench",
+		Description: "Guide to create a workbench",
+		Arguments: []*mcp.PromptArgument{
+			{Name: "namespace", Description: "Target namespace", Required: true},
+			{Name: "name", Description: "Workbench name", Required: true},
+		},
+	}, CreateWorkbenchPromptHandler)
+
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)
 	}

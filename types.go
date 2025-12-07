@@ -52,6 +52,8 @@ type CreateWorkbenchInput struct {
 	WorkbenchName string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
 	Image         string `json:"image" jsonschema_description:"the image of the workbench"`
 	ImageURL      string `json:"imageURL" jsonschema_description:"the image URL"`
+	ImageTag      string `json:"imageTag" jsonschema_description:"the image tag"`
+	// url of the image source? quai or dockehub
 }
 
 type ListImagesOutput struct {

@@ -43,6 +43,13 @@ func main() {
 		Description: "create a new workbench with given name, image and image URL in a given project namespace",
 	}, CreateWorkbench)
 
+	server.AddResource(&mcp.Resource{
+		URI:         "resource://mcp-test/images",
+		Name:        "Image Catalog",
+		Description: "List of available notebook images their URLs and tags",
+		MIMEType:    "application/json",
+	}, ImagesResourceHandler)
+
 	if err := server.Run(context.Background(), &mcp.StdioTransport{}); err != nil {
 		log.Fatal(err)
 	}

@@ -17,7 +17,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 		return nil, WorkbenchOutput{}, err
 	}
 
-	err = createStatefulSet(ctx, dyn, input.Namespace, input.WorkbenchName, "10Gi")
+	err = createPersistentVolumeClaim(ctx, dyn, input.Namespace, input.WorkbenchName, "10Gi")
 	if err != nil {
 		return nil, WorkbenchOutput{}, fmt.Errorf("failed to create PVC: %v", err)
 	}
@@ -27,6 +27,11 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
                   --ServerApp.password=''
                   --ServerApp.base_url=/notebook/%s/%s
                   --ServerApp.quit_button=False`, input.Namespace, input.WorkbenchName)
+
+	imageFull := input.ImageURL
+	if input.ImageTag != "" {
+		imageFull = fmt.Sprintf("%s:%s", input.ImageURL, input.ImageTag)
+	}
 
 	notebook := &unstructured.Unstructured{
 		Object: map[string]interface{}{
@@ -45,6 +50,8 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 					"openshift.io/description":                      "Created via MCP",
 					"notebooks.opendatahub.io/inject-auth":          "true",
 					"notebooks.opendatahub.io/last-image-selection": input.Image,
+					"opendatahub.io/hardware-profile-name":          "default-profile",
+					"opendatahub.io/hardware-profile-namespace":     "redhat-ods-applications",
 				},
 			},
 			"spec": map[string]interface{}{
@@ -55,7 +62,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 						"containers": []interface{}{
 							map[string]interface{}{
 								"name":            input.WorkbenchName,
-								"image":           input.ImageURL,
+								"image":           imageFull,
 								"imagePullPolicy": "Always",
 								"workingDir":      "/opt/app-root/src",
 								"ports": []interface{}{
@@ -81,8 +88,8 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 										"memory": "4Gi",
 									},
 									"requests": map[string]interface{}{
-										"cpu":    "1",
-										"memory": "2Gi",
+										"cpu":    "2",
+										"memory": "4Gi",
 									},
 								},
 								"volumeMounts": []interface{}{
@@ -125,7 +132,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 	return nil, WorkbenchOutput{Message: "Workbench was succesfully created!"}, nil
 }
 
-func createStatefulSet(ctx context.Context, dyn dynamic.Interface, namespace, name, size string) error {
+func createPersistentVolumeClaim(ctx context.Context, dyn dynamic.Interface, namespace, name, size string) error {
 	pvc := &unstructured.Unstructured{
 		Object: map[string]interface{}{
 			"apiVersion": "v1",

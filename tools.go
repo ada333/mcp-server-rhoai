@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	k8stypes "k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
@@ -128,41 +127,14 @@ func ChangeWorkbenchStatus(ctx context.Context, req *mcp.CallToolRequest, input 
 
 // Lists image-display-name for every image in the cluster
 func ListImages(ctx context.Context, req *mcp.CallToolRequest, input ListWorkbenchesInput) (*mcp.CallToolResult, ListImagesOutput, error) {
-	dyn, err := getDynamicClient()
+	images, err := GetImages(ctx)
 	if err != nil {
 		return nil, ListImagesOutput{}, err
 	}
 
-	imagesGVR := schema.GroupVersionResource{Group: "image.openshift.io", Version: "v1", Resource: "imagestreams"}
-	images, err := dyn.Resource(imagesGVR).Namespace("redhat-ods-applications").List(ctx, metav1.ListOptions{
-		LabelSelector: "opendatahub.io/notebook-image=true",
-	})
-	if err != nil {
-		return nil, ListImagesOutput{}, fmt.Errorf("failed to list images: %v", err)
-	}
-
 	msg := ""
-	for _, image := range images.Items {
-		annotations := image.GetAnnotations()
-		displayName := annotations["opendatahub.io/notebook-image-name"]
-
-		repoURL, found, err := unstructured.NestedString(image.Object, "status", "dockerImageRepository")
-		if !found || err != nil {
-			repoURL = "URL not available"
-		}
-
-		tagsRaw, _, _ := unstructured.NestedSlice(image.Object, "spec", "tags")
-
-		versions := ""
-		for _, t := range tagsRaw {
-			tagMap, ok := t.(map[string]interface{})
-			if ok {
-				tagName, _ := tagMap["name"].(string)
-				versions += fmt.Sprintf("%s \n", tagName)
-			}
-		}
-
-		msg += fmt.Sprintf("Image: %s\n URL: %s\n Versions: %s\n", displayName, repoURL, versions)
+	for _, image := range images {
+		msg += fmt.Sprintf("Image: %s\n URL: %s\n Versions: %s\n", image.Name, image.URL, strings.Join(image.Versions, "\n"))
 	}
 	return nil, ListImagesOutput{Images: msg}, nil
 }

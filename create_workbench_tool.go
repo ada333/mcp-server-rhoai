@@ -17,6 +17,11 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 		return nil, WorkbenchOutput{}, err
 	}
 
+	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, input.ImageDisplayName, input.ImageTag)
+	if err != nil {
+		return nil, WorkbenchOutput{}, fmt.Errorf("failed to lookup image info: %v", err)
+	}
+
 	err = createPersistentVolumeClaim(ctx, dyn, input.Namespace, input.WorkbenchName, "10Gi")
 	if err != nil {
 		return nil, WorkbenchOutput{}, fmt.Errorf("failed to create PVC: %v", err)
@@ -28,9 +33,9 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
                   --ServerApp.base_url=/notebook/%s/%s
                   --ServerApp.quit_button=False`, input.Namespace, input.WorkbenchName)
 
-	imageFull := input.ImageURL
+	imageFull := repoURL
 	if input.ImageTag != "" {
-		imageFull = fmt.Sprintf("%s:%s", input.ImageURL, input.ImageTag)
+		imageFull = fmt.Sprintf("%s:%s", repoURL, input.ImageTag)
 	}
 
 	notebook := &unstructured.Unstructured{
@@ -46,12 +51,14 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 					"opendatahub.io/odh-managed": "true",
 				},
 				"annotations": map[string]interface{}{
-					"openshift.io/display-name":                     input.WorkbenchName,
-					"openshift.io/description":                      "Created via MCP",
-					"notebooks.opendatahub.io/inject-auth":          "true",
-					"notebooks.opendatahub.io/last-image-selection": input.Image,
-					"opendatahub.io/hardware-profile-name":          "default-profile",
-					"opendatahub.io/hardware-profile-namespace":     "redhat-ods-applications",
+					"opendatahub.io/image-display-name":                                input.ImageDisplayName,
+					"openshift.io/display-name":                                        input.WorkbenchName,
+					"openshift.io/description":                                         "Created via MCP",
+					"notebooks.opendatahub.io/inject-auth":                             "true",
+					"notebooks.opendatahub.io/last-image-selection":                    fmt.Sprintf("%s:%s", imageName, input.ImageTag),
+					"notebooks.opendatahub.io/last-image-version-git-commit-selection": gitCommit,
+					"opendatahub.io/hardware-profile-name":                             "default-profile",
+					"opendatahub.io/hardware-profile-namespace":                        "redhat-ods-applications",
 				},
 			},
 			"spec": map[string]interface{}{
@@ -79,7 +86,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input Create
 									},
 									map[string]interface{}{
 										"name":  "JUPYTER_IMAGE",
-										"value": input.ImageURL,
+										"value": imageFull,
 									},
 								},
 								"resources": map[string]interface{}{

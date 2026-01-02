@@ -48,12 +48,10 @@ func (s WorkbenchStatus) String() string {
 }
 
 type CreateWorkbenchInput struct {
-	Namespace     string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
-	WorkbenchName string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
-	Image         string `json:"image" jsonschema_description:"the image of the workbench"`
-	ImageURL      string `json:"imageURL" jsonschema_description:"the image URL"`
-	ImageTag      string `json:"imageTag" jsonschema_description:"the image tag"`
-	// url of the image source? quai or dockehub
+	Namespace        string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
+	WorkbenchName    string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
+	ImageDisplayName string `json:"imageDisplayName" jsonschema_description:"the image display name - f.e. Jupyter | Data Science | CPU | Python 3.12"`
+	ImageTag         string `json:"imageTag" jsonschema_description:"the image tag "`
 }
 
 type ListImagesOutput struct {

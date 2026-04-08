@@ -24,38 +24,14 @@ func ListHardwareProfiles(ctx context.Context, req *mcp.CallToolRequest, input s
 
 	var result []core.HardwareProfile
 	for _, profile := range hardwareProfiles.Items {
-		identifiers, foundIdentifiers, err := unstructured.NestedSlice(profile.Object, "spec", "identifiers")
-		if !foundIdentifiers || err != nil {
+		hwResources, err := GetResourcesFromHardwareProfile(&profile)
+		if err != nil {
 			continue
-		}
-
-		resources := make([]core.HardwareProfileResource, 0, len(identifiers))
-		for _, identifier := range identifiers {
-			identifierMap, okIdentifierMap := identifier.(map[string]interface{})
-			if !okIdentifierMap {
-				continue
-			}
-
-			displayName, _ := identifierMap["displayName"].(string)
-			identifierStr, _ := identifierMap["identifier"].(string)
-			resourceType, _ := identifierMap["resourceType"].(string)
-			defaultCount := convertToString(identifierMap["defaultCount"])
-			maxCount := convertToString(identifierMap["maxCount"])
-			minCount := convertToString(identifierMap["minCount"])
-
-			resources = append(resources, core.HardwareProfileResource{
-				ResourceName:       displayName,
-				ResourceIdentifier: identifierStr,
-				ResourceType:       resourceType,
-				DefaultCount:       defaultCount,
-				MaxCount:           maxCount,
-				MinCount:           minCount,
-			})
 		}
 
 		result = append(result, core.HardwareProfile{
 			HardwareProfileName: profile.GetName(),
-			Resources:           resources,
+			Resources:           hwResources,
 		})
 	}
 	return nil, core.ListHardwareProfilesOutput{HardwareProfiles: result}, nil

@@ -86,26 +86,28 @@ func ListResourceConsumptionPerWorkbench(ctx context.Context, req *mcp.CallToolR
 	return nil, core.ListResourceConsumptionOutput{}, fmt.Errorf("workbench %s not found in namespace %s", input.WorkbenchName, input.Namespace)
 }
 
-func ListResourceConsumptionPerNamespace(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerNamespaceInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
-	_, workbenches, err := ListWorkbenches(ctx, req, core.ListWorkbenchesInput(input))
-	if err != nil {
-		return nil, core.ListResourceConsumptionOutput{}, err
-	}
-
+func aggregateResourceConsumption(workbenches []core.WorkbenchInfo) core.ListResourceConsumptionOutput {
 	var cpuValues, memoryValues, diskValues, gpuValues []string
-	for _, wb := range workbenches.Workbenches {
+	for _, wb := range workbenches {
 		cpuValues = append(cpuValues, wb.CPUUsage)
 		memoryValues = append(memoryValues, wb.MemoryUsage)
 		diskValues = append(diskValues, wb.DiskUsage)
 		gpuValues = append(gpuValues, wb.GPUUsage)
 	}
-
-	return nil, core.ListResourceConsumptionOutput{
+	return core.ListResourceConsumptionOutput{
 		CPUUsage:    sumResourceValues(cpuValues),
 		MemoryUsage: sumResourceValues(memoryValues),
 		DiskUsage:   sumResourceValues(diskValues),
 		GPUUsage:    sumResourceValues(gpuValues),
-	}, nil
+	}
+}
+
+func ListResourceConsumptionPerNamespace(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerNamespaceInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
+	_, workbenches, err := ListWorkbenches(ctx, req, core.ListWorkbenchesInput(input))
+	if err != nil {
+		return nil, core.ListResourceConsumptionOutput{}, err
+	}
+	return nil, aggregateResourceConsumption(workbenches.Workbenches), nil
 }
 
 func ListResourceConsumptionPerUser(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerUserInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
@@ -114,22 +116,13 @@ func ListResourceConsumptionPerUser(ctx context.Context, req *mcp.CallToolReques
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}
 
-	var cpuValues, memoryValues, diskValues, gpuValues []string
+	var userWorkbenches []core.WorkbenchInfo
 	for _, wb := range workbenches.Workbenches {
 		if wb.User == input.User {
-			cpuValues = append(cpuValues, wb.CPUUsage)
-			memoryValues = append(memoryValues, wb.MemoryUsage)
-			diskValues = append(diskValues, wb.DiskUsage)
-			gpuValues = append(gpuValues, wb.GPUUsage)
+			userWorkbenches = append(userWorkbenches, wb)
 		}
 	}
-
-	return nil, core.ListResourceConsumptionOutput{
-		CPUUsage:    sumResourceValues(cpuValues),
-		MemoryUsage: sumResourceValues(memoryValues),
-		DiskUsage:   sumResourceValues(diskValues),
-		GPUUsage:    sumResourceValues(gpuValues),
-	}, nil
+	return nil, aggregateResourceConsumption(userWorkbenches), nil
 }
 
 func ListResourceConsumptionPerCluster(ctx context.Context, req *mcp.CallToolRequest, input struct{}) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
@@ -137,19 +130,5 @@ func ListResourceConsumptionPerCluster(ctx context.Context, req *mcp.CallToolReq
 	if err != nil {
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}
-
-	var cpuValues, memoryValues, diskValues, gpuValues []string
-	for _, wb := range workbenches.Workbenches {
-		cpuValues = append(cpuValues, wb.CPUUsage)
-		memoryValues = append(memoryValues, wb.MemoryUsage)
-		diskValues = append(diskValues, wb.DiskUsage)
-		gpuValues = append(gpuValues, wb.GPUUsage)
-	}
-
-	return nil, core.ListResourceConsumptionOutput{
-		CPUUsage:    sumResourceValues(cpuValues),
-		MemoryUsage: sumResourceValues(memoryValues),
-		DiskUsage:   sumResourceValues(diskValues),
-		GPUUsage:    sumResourceValues(gpuValues),
-	}, nil
+	return nil, aggregateResourceConsumption(workbenches.Workbenches), nil
 }

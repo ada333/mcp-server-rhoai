@@ -1,91 +1,90 @@
 description: "MCP Server RHOAI - Tool Selection Evaluation"
 
-# Rate limiting to avoid API limits
-delay: 2000  # 2 second delay between requests
+evaluateOptions:
+  delay: 2000
+
+prompts:
+  - "{{prompt}}"
 
 providers:
   # Uncomment to test GPT-4o (more expensive, better quality)
   # - id: openai:gpt-4o
   #   config:
-  #     tools:
-  #       - mcp:
-  #           serverPath: ./mcp-server-rhoai
-  #           env:
-  #             MCP_RHOAI_MODE: write
+  #     mcp:
+  #       enabled: true
+  #       server:
+  #         command: ./mcp-server-rhoai
+  #         args: []
+  #         name: rhoai
+  #         env:
+  #           MCP_RHOAI_MODE: write
 
-  - id: openai:gpt-4o-mini
-    config:
-      tools:
-        - mcp:
-            serverPath: ./mcp-server-rhoai
-            env:
-              MCP_RHOAI_MODE: write
+  # Uncomment to test GPT-4o-mini (requires OPENAI_API_KEY with credits)
+  # - id: openai:gpt-4o-mini
+  #   config:
+  #     mcp:
+  #       enabled: true
+  #       server:
+  #         command: ./mcp-server-rhoai
+  #         args: []
+  #         name: rhoai
+  #         env:
+  #           MCP_RHOAI_MODE: write
 
   # Uncomment to test with Claude (requires ANTHROPIC_API_KEY with credits)
   # - id: anthropic:claude-3-5-sonnet-20241022
   #   config:
-  #     tools:
-  #       - mcp:
-  #           serverPath: ./mcp-server-rhoai
-  #           env:
-  #             MCP_RHOAI_MODE: write
+  #     mcp:
+  #       enabled: true
+  #       server:
+  #         command: ./mcp-server-rhoai
+  #         args: []
+  #         name: rhoai
+  #         env:
+  #           MCP_RHOAI_MODE: write
 
-  # Uncomment to test with Gemini (requires GOOGLE_API_KEY)
-  # - id: google:gemini-1.5-pro
-  #   config:
-  #     tools:
-  #       - mcp:
-  #           serverPath: ./mcp-server-rhoai
-  #           env:
-  #             MCP_RHOAI_MODE: write
+  - id: google:gemini-2.0-flash
+    config:
+      mcp:
+        enabled: true
+        server:
+          command: ./mcp-server-rhoai
+          args: []
+          name: rhoai
+          env:
+            MCP_RHOAI_MODE: write
 
 tests:
   - description: "List all workbenches across namespaces"
     vars:
       prompt: "Show me all workbenches across all namespaces"
     assert:
-      - type: tool-calls
+      - type: tool-call-f1
         value:
-          - name: "List All Workbenches"
-      - type: is-json
-      - type: javascript
-        value: "output.includes('test-workbench')"
+          - "list_all_workbenches"
 
   - description: "Get resource consumption for namespace"
     vars:
       prompt: "What is the resource consumption in test-namespace?"
     assert:
-      - type: tool-calls
+      - type: tool-call-f1
         value:
-          - name: "List Resource Consumption Per Namespace"
-            arguments:
-              namespace: "test-namespace"
-      - type: is-json
+          - "list_resource_consumption_per_namespace"
 
   - description: "List workbenches in specific namespace"
     vars:
       prompt: "List workbenches in test-namespace"
     assert:
-      - type: tool-calls
+      - type: tool-call-f1
         value:
-          - name: "List Workbenches"
-            arguments:
-              namespace: "test-namespace"
+          - "list_workbenches"
 
   - description: "Create a new workbench"
     vars:
       prompt: "Create a workbench named my-notebook in namespace test-namespace using Jupyter image"
     assert:
-      - type: tool-calls
+      - type: tool-call-f1
         value:
-          - name: "Create Workbench"
-            arguments:
-              workbenchName: "my-notebook"
-              namespace: "test-namespace"
-
-
-defaultTest:
-  options:
-    # Remove provider to test against all providers, or specify one to test against that specific provider
+          - "create_workbench"
 
 outputPath: ./promptfoo-results.json

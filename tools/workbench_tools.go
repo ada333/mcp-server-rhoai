@@ -67,7 +67,75 @@ func getResourceRequestsFromWorkbench(wb *unstructured.Unstructured) (cpuRequest
 	return cpuRequest, memoryRequest, gpuRequest, nil
 }
 
-// lists workbenches in a given namespace
+func parseImageTag(annotations map[string]string) string {
+	lastImageSelection := annotations["notebooks.opendatahub.io/last-image-selection"]
+	if lastImageSelection == "" {
+		return ""
+	}
+	parts := strings.Split(lastImageSelection, ":")
+	if len(parts) > 1 {
+		return parts[1]
+	}
+	return ""
+}
+
+func resolveWorkbenchStatus(annotations map[string]string) string {
+	if annotations["kubeflow-resource-stopped"] != "" {
+		return "stopped"
+	}
+	return "running"
+}
+
+func extractWorkbenchInfo(ctx context.Context, dyn dynamic.Interface, wb unstructured.Unstructured) (core.WorkbenchInfo, error) {
+	name := wb.GetName()
+	namespace := wb.GetNamespace()
+	annotations := wb.GetAnnotations()
+
+	status := resolveWorkbenchStatus(annotations)
+
+	pvcName, err := getPVCNameFromWorkbench(&wb)
+	if err != nil {
+		return core.WorkbenchInfo{}, fmt.Errorf("failed to get PVC name for workbench %s: %v", name, err)
+	}
+
+	cpuRequest, memoryRequest, gpuRequest, err := getResourceRequestsFromWorkbench(&wb)
+	if err != nil {
+		return core.WorkbenchInfo{}, fmt.Errorf("failed to get resource requests for workbench %s: %v", name, err)
+	}
+
+	uptime := "0s"
+	if status == "running" {
+		uptime, err = getUptimeFromWorkbench(name, namespace)
+		if err != nil {
+			return core.WorkbenchInfo{}, fmt.Errorf("failed to get uptime for workbench %s: %v", name, err)
+		}
+	}
+
+	diskUsage := ""
+	if pvcName != "" {
+		diskUsage, err = getDiskUsageFromPVC(ctx, dyn, namespace, pvcName)
+		if err != nil {
+			return core.WorkbenchInfo{}, fmt.Errorf("failed to get disk usage for workbench %s: %v", name, err)
+		}
+	}
+
+	return core.WorkbenchInfo{
+		Name:             name,
+		User:             annotations["opendatahub.io/username"],
+		Status:           status,
+		ImageDisplayName: annotations["opendatahub.io/image-display-name"],
+		ImageTag:         parseImageTag(annotations),
+		HardwareProfile:  annotations["opendatahub.io/hardware-profile-name"],
+		PVCName:          pvcName,
+		Namespace:        namespace,
+		Uptime:           uptime,
+		CPUUsage:         cpuRequest,
+		MemoryUsage:      memoryRequest,
+		DiskUsage:        diskUsage,
+		GPUUsage:         gpuRequest,
+	}, nil
+}
+
 func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
 	dyn, err := GetDynamicClient()
 	if err != nil {
@@ -79,75 +147,13 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input core.L
 		return nil, core.ListWorkbenchesResult{}, fmt.Errorf("failed to list workbenches: %v", err)
 	}
 
-	workbenchesInfo := []core.WorkbenchInfo{}
+	workbenchesInfo := make([]core.WorkbenchInfo, 0, len(workbenches.Items))
 	for _, wb := range workbenches.Items {
-		name := wb.GetName()
-		user := wb.GetAnnotations()["opendatahub.io/username"]
-		status := wb.GetAnnotations()["kubeflow-resource-stopped"]
-		imageDisplayName := wb.GetAnnotations()["opendatahub.io/image-display-name"]
-
-		imageTag := ""
-		lastImageSelection := wb.GetAnnotations()["notebooks.opendatahub.io/last-image-selection"]
-		if lastImageSelection != "" {
-			parts := strings.Split(lastImageSelection, ":")
-			if len(parts) > 1 {
-				imageTag = parts[1]
-			}
-		}
-
-		hardwareProfile := wb.GetAnnotations()["opendatahub.io/hardware-profile-name"]
-		namespace := wb.GetNamespace()
-		pvcName, err := getPVCNameFromWorkbench(&wb)
+		info, err := extractWorkbenchInfo(ctx, dyn, wb)
 		if err != nil {
-			return nil, core.ListWorkbenchesResult{}, fmt.Errorf("failed to get PVC name for workbench %s: %v", name, err)
+			return nil, core.ListWorkbenchesResult{}, err
 		}
-
-		cpuRequest, memoryRequest, gpuRequest, err := getResourceRequestsFromWorkbench(&wb)
-		if err != nil {
-			return nil, core.ListWorkbenchesResult{}, fmt.Errorf("failed to get resource requests for workbench %s: %v", name, err)
-		}
-
-		if status != "" {
-			status = "stopped"
-		} else {
-			status = "running"
-		}
-
-		uptime := ""
-		if status == "running" {
-			uptime, err = getUptimeFromWorkbench(wb.GetName(), wb.GetNamespace())
-			if err != nil {
-				return nil, core.ListWorkbenchesResult{}, fmt.Errorf("failed to get uptime for workbench %s: %v", name, err)
-			}
-		} else {
-			uptime = "0s"
-		}
-
-		diskUsage := ""
-		if pvcName != "" {
-			diskUsage, err = getDiskUsageFromPVC(ctx, dyn, wb.GetNamespace(), pvcName)
-			if err != nil {
-				return nil, core.ListWorkbenchesResult{}, fmt.Errorf("failed to get disk usage for workbench %s: %v", name, err)
-			}
-		}
-
-		workbenchInfo := core.WorkbenchInfo{
-			Name:             name,
-			User:             user,
-			Status:           status,
-			ImageDisplayName: imageDisplayName,
-			ImageTag:         imageTag,
-			HardwareProfile:  hardwareProfile,
-			PVCName:          pvcName,
-			Namespace:        namespace,
-			Uptime:           uptime,
-			CPUUsage:         cpuRequest,
-			MemoryUsage:      memoryRequest,
-			DiskUsage:        diskUsage,
-			GPUUsage:         gpuRequest,
-		}
-		workbenchesInfo = append(workbenchesInfo, workbenchInfo)
-
+		workbenchesInfo = append(workbenchesInfo, info)
 	}
 	return nil, core.ListWorkbenchesResult{Workbenches: workbenchesInfo}, nil
 }
@@ -160,51 +166,39 @@ func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input cor
 	return nil, core.ListWorkbenchesResult{Workbenches: workbenches.Workbenches}, nil
 }
 
-func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.CreateWorkbenchInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {
-	dyn, err := GetDynamicClient()
-	if err != nil {
-		return nil, core.DefaultToolOutput{}, err
+func resolveHardwareProfile(input core.HardwareProfile) core.HardwareProfile {
+	if input.HardwareProfileName != "" {
+		return input
 	}
+	return resources.GetDefaultHardwareProfile()
+}
 
-	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, input.ImageDisplayName, input.ImageTag)
-	if err != nil {
-		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to lookup image info: %v", err)
+func buildResourceRequirements(profile core.HardwareProfile) (limits, requests map[string]interface{}) {
+	limits = make(map[string]interface{})
+	requests = make(map[string]interface{})
+	for _, r := range profile.Resources {
+		limits[r.ResourceIdentifier] = r.MaxCount
+		requests[r.ResourceIdentifier] = r.DefaultCount
 	}
+	return limits, requests
+}
 
-	if input.PVCName == "" {
-		input.PVCName = input.WorkbenchName
-		err = createPersistentVolumeClaim(ctx, dyn, input.Namespace, input.PVCName, defaultPVCSize)
-		if err != nil {
-			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to create PVC: %v", err)
-		}
+func resolveFullImageURL(repoURL, imageTag string) string {
+	if imageTag != "" {
+		return fmt.Sprintf("%s:%s", repoURL, imageTag)
 	}
+	return repoURL
+}
 
+// the notebook/workbench object could theoretically be a constant, but not really necessary now since it is used only once
+func buildNotebookObject(input core.CreateWorkbenchInput, imageFull, imageName, gitCommit string, hardwareProfile core.HardwareProfile, limits, requests map[string]interface{}) *unstructured.Unstructured {
 	notebookArgs := fmt.Sprintf(`--ServerApp.port=8888
                   --ServerApp.token=''
                   --ServerApp.password=''
                   --ServerApp.base_url=/notebook/%s/%s
                   --ServerApp.quit_button=False`, input.Namespace, input.WorkbenchName)
 
-	imageFull := repoURL
-	if input.ImageTag != "" {
-		imageFull = fmt.Sprintf("%s:%s", repoURL, input.ImageTag)
-	}
-
-	var hardwareProfile core.HardwareProfile
-	if input.HardwareProfile.HardwareProfileName != "" {
-		hardwareProfile = input.HardwareProfile
-	} else {
-		hardwareProfile = resources.GetDefaultHardwareProfile()
-	}
-
-	limits := make(map[string]interface{})
-	requests := make(map[string]interface{})
-	for _, resource := range hardwareProfile.Resources {
-		limits[resource.ResourceIdentifier] = resource.MaxCount
-		requests[resource.ResourceIdentifier] = resource.DefaultCount
-	}
-
-	notebook := &unstructured.Unstructured{
+	return &unstructured.Unstructured{
 		Object: map[string]interface{}{
 			"apiVersion": "kubeflow.org/v1",
 			"kind":       "Notebook",
@@ -291,6 +285,30 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.C
 			},
 		},
 	}
+}
+
+func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.CreateWorkbenchInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {
+	dyn, err := GetDynamicClient()
+	if err != nil {
+		return nil, core.DefaultToolOutput{}, err
+	}
+
+	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, input.ImageDisplayName, input.ImageTag)
+	if err != nil {
+		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to lookup image info: %v", err)
+	}
+
+	if input.PVCName == "" {
+		input.PVCName = input.WorkbenchName
+		if err := createPersistentVolumeClaim(ctx, dyn, input.Namespace, input.PVCName, defaultPVCSize); err != nil {
+			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to create PVC: %v", err)
+		}
+	}
+
+	imageFull := resolveFullImageURL(repoURL, input.ImageTag)
+	hardwareProfile := resolveHardwareProfile(input.HardwareProfile)
+	limits, requests := buildResourceRequirements(hardwareProfile)
+	notebook := buildNotebookObject(input, imageFull, imageName, gitCommit, hardwareProfile, limits, requests)
 
 	_, err = dyn.Resource(core.WorkbenchesGVR).Namespace(input.Namespace).Create(ctx, notebook, metav1.CreateOptions{})
 	if err != nil {
@@ -298,6 +316,78 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.C
 	}
 
 	return nil, core.DefaultToolOutput{Message: "Workbench was succesfully created!"}, nil
+}
+
+func updateWorkbenchImage(ctx context.Context, container map[string]interface{}, annotations map[string]string, displayName, imageTag string) error {
+	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, displayName, imageTag)
+	if err != nil {
+		return fmt.Errorf("failed to lookup image info: %v", err)
+	}
+	imageFull := fmt.Sprintf("%s:%s", repoURL, imageTag)
+
+	container["image"] = imageFull
+
+	envs, _ := container["env"].([]interface{})
+	for i, e := range envs {
+		if envMap, ok := e.(map[string]interface{}); ok && envMap["name"] == "JUPYTER_IMAGE" {
+			envMap["value"] = imageFull
+			envs[i] = envMap
+		}
+	}
+	container["env"] = envs
+
+	annotations["opendatahub.io/image-display-name"] = displayName
+	annotations["notebooks.opendatahub.io/last-image-selection"] = fmt.Sprintf("%s:%s", imageName, imageTag)
+	annotations["notebooks.opendatahub.io/last-image-version-git-commit-selection"] = gitCommit
+	return nil
+}
+
+func updateWorkbenchHardwareProfile(container map[string]interface{}, annotations map[string]string, profile core.HardwareProfile) {
+	limits, requests := buildResourceRequirements(profile)
+	container["resources"] = map[string]interface{}{
+		"limits":   limits,
+		"requests": requests,
+	}
+	annotations["opendatahub.io/hardware-profile-name"] = profile.HardwareProfileName
+	annotations["opendatahub.io/hardware-profile-namespace"] = core.GetDefaultNamespace()
+}
+
+func updateWorkbenchPVC(container map[string]interface{}, workbench *unstructured.Unstructured, pvcName string) error {
+	volumeMounts, _ := container["volumeMounts"].([]interface{})
+	for i, vm := range volumeMounts {
+		if vmMap, ok := vm.(map[string]interface{}); ok && vmMap["mountPath"] == "/opt/app-root/src/" {
+			vmMap["name"] = pvcName
+			volumeMounts[i] = vmMap
+		}
+	}
+	container["volumeMounts"] = volumeMounts
+
+	volumes, _, _ := unstructured.NestedSlice(workbench.Object, "spec", "template", "spec", "volumes")
+	for i, v := range volumes {
+		if vMap, ok := v.(map[string]interface{}); ok {
+			if _, hasPVC := vMap["persistentVolumeClaim"]; hasPVC {
+				vMap["name"] = pvcName
+				if pvcMap, ok := vMap["persistentVolumeClaim"].(map[string]interface{}); ok {
+					pvcMap["claimName"] = pvcName
+					vMap["persistentVolumeClaim"] = pvcMap
+				}
+				volumes[i] = vMap
+			}
+		}
+	}
+	return unstructured.SetNestedSlice(workbench.Object, volumes, "spec", "template", "spec", "volumes")
+}
+
+func getFirstContainer(workbench *unstructured.Unstructured) (map[string]interface{}, []interface{}, error) {
+	containers, _, _ := unstructured.NestedSlice(workbench.Object, "spec", "template", "spec", "containers")
+	if len(containers) == 0 {
+		return nil, nil, fmt.Errorf("workbench has no containers")
+	}
+	container, ok := containers[0].(map[string]interface{})
+	if !ok {
+		return nil, nil, fmt.Errorf("unexpected container format")
+	}
+	return container, containers, nil
 }
 
 func UpdateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.UpdateWorkbenchInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {
@@ -316,79 +406,24 @@ func UpdateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.U
 		annotations = map[string]string{}
 	}
 
-	containers, _, _ := unstructured.NestedSlice(workbench.Object, "spec", "template", "spec", "containers")
-	if len(containers) == 0 {
-		return nil, core.DefaultToolOutput{}, fmt.Errorf("workbench %s has no containers", input.WorkbenchName)
-	}
-	container, ok := containers[0].(map[string]interface{})
-	if !ok {
-		return nil, core.DefaultToolOutput{}, fmt.Errorf("unexpected container format in workbench %s", input.WorkbenchName)
+	container, containers, err := getFirstContainer(workbench)
+	if err != nil {
+		return nil, core.DefaultToolOutput{}, fmt.Errorf("workbench %s: %v", input.WorkbenchName, err)
 	}
 
 	if input.ImageDisplayName != "" && input.ImageTag != "" {
-		repoURL, gitCommit, imageName, err := GetImageInfo(ctx, input.ImageDisplayName, input.ImageTag)
-		if err != nil {
-			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to lookup image info: %v", err)
+		if err := updateWorkbenchImage(ctx, container, annotations, input.ImageDisplayName, input.ImageTag); err != nil {
+			return nil, core.DefaultToolOutput{}, err
 		}
-		imageFull := fmt.Sprintf("%s:%s", repoURL, input.ImageTag)
-
-		container["image"] = imageFull
-
-		envs, _ := container["env"].([]interface{})
-		for i, e := range envs {
-			if envMap, ok := e.(map[string]interface{}); ok && envMap["name"] == "JUPYTER_IMAGE" {
-				envMap["value"] = imageFull
-				envs[i] = envMap
-			}
-		}
-		container["env"] = envs
-
-		annotations["opendatahub.io/image-display-name"] = input.ImageDisplayName
-		annotations["notebooks.opendatahub.io/last-image-selection"] = fmt.Sprintf("%s:%s", imageName, input.ImageTag)
-		annotations["notebooks.opendatahub.io/last-image-version-git-commit-selection"] = gitCommit
 	}
 
 	if input.HardwareProfile.HardwareProfileName != "" {
-		limits := make(map[string]interface{})
-		requests := make(map[string]interface{})
-		for _, res := range input.HardwareProfile.Resources {
-			limits[res.ResourceIdentifier] = res.MaxCount
-			requests[res.ResourceIdentifier] = res.DefaultCount
-		}
-		container["resources"] = map[string]interface{}{
-			"limits":   limits,
-			"requests": requests,
-		}
-
-		annotations["opendatahub.io/hardware-profile-name"] = input.HardwareProfile.HardwareProfileName
-		annotations["opendatahub.io/hardware-profile-namespace"] = core.GetDefaultNamespace()
+		updateWorkbenchHardwareProfile(container, annotations, input.HardwareProfile)
 	}
 
 	if input.PVCName != "" {
-		volumeMounts, _ := container["volumeMounts"].([]interface{})
-		for i, vm := range volumeMounts {
-			if vmMap, ok := vm.(map[string]interface{}); ok && vmMap["mountPath"] == "/opt/app-root/src/" {
-				vmMap["name"] = input.PVCName
-				volumeMounts[i] = vmMap
-			}
-		}
-		container["volumeMounts"] = volumeMounts
-
-		volumes, _, _ := unstructured.NestedSlice(workbench.Object, "spec", "template", "spec", "volumes")
-		for i, v := range volumes {
-			if vMap, ok := v.(map[string]interface{}); ok {
-				if _, hasPVC := vMap["persistentVolumeClaim"]; hasPVC {
-					vMap["name"] = input.PVCName
-					if pvcMap, ok := vMap["persistentVolumeClaim"].(map[string]interface{}); ok {
-						pvcMap["claimName"] = input.PVCName
-						vMap["persistentVolumeClaim"] = pvcMap
-					}
-					volumes[i] = vMap
-				}
-			}
-		}
-		if err := unstructured.SetNestedSlice(workbench.Object, volumes, "spec", "template", "spec", "volumes"); err != nil {
-			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to set volumes: %v", err)
+		if err := updateWorkbenchPVC(container, workbench, input.PVCName); err != nil {
+			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to update PVC: %v", err)
 		}
 	}
 

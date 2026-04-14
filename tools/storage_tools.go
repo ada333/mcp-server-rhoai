@@ -6,7 +6,6 @@ import (
 
 	"github.com/amaly/mcp-server-rhoai/core"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -115,10 +114,7 @@ func createPersistentVolumeClaim(ctx context.Context, dyn dynamic.Interface, nam
 	}
 
 	_, err := dyn.Resource(core.PvcGVR).Namespace(namespace).Create(ctx, pvc, metav1.CreateOptions{})
-	if err != nil && !errors.IsAlreadyExists(err) {
-		return err
-	}
-	return nil
+	return err
 }
 
 func DeletePVC(ctx context.Context, req *mcp.CallToolRequest, input core.DeletePVCInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {

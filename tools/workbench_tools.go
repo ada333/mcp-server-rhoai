@@ -301,7 +301,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.C
 	if input.PVCName == "" {
 		input.PVCName = input.WorkbenchName
 		if err := createPersistentVolumeClaim(ctx, dyn, input.Namespace, input.PVCName, defaultPVCSize); err != nil {
-			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to create PVC: %v", err)
+			return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to create PVC: %v, try using a different workbench name", err)
 		}
 	}
 

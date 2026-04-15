@@ -55,7 +55,7 @@ func UpdatePVC(ctx context.Context, req *mcp.CallToolRequest, input core.PVCInpu
 		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to get PVC: %v", err)
 	}
 
-	current_size, err := getDiskUsageFromPVC(ctx, dyn, input.Namespace, input.PVCName)
+	current_size, err := getDiskUsageFromPVCFn(ctx, dyn, input.Namespace, input.PVCName)
 	if err != nil {
 		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to get PVC size: %v", err)
 	}

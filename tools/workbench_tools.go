@@ -18,6 +18,10 @@ import (
 
 const defaultPVCSize = "10Gi"
 
+var getUptimeFromWorkbenchFn = getUptimeFromWorkbench
+var getDiskUsageFromPVCFn = getDiskUsageFromPVC
+var getImageInfoFn = GetImageInfo
+
 func getPVCNameFromWorkbench(wb *unstructured.Unstructured) (string, error) {
 	volumes, found, err := unstructured.NestedSlice(wb.Object, "spec", "template", "spec", "volumes")
 	if err != nil {
@@ -63,7 +67,7 @@ func getResourceRequestsFromWorkbench(wb *unstructured.Unstructured) (cpuRequest
 
 	cpuRequest = requests["cpu"]
 	memoryRequest = requests["memory"]
-	gpuRequest = requests["nvidia.com/gpu"] // maybe there can be other than nvidia.com/gpu?
+	gpuRequest = requests["nvidia.com/gpu"] // FIX: maybe there can be other than nvidia.com/gpu?
 	return cpuRequest, memoryRequest, gpuRequest, nil
 }
 
@@ -105,7 +109,7 @@ func extractWorkbenchInfo(ctx context.Context, dyn dynamic.Interface, wb unstruc
 
 	uptime := "0s"
 	if status == "running" {
-		uptime, err = getUptimeFromWorkbench(name, namespace)
+		uptime, err = getUptimeFromWorkbenchFn(name, namespace)
 		if err != nil {
 			return core.WorkbenchInfo{}, fmt.Errorf("failed to get uptime for workbench %s: %v", name, err)
 		}
@@ -113,7 +117,7 @@ func extractWorkbenchInfo(ctx context.Context, dyn dynamic.Interface, wb unstruc
 
 	diskUsage := ""
 	if pvcName != "" {
-		diskUsage, err = getDiskUsageFromPVC(ctx, dyn, namespace, pvcName)
+		diskUsage, err = getDiskUsageFromPVCFn(ctx, dyn, namespace, pvcName)
 		if err != nil {
 			return core.WorkbenchInfo{}, fmt.Errorf("failed to get disk usage for workbench %s: %v", name, err)
 		}
@@ -234,7 +238,7 @@ func buildNotebookObject(input core.CreateWorkbenchInput, imageFull, imageName, 
 								"workingDir":      "/opt/app-root/src",
 								"ports": []interface{}{
 									map[string]interface{}{
-										"containerPort": 8888,
+										"containerPort": int64(8888),
 										"name":          "notebook-port",
 										"protocol":      "TCP",
 									},
@@ -293,7 +297,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.C
 		return nil, core.DefaultToolOutput{}, err
 	}
 
-	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, input.ImageDisplayName, input.ImageTag)
+	repoURL, gitCommit, imageName, err := getImageInfoFn(ctx, input.ImageDisplayName, input.ImageTag)
 	if err != nil {
 		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to lookup image info: %v", err)
 	}
@@ -319,7 +323,7 @@ func CreateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.C
 }
 
 func updateWorkbenchImage(ctx context.Context, container map[string]interface{}, annotations map[string]string, displayName, imageTag string) error {
-	repoURL, gitCommit, imageName, err := GetImageInfo(ctx, displayName, imageTag)
+	repoURL, gitCommit, imageName, err := getImageInfoFn(ctx, displayName, imageTag)
 	if err != nil {
 		return fmt.Errorf("failed to lookup image info: %v", err)
 	}

@@ -11,6 +11,14 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
+var listWorkbenchesFn = func(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
+	return ListWorkbenches(ctx, req, input)
+}
+
+var listAllWorkbenchesFn = func(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
+	return ListAllWorkbenches(ctx, req, input)
+}
+
 func parseResourceValue(s string) (float64, string, error) {
 	if s == "" || s == "0" {
 		return 0, "", nil
@@ -66,7 +74,7 @@ func sumResourceValues(values []string) string {
 }
 
 func ListResourceConsumptionPerWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerWorkbenchInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
-	_, workbenches, err := ListWorkbenches(ctx, req, core.ListWorkbenchesInput{Namespace: input.Namespace})
+	_, workbenches, err := listWorkbenchesFn(ctx, req, core.ListWorkbenchesInput{Namespace: input.Namespace})
 	if err != nil {
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}
@@ -103,7 +111,7 @@ func aggregateResourceConsumption(workbenches []core.WorkbenchInfo) core.ListRes
 }
 
 func ListResourceConsumptionPerNamespace(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerNamespaceInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
-	_, workbenches, err := ListWorkbenches(ctx, req, core.ListWorkbenchesInput(input))
+	_, workbenches, err := listWorkbenchesFn(ctx, req, core.ListWorkbenchesInput(input))
 	if err != nil {
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}
@@ -111,7 +119,7 @@ func ListResourceConsumptionPerNamespace(ctx context.Context, req *mcp.CallToolR
 }
 
 func ListResourceConsumptionPerUser(ctx context.Context, req *mcp.CallToolRequest, input core.ListResourceConsumptionPerUserInput) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
-	_, workbenches, err := ListAllWorkbenches(ctx, req, core.ListWorkbenchesInput{})
+	_, workbenches, err := listAllWorkbenchesFn(ctx, req, core.ListWorkbenchesInput{})
 	if err != nil {
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}
@@ -126,7 +134,7 @@ func ListResourceConsumptionPerUser(ctx context.Context, req *mcp.CallToolReques
 }
 
 func ListResourceConsumptionPerCluster(ctx context.Context, req *mcp.CallToolRequest, input struct{}) (*mcp.CallToolResult, core.ListResourceConsumptionOutput, error) {
-	_, workbenches, err := ListAllWorkbenches(ctx, req, core.ListWorkbenchesInput{})
+	_, workbenches, err := listAllWorkbenchesFn(ctx, req, core.ListWorkbenchesInput{})
 	if err != nil {
 		return nil, core.ListResourceConsumptionOutput{}, err
 	}

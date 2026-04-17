@@ -111,7 +111,33 @@ The evaluation measures:
 
 Results are displayed in an interactive web UI showing pass/fail rates, detailed comparisons, and performance metrics.
 
-**Prerequisites**: Node.js/npm must be installed.
+**Prerequisites**: Node.js (^20.20.0 or >=22.22.0) and npm must be installed.
+
+### Evaluation Findings
+
+Evaluation was run against Google Gemini models (2.5 Flash and 2.5 Pro). Key findings:
+
+| Test Case | Gemini 2.5 Flash | Gemini 2.5 Pro |
+|-----------|-----------------|----------------|
+| List workbenches in a namespace | PASS | PASS |
+| Resource consumption per namespace | PASS | PASS |
+| List all workbenches across namespaces | FAIL | FAIL |
+| Create a workbench | FAIL | FAIL |
+
+**Observations:**
+
+1. **`list_all_workbenches` tool confusion** — Both models refused to call this tool despite it being available. The tool's input schema requires a `namespace` parameter, which contradicts its description ("list workbenches across all namespaces"). Models interpret this inconsistency as a reason to fall back to the per-namespace `list_workbenches` tool or refuse entirely.
+
+2. **`create_workbench` tool refusal** — Both models declined to call `create_workbench`, claiming they could only list resources. The tool has a complex input schema with many required fields (`hardwareProfile` as a nested object, `imageTag`, `pvcName`, etc.). When the test prompt does not supply all required parameters, the models choose not to attempt the call rather than inferring or requesting missing values.
+
+3. **Model quality vs. cost trade-off** — Gemini 2.5 Flash and 2.5 Pro produced identical results for tool selection tasks. Lighter models may struggle with complex tool schemas. Note that `gemini-2.0-flash` has been deprecated for new API users as of April 2026.
+
+4. **Free tier limitations** — The Google Gemini free tier quota can be exhausted quickly. When the quota is hit (`limit: 0`), promptfoo enters an infinite retry loop. A pay-as-you-go billing plan is recommended for running evaluations reliably.
+
+**Recommendations for improving eval pass rates:**
+- Remove the contradictory `namespace` parameter from the `list_all_workbenches` input schema, or rename the tool to clarify its behavior.
+- Enrich test prompts for write operations to include all required parameters (e.g., hardware profile, image tag, PVC name), or simplify the tool's required fields so the model can attempt the call with partial information.
+- Consider testing with OpenAI GPT-4o or Anthropic Claude, which may handle complex tool schemas more reliably.
 
 ## Configuration
 

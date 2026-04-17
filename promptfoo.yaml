@@ -43,7 +43,7 @@ providers:
   #         env:
   #           MCP_RHOAI_MODE: write
 
-  - id: google:gemini-2.0-flash
+  - id: google:gemini-2.5-pro
     config:
       mcp:
         enabled: true

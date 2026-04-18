@@ -8,10 +8,7 @@ import (
 
 	core "github.com/amaly/mcp-server-rhoai/core"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
-	dynamicfake "k8s.io/client-go/dynamic/fake"
 )
 
 func newUnstructuredWorkbench(name, namespace string) *unstructured.Unstructured {
@@ -93,18 +90,11 @@ func mockWorkbenchHelpers(t *testing.T) {
 }
 
 func TestListWorkbenches_Stopped(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
 	ns := "test-ns"
 	wb := newDetailedWorkbench("wb-1", ns, "alice", "PyTorch", "v1", "small", "wb-1-pvc", true)
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, wb)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	_, out, err := ListWorkbenches(context.Background(), nil, core.ListWorkbenchesInput{Namespace: ns})
 	if err != nil {
@@ -137,18 +127,11 @@ func TestListWorkbenches_Stopped(t *testing.T) {
 }
 
 func TestListWorkbenches_Running(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
 	ns := "test-ns"
 	wb := newDetailedWorkbench("running-wb", ns, "bob", "TensorFlow", "v2", "large", "running-pvc", false)
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, wb)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	_, out, err := ListWorkbenches(context.Background(), nil, core.ListWorkbenchesInput{Namespace: ns})
 	if err != nil {
@@ -166,18 +149,11 @@ func TestListWorkbenches_Running(t *testing.T) {
 }
 
 func TestListAllWorkbenches(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
 	wb1 := newDetailedWorkbench("wb-1", "ns1", "alice", "PyTorch", "v1", "small", "pvc1", true)
 	wb2 := newDetailedWorkbench("wb-2", "ns2", "bob", "TF", "v1", "medium", "pvc2", true)
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, wb1, wb2)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb1, wb2)
 
 	_, out, err := ListAllWorkbenches(context.Background(), nil, core.ListWorkbenchesInput{})
 	if err != nil {
@@ -197,15 +173,8 @@ func TestListAllWorkbenches(t *testing.T) {
 }
 
 func TestDeleteWorkbench_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	wb := newUnstructuredWorkbench("to-delete", "ns1")
-	client := dynamicfake.NewSimpleDynamicClient(scheme, wb)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	_, out, err := DeleteWorkbench(context.Background(), nil, core.DeleteWorkbenchInput{
 		Namespace:     "ns1",
@@ -220,18 +189,7 @@ func TestDeleteWorkbench_Success(t *testing.T) {
 }
 
 func TestDeleteWorkbench_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := DeleteWorkbench(context.Background(), nil, core.DeleteWorkbenchInput{
 		Namespace:     "ns1",
@@ -243,22 +201,13 @@ func TestDeleteWorkbench_NotFound(t *testing.T) {
 }
 
 func TestIsWorkbenchStopped(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	stoppedWb := newUnstructuredWorkbench("stopped-wb", "ns1")
 	stoppedWb.SetAnnotations(map[string]string{
 		"kubeflow-resource-stopped": time.Now().UTC().Format(time.RFC3339),
 	})
 	runningWb := newUnstructuredWorkbench("running-wb", "ns1")
 
-	client := dynamicfake.NewSimpleDynamicClient(scheme, stoppedWb, runningWb)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
-
-	dyn, _ := GetDynamicClient()
+	dyn := setupFakeClient(t, stoppedWb, runningWb)
 
 	stopped, err := IsWorkbenchStopped(context.Background(), dyn, "ns1", "stopped-wb")
 	if err != nil {
@@ -412,24 +361,13 @@ func TestGetResourceRequestsFromWorkbench(t *testing.T) {
 }
 
 func TestChangeWorkbenchStatus(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	stoppedWorkbench := newUnstructuredWorkbench("StoppedWorkbench", "ns1")
 	stoppedWorkbench.SetAnnotations(map[string]string{
 		"kubeflow-resource-stopped": time.Now().UTC().Format(time.RFC3339),
 	})
 	runningWorkbench := newUnstructuredWorkbench("RunningWorkbench", "ns1")
 
-	client := dynamicfake.NewSimpleDynamicClient(scheme,
-		stoppedWorkbench,
-		runningWorkbench,
-	)
-
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, stoppedWorkbench, runningWorkbench)
 
 	_, out, err := ChangeWorkbenchStatus(context.Background(), nil, core.ChangeWorkbenchStatusInput{Namespace: "ns1", WorkbenchName: "StoppedWorkbench", Status: core.Stopped})
 	if err != nil {
@@ -466,22 +404,10 @@ func TestChangeWorkbenchStatus(t *testing.T) {
 }
 
 func TestCreateWorkbench_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
-	scheme := runtime.NewScheme()
 	pvc := newUnstructuredPVC("existing-pvc", "ns1", "10Gi")
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-			core.PvcGVR:        "PersistentVolumeClaimList",
-		},
-		pvc,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, pvc)
 
 	_, out, err := CreateWorkbench(context.Background(), nil, core.CreateWorkbenchInput{
 		Namespace:        "ns1",
@@ -499,20 +425,9 @@ func TestCreateWorkbench_Success(t *testing.T) {
 }
 
 func TestCreateWorkbench_AutoCreatesPVC(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-			core.PvcGVR:        "PersistentVolumeClaimList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, out, err := CreateWorkbench(context.Background(), nil, core.CreateWorkbenchInput{
 		Namespace:        "ns1",
@@ -529,16 +444,10 @@ func TestCreateWorkbench_AutoCreatesPVC(t *testing.T) {
 }
 
 func TestUpdateWorkbench_Image(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
-	scheme := runtime.NewScheme()
 	wb := newDetailedWorkbench("update-wb", "ns1", "alice", "OldImage", "v1", "small", "pvc1", true)
-	client := dynamicfake.NewSimpleDynamicClient(scheme, wb)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	_, out, err := UpdateWorkbench(context.Background(), nil, core.UpdateWorkbenchInput{
 		Namespace:        "ns1",
@@ -555,19 +464,9 @@ func TestUpdateWorkbench_Image(t *testing.T) {
 }
 
 func TestUpdateWorkbench_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
 	mockWorkbenchHelpers(t)
 
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := UpdateWorkbench(context.Background(), nil, core.UpdateWorkbenchInput{
 		Namespace:        "ns1",

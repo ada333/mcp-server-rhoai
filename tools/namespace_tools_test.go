@@ -7,22 +7,14 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestListNamespaces_Success(t *testing.T) {
-	orig := GetClientSet
-	defer func() { GetClientSet = orig }()
-
-	client := fake.NewSimpleClientset(
+	setupFakeClientSet(t,
 		&corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: "ns-alpha"}},
 		&corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: "ns-beta"}},
 		&corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: "ns-gamma"}},
 	)
-	GetClientSet = func() (kubernetes.Interface, error) {
-		return client, nil
-	}
 
 	_, out, err := ListNamespaces(context.Background(), nil, struct{}{})
 	if err != nil {
@@ -37,13 +29,7 @@ func TestListNamespaces_Success(t *testing.T) {
 }
 
 func TestListNamespaces_Empty(t *testing.T) {
-	orig := GetClientSet
-	defer func() { GetClientSet = orig }()
-
-	client := fake.NewSimpleClientset()
-	GetClientSet = func() (kubernetes.Interface, error) {
-		return client, nil
-	}
+	setupFakeClientSet(t)
 
 	_, out, err := ListNamespaces(context.Background(), nil, struct{}{})
 	if err != nil {
@@ -55,16 +41,10 @@ func TestListNamespaces_Empty(t *testing.T) {
 }
 
 func TestGetAllNamespaces_Success(t *testing.T) {
-	orig := GetClientSet
-	defer func() { GetClientSet = orig }()
-
-	client := fake.NewSimpleClientset(
+	setupFakeClientSet(t,
 		&corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: "default"}},
 		&corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: "kube-system"}},
 	)
-	GetClientSet = func() (kubernetes.Interface, error) {
-		return client, nil
-	}
 
 	names, err := GetAllNamespaces(context.Background())
 	if err != nil {

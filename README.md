@@ -53,6 +53,8 @@ The build process will:
 
 ## Testing
 
+The project has a comprehensive unit test suite (60 tests across 7 test files) covering every tool module. Tests use Kubernetes fake clients (`dynamicfake.NewSimpleDynamicClient`) and function-variable mocking to isolate logic from live cluster dependencies, so no running cluster is needed.
+
 Run tests using Make or directly with Go:
 
 ```bash
@@ -64,9 +66,14 @@ go test -v ./tools/... ./resources/... ./prompts/...
 ```
 
 Test coverage includes:
-- Tool operations (workbenches, images, hardware profiles)
-- Resource management
-- Image catalog parsing
+- **Workbench tools** — CRUD operations, status transitions, and helper functions (image tag parsing, resource extraction, PVC name resolution)
+- **Storage tools** — PVC creation, deletion, and size updates including rejection of size decreases
+- **Image tools** — Custom image CRUD, default-image and in-use protection checks, image listing
+- **Hardware profile tools** — Profile CRUD and resource identifier parsing
+- **Resource consumption tools** — Value parsing (millicores, Gi suffixes, decimals), aggregation, and per-workbench/namespace/user/cluster queries
+- **Namespace & pod tools** — Listing and filtering by namespace
+
+Each tool module has a dedicated `*_test.go` file with both success and error-path cases. Table-driven subtests are used where multiple input variations need to be verified.
 
 ## Evaluation
 

@@ -8,16 +8,11 @@ import (
 	core "github.com/amaly/mcp-server-rhoai/core"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/kubernetes/fake"
 )
 
 func TestListPods_Success(t *testing.T) {
-	orig := GetClientSet
-	defer func() { GetClientSet = orig }()
-
 	ns := "test-ns"
-	client := fake.NewSimpleClientset(
+	setupFakeClientSet(t,
 		&corev1.Pod{
 			ObjectMeta: metav1.ObjectMeta{
 				Name:      "pod-a",
@@ -33,9 +28,6 @@ func TestListPods_Success(t *testing.T) {
 			Status: corev1.PodStatus{Phase: corev1.PodSucceeded},
 		},
 	)
-	GetClientSet = func() (kubernetes.Interface, error) {
-		return client, nil
-	}
 
 	_, out, err := ListPods(context.Background(), nil, core.ListWorkbenchesInput{Namespace: ns})
 	if err != nil {

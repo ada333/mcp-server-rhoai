@@ -9,7 +9,6 @@ import (
 	"github.com/amaly/mcp-server-rhoai/resources"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
 	dynamicfake "k8s.io/client-go/dynamic/fake"
 )
@@ -83,18 +82,7 @@ func newWorkbenchWithImageAnnotation(name, namespace, imageName string) *unstruc
 }
 
 func TestCreateCustomImage_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.ImagesGVR: "ImageStreamList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	input := core.CreateCustomImageInput{
 		ImageName:        "my-custom-image",
@@ -112,17 +100,10 @@ func TestCreateCustomImage_Success(t *testing.T) {
 }
 
 func TestUpdateImage_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("img-to-update", false, map[string]string{
 		"opendatahub.io/notebook-image-name": "OldName",
 	})
-	client := dynamicfake.NewSimpleDynamicClient(scheme, img)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img)
 
 	_, out, err := UpdateImage(context.Background(), nil, core.UpdateImageInput{
 		ImageName:    "img-to-update",
@@ -137,18 +118,7 @@ func TestUpdateImage_Success(t *testing.T) {
 }
 
 func TestUpdateImage_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.ImagesGVR: "ImageStreamList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := UpdateImage(context.Background(), nil, core.UpdateImageInput{
 		ImageName:    "nonexistent",
@@ -160,23 +130,10 @@ func TestUpdateImage_NotFound(t *testing.T) {
 }
 
 func TestDeleteImage_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("custom-img", false, map[string]string{
 		"opendatahub.io/notebook-image-name": "CustomImage",
 	})
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.ImagesGVR:      "ImageStreamList",
-			core.WorkbenchesGVR: "NotebookList",
-		},
-		img,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img)
 
 	_, out, err := DeleteImage(context.Background(), nil, core.DeleteImageInput{ImageName: "custom-img"})
 	if err != nil {
@@ -188,23 +145,10 @@ func TestDeleteImage_Success(t *testing.T) {
 }
 
 func TestDeleteImage_DefaultImageBlocked(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("default-img", true, map[string]string{
 		"opendatahub.io/notebook-image-name": "DefaultImage",
 	})
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.ImagesGVR:      "ImageStreamList",
-			core.WorkbenchesGVR: "NotebookList",
-		},
-		img,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img)
 
 	_, _, err := DeleteImage(context.Background(), nil, core.DeleteImageInput{ImageName: "default-img"})
 	if err == nil {
@@ -216,24 +160,11 @@ func TestDeleteImage_DefaultImageBlocked(t *testing.T) {
 }
 
 func TestDeleteImage_UsedImageBlocked(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("used-img", false, map[string]string{
 		"opendatahub.io/notebook-image-name": "UsedImage",
 	})
 	wb := newWorkbenchWithImageAnnotation("wb1", "ns1", "used-img")
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.ImagesGVR:      "ImageStreamList",
-			core.WorkbenchesGVR: "NotebookList",
-		},
-		img, wb,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img, wb)
 
 	_, _, err := DeleteImage(context.Background(), nil, core.DeleteImageInput{ImageName: "used-img"})
 	if err == nil {
@@ -245,15 +176,8 @@ func TestDeleteImage_UsedImageBlocked(t *testing.T) {
 }
 
 func TestImageIsDefault_True(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("default-img", true, nil)
-	client := dynamicfake.NewSimpleDynamicClient(scheme, img)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img)
 
 	result, err := ImageIsDefault(context.Background(), "default-img")
 	if err != nil {
@@ -265,15 +189,8 @@ func TestImageIsDefault_True(t *testing.T) {
 }
 
 func TestImageIsDefault_False(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	img := newUnstructuredImage("custom-img", false, nil)
-	client := dynamicfake.NewSimpleDynamicClient(scheme, img)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, img)
 
 	result, err := ImageIsDefault(context.Background(), "custom-img")
 	if err != nil {
@@ -285,20 +202,8 @@ func TestImageIsDefault_False(t *testing.T) {
 }
 
 func TestImageIsUsed_True(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	wb := newWorkbenchWithImageAnnotation("wb1", "ns1", "my-image")
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-		},
-		wb,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	result, err := ImageIsUsed(context.Background(), "my-image")
 	if err != nil {
@@ -310,20 +215,8 @@ func TestImageIsUsed_True(t *testing.T) {
 }
 
 func TestImageIsUsed_False(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	wb := newWorkbenchWithImageAnnotation("wb1", "ns1", "other-image")
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.WorkbenchesGVR: "NotebookList",
-		},
-		wb,
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, wb)
 
 	result, err := ImageIsUsed(context.Background(), "unused-image")
 	if err != nil {

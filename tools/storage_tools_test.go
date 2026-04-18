@@ -7,10 +7,6 @@ import (
 
 	core "github.com/amaly/mcp-server-rhoai/core"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
-	dynamicfake "k8s.io/client-go/dynamic/fake"
 )
 
 func newUnstructuredPVC(name, namespace, size string) *unstructured.Unstructured {
@@ -35,18 +31,11 @@ func newUnstructuredPVC(name, namespace, size string) *unstructured.Unstructured
 }
 
 func TestListPVCs_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme,
+	setupFakeClient(t,
 		newUnstructuredPVC("pvc-a", "ns1", "10Gi"),
 		newUnstructuredPVC("pvc-b", "ns1", "20Gi"),
 		newUnstructuredPVC("pvc-other", "ns2", "5Gi"),
 	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
 
 	_, out, err := ListPVCs(context.Background(), nil, core.ListPVCsInput{Namespace: "ns1"})
 	if err != nil {
@@ -64,18 +53,7 @@ func TestListPVCs_Success(t *testing.T) {
 }
 
 func TestListPVCs_Empty(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.PvcGVR: "PersistentVolumeClaimList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, out, err := ListPVCs(context.Background(), nil, core.ListPVCsInput{Namespace: "empty-ns"})
 	if err != nil {
@@ -87,18 +65,7 @@ func TestListPVCs_Empty(t *testing.T) {
 }
 
 func TestCreatePVC_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.PvcGVR: "PersistentVolumeClaimList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, out, err := CreatePVC(context.Background(), nil, core.PVCInput{
 		Namespace: "ns1",
@@ -114,14 +81,7 @@ func TestCreatePVC_Success(t *testing.T) {
 }
 
 func TestCreatePVC_Duplicate(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, newUnstructuredPVC("existing", "ns1", "10Gi"))
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, newUnstructuredPVC("existing", "ns1", "10Gi"))
 
 	_, _, err := CreatePVC(context.Background(), nil, core.PVCInput{
 		Namespace: "ns1",
@@ -134,14 +94,7 @@ func TestCreatePVC_Duplicate(t *testing.T) {
 }
 
 func TestDeletePVC_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, newUnstructuredPVC("to-delete", "ns1", "10Gi"))
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, newUnstructuredPVC("to-delete", "ns1", "10Gi"))
 
 	_, out, err := DeletePVC(context.Background(), nil, core.DeletePVCInput{Namespace: "ns1", PVCName: "to-delete"})
 	if err != nil {
@@ -153,18 +106,7 @@ func TestDeletePVC_Success(t *testing.T) {
 }
 
 func TestDeletePVC_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.PvcGVR: "PersistentVolumeClaimList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := DeletePVC(context.Background(), nil, core.DeletePVCInput{Namespace: "ns1", PVCName: "nonexistent"})
 	if err == nil {
@@ -173,14 +115,7 @@ func TestDeletePVC_NotFound(t *testing.T) {
 }
 
 func TestUpdatePVC_IncreaseSize(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, newUnstructuredPVC("resize-me", "ns1", "10Gi"))
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, newUnstructuredPVC("resize-me", "ns1", "10Gi"))
 
 	_, out, err := UpdatePVC(context.Background(), nil, core.PVCInput{
 		Namespace: "ns1",
@@ -196,14 +131,7 @@ func TestUpdatePVC_IncreaseSize(t *testing.T) {
 }
 
 func TestUpdatePVC_DecreaseSize(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClient(scheme, newUnstructuredPVC("shrink-me", "ns1", "20Gi"))
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, newUnstructuredPVC("shrink-me", "ns1", "20Gi"))
 
 	_, _, err := UpdatePVC(context.Background(), nil, core.PVCInput{
 		Namespace: "ns1",
@@ -219,18 +147,7 @@ func TestUpdatePVC_DecreaseSize(t *testing.T) {
 }
 
 func TestUpdatePVC_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.PvcGVR: "PersistentVolumeClaimList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := UpdatePVC(context.Background(), nil, core.PVCInput{
 		Namespace: "ns1",

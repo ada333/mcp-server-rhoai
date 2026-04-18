@@ -6,10 +6,6 @@ import (
 
 	core "github.com/amaly/mcp-server-rhoai/core"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
-	dynamicfake "k8s.io/client-go/dynamic/fake"
 )
 
 func newUnstructuredHardwareProfile(name string, identifiers []interface{}) *unstructured.Unstructured {
@@ -41,19 +37,11 @@ func makeIdentifier(displayName, identifier, resourceType, defaultCount, maxCoun
 }
 
 func TestListHardwareProfiles_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	hp := newUnstructuredHardwareProfile("small", []interface{}{
 		makeIdentifier("CPU", "cpu", "CPU", "1", "4", "1"),
 		makeIdentifier("Memory", "memory", "Memory", "2Gi", "8Gi", "1Gi"),
 	})
-
-	client := dynamicfake.NewSimpleDynamicClient(scheme, hp)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, hp)
 
 	_, out, err := ListHardwareProfiles(context.Background(), nil, struct{}{})
 	if err != nil {
@@ -71,18 +59,7 @@ func TestListHardwareProfiles_Success(t *testing.T) {
 }
 
 func TestListHardwareProfiles_Empty(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.HardwareProfilesGVR: "HardwareProfileList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, out, err := ListHardwareProfiles(context.Background(), nil, struct{}{})
 	if err != nil {
@@ -94,18 +71,7 @@ func TestListHardwareProfiles_Empty(t *testing.T) {
 }
 
 func TestCreateHardwareProfile_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.HardwareProfilesGVR: "HardwareProfileList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	input := core.HardwareProfile{
 		HardwareProfileName: "medium",
@@ -124,17 +90,10 @@ func TestCreateHardwareProfile_Success(t *testing.T) {
 }
 
 func TestDeleteHardwareProfile_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	hp := newUnstructuredHardwareProfile("to-delete", []interface{}{
 		makeIdentifier("CPU", "cpu", "CPU", "1", "2", "1"),
 	})
-	client := dynamicfake.NewSimpleDynamicClient(scheme, hp)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, hp)
 
 	_, out, err := DeleteHardwareProfile(context.Background(), nil, core.DeleteHardwareProfileInput{HardwareProfileName: "to-delete"})
 	if err != nil {
@@ -146,18 +105,7 @@ func TestDeleteHardwareProfile_Success(t *testing.T) {
 }
 
 func TestDeleteHardwareProfile_NotFound(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
-	client := dynamicfake.NewSimpleDynamicClientWithCustomListKinds(scheme,
-		map[schema.GroupVersionResource]string{
-			core.HardwareProfilesGVR: "HardwareProfileList",
-		},
-	)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t)
 
 	_, _, err := DeleteHardwareProfile(context.Background(), nil, core.DeleteHardwareProfileInput{HardwareProfileName: "nonexistent"})
 	if err == nil {
@@ -166,17 +114,10 @@ func TestDeleteHardwareProfile_NotFound(t *testing.T) {
 }
 
 func TestUpdateHardwareProfile_Success(t *testing.T) {
-	orig := GetDynamicClient
-	defer func() { GetDynamicClient = orig }()
-
-	scheme := runtime.NewScheme()
 	hp := newUnstructuredHardwareProfile("updatable", []interface{}{
 		makeIdentifier("CPU", "cpu", "CPU", "1", "4", "1"),
 	})
-	client := dynamicfake.NewSimpleDynamicClient(scheme, hp)
-	GetDynamicClient = func() (dynamic.Interface, error) {
-		return client, nil
-	}
+	setupFakeClient(t, hp)
 
 	input := core.UpdateHardwareProfileInput{
 		HardwareProfileName:    "updatable",

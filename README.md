@@ -229,14 +229,24 @@ All tools are available, including create, delete, and modify operations.
 
 ### Configuring the Mode
 
-The mode is controlled by the `MCP_RHOAI_MODE` environment variable:
+The mode can be set via command-line flag or environment variable:
 
-| Variable Value | Mode | Description |
-|---------------|------|-------------|
-| Not set or any value except `write` | Read-only | Default, safe mode |
+**Command-line flag (recommended for promptfoo/scripts):**
+```bash
+./mcp-server-rhoai -mode write
+```
+
+**Environment variable (for MCP client configs):**
+```bash
+export MCP_RHOAI_MODE=write
+```
+
+| Value | Mode | Description |
+|-------|------|-------------|
+| Not set | Read-only | Default, safe mode |
 | `write` | Read-write | Full access to all tools |
 
-Set the environment variable in your MCP server configuration (see [Configuration](#configuration) section above).
+The `-mode` flag takes precedence over the environment variable.
 
 ## Available Tools
 

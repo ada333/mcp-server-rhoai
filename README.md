@@ -77,74 +77,28 @@ Each tool module has a dedicated `*_test.go` file with both success and error-pa
 
 ## Evaluation
 
-This project uses [Promptfoo](https://www.promptfoo.dev/) for automated evaluation of tool selection and execution quality. Promptfoo is an open-source testing framework specifically designed for evaluating LLM applications, tool calling, and agent behavior. It provides metrics-based testing with visual reports.
+Uses [Promptfoo](https://www.promptfoo.dev/) for testing tool selection accuracy.
 
 ### Run Evaluation
 
 ```bash
-# Run evaluation tests
-make eval
-
-# Run evaluation and view results in browser
-make eval-view
+export GOOGLE_API_KEY=your-key-here
+make eval        # run tests
+make eval-view   # run and open results in browser
 ```
 
-**API Key Requirements:**
+### What It Tests
 
-The evaluation uses AI models to test the MCP server. You'll need an API key for one of the supported providers:
+- **Tool selection** - correct tool called for each prompt
+- **Parameter extraction** - arguments passed correctly (namespace, workbench name, etc.)
 
-- **OpenAI** (default): Set `OPENAI_API_KEY` environment variable
-  ```bash
-  export OPENAI_API_KEY=your-key-here
-  make eval
-  ```
+### Key Learnings
 
-- **Anthropic Claude**: Uncomment the Claude provider in `promptfoo.yaml` and set `ANTHROPIC_API_KEY`
-  ```bash
-  export ANTHROPIC_API_KEY=your-key-here
-  make eval
-  ```
+Tool descriptions must be explicit for model-agnostic compatibility:
 
-- **Google Gemini**: Uncomment the Gemini provider in `promptfoo.yaml` and set `GOOGLE_API_KEY`
-  ```bash
-  export GOOGLE_API_KEY=your-key-here
-  make eval
-  ```
-
-The evaluation measures:
-- **Tool Selection Accuracy** - Does the system choose the correct tool for each prompt?
-- **Parameter Extraction** - Are the tool parameters extracted correctly?
-- **Execution Success Rate** - Do the tools execute without errors?
-
-Results are displayed in an interactive web UI showing pass/fail rates, detailed comparisons, and performance metrics.
-
-**Prerequisites**: Node.js (^20.20.0 or >=22.22.0) and npm must be installed.
-
-### Evaluation Findings
-
-Evaluation was run against Google Gemini models (2.5 Flash and 2.5 Pro). Key findings:
-
-| Test Case | Gemini 2.5 Flash | Gemini 2.5 Pro |
-|-----------|-----------------|----------------|
-| List workbenches in a namespace | PASS | PASS |
-| Resource consumption per namespace | PASS | PASS |
-| List all workbenches across namespaces | FAIL | FAIL |
-| Create a workbench | FAIL | FAIL |
-
-**Observations:**
-
-1. **`list_all_workbenches` tool confusion** — Both models refused to call this tool despite it being available. The tool's input schema requires a `namespace` parameter, which contradicts its description ("list workbenches across all namespaces"). Models interpret this inconsistency as a reason to fall back to the per-namespace `list_workbenches` tool or refuse entirely.
-
-2. **`create_workbench` tool refusal** — Both models declined to call `create_workbench`, claiming they could only list resources. The tool has a complex input schema with many required fields (`hardwareProfile` as a nested object, `imageTag`, `pvcName`, etc.). When the test prompt does not supply all required parameters, the models choose not to attempt the call rather than inferring or requesting missing values.
-
-3. **Model quality vs. cost trade-off** — Gemini 2.5 Flash and 2.5 Pro produced identical results for tool selection tasks. Lighter models may struggle with complex tool schemas. Note that `gemini-2.0-flash` has been deprecated for new API users as of April 2026.
-
-4. **Free tier limitations** — The Google Gemini free tier quota can be exhausted quickly. When the quota is hit (`limit: 0`), promptfoo enters an infinite retry loop. A pay-as-you-go billing plan is recommended for running evaluations reliably.
-
-**Recommendations for improving eval pass rates:**
-- Remove the contradictory `namespace` parameter from the `list_all_workbenches` input schema, or rename the tool to clarify its behavior.
-- Enrich test prompts for write operations to include all required parameters (e.g., hardware profile, image tag, PVC name), or simplify the tool's required fields so the model can attempt the call with partial information.
-- Consider testing with OpenAI GPT-4o or Anthropic Claude, which may handle complex tool schemas more reliably.
+- Mark optional fields with `omitempty` and describe defaults in jsonschema descriptions
+- Include valid values in descriptions (e.g., "status: 0 for running, 1 for stopped")  
+- Simpler models (Gemini Flash) are stricter than Claude - good for testing robustness
 
 ## Configuration
 

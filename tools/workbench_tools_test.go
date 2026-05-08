@@ -148,16 +148,16 @@ func TestListWorkbenches_Running(t *testing.T) {
 	}
 }
 
-func TestListAllWorkbenches(t *testing.T) {
+func TestListWorkbenchesAllNamespaces(t *testing.T) {
 	mockWorkbenchHelpers(t)
 
 	wb1 := newDetailedWorkbench("wb-1", "ns1", "alice", "PyTorch", "v1", "small", "pvc1", true)
 	wb2 := newDetailedWorkbench("wb-2", "ns2", "bob", "TF", "v1", "medium", "pvc2", true)
 	setupFakeClient(t, wb1, wb2)
 
-	_, out, err := ListAllWorkbenches(context.Background(), nil, core.ListWorkbenchesInput{})
+	_, out, err := ListWorkbenches(context.Background(), nil, core.ListWorkbenchesInput{})
 	if err != nil {
-		t.Fatalf("ListAllWorkbenches returned error: %v", err)
+		t.Fatalf("ListWorkbenches (all namespaces) returned error: %v", err)
 	}
 	if len(out.Workbenches) != 2 {
 		t.Fatalf("expected 2 workbenches across all namespaces, got %d", len(out.Workbenches))

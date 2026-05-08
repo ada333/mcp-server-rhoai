@@ -36,12 +36,12 @@ func registerNamespaceTools(server *mcp.Server) {
 func registerWorkbenchTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_workbench",
-		Description: "create a new workbench with given name, image and image URL in a given project namespace",
+		Description: "create a new workbench. Requires namespace, workbenchName, imageDisplayName, and imageTag. PVC and hardware profile are optional - if not provided, a PVC is auto-created with the workbench name and default hardware profile is used.",
 	}, CreateWorkbench)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_workbench",
-		Description: "update a workbench with given name, image and image URL in a given project namespace",
+		Description: "update a workbench. Requires namespace and workbenchName. Optionally update imageDisplayName, imageTag, hardwareProfile, or pvcName - only provide the fields you want to change.",
 	}, UpdateWorkbench)
 
 	mcp.AddTool(server, &mcp.Tool{
@@ -51,36 +51,31 @@ func registerWorkbenchTools(server *mcp.Server) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "change_workbench_status",
-		Description: "change the status of a workbench with given name in a given project namespace",
+		Description: "start or stop a workbench. Use status=0 to start (running), status=1 to stop (stopped).",
 	}, ChangeWorkbenchStatus)
 }
 
 func registerWorkbenchListingTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_workbenches",
-		Description: "list the workbenches in a given project namespace",
+		Description: "list workbenches. If namespace is provided, lists workbenches in that namespace. If namespace is empty or not provided, lists all workbenches across all namespaces.",
 	}, ListWorkbenches)
-
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "list_all_workbenches",
-		Description: "list the workbenches across all namespaces",
-	}, ListAllWorkbenches)
 }
 
 func registerImageTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_custom_image",
-		Description: "create a new custom notebook image",
+		Description: "create a custom notebook image. Requires imageName, imageLocation (docker URL), and imageDescription.",
 	}, CreateCustomImage)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_image",
-		Description: "update an image with given name, description and location",
+		Description: "update a custom image. Requires imageName. Optionally provide newImageName to rename or imageDescription to update description.",
 	}, UpdateImage)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "delete_image",
-		Description: "delete an image with given name",
+		Description: "delete a custom image by name",
 	}, DeleteImage)
 }
 
@@ -94,36 +89,36 @@ func registerImageListingTools(server *mcp.Server) {
 func registerHardwareProfileTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_hardware_profile",
-		Description: "create a hardware profile with given name and resources",
+		Description: "create a hardware profile. Requires hardwareProfileName and resources array. Each resource needs: resourceName, resourceIdentifier (e.g. 'cpu', 'memory'), resourceType, defaultCount, minCount, maxCount.",
 	}, CreateHardwareProfile)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_hardware_profile",
-		Description: "update a hardware profile with given name and resources",
+		Description: "update a hardware profile. Requires hardwareProfileName and resources to update. Optionally provide newHardwareProfileName to rename.",
 	}, UpdateHardwareProfile)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "delete_hardware_profile",
-		Description: "delete a hardware profile with given name",
+		Description: "delete a hardware profile by name",
 	}, DeleteHardwareProfile)
 }
 
 func registerHardwareProfileListingTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_hardware_profiles",
-		Description: "list the hardware profiles in a given project namespace",
+		Description: "list all available hardware profiles",
 	}, ListHardwareProfiles)
 }
 
 func registerStorageTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_pvc",
-		Description: "create a persistent volume claim with given name and size in a given project namespace",
+		Description: "create a persistent volume claim. Requires namespace, pvcName, and size (e.g. '10Gi', '20Gi').",
 	}, CreatePVC)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_pvc",
-		Description: "update a persistent volume claim with given name and size in a given project namespace",
+		Description: "update a persistent volume claim. Requires namespace and pvcName. Optionally provide size to resize (can only increase) or newPVCName to rename.",
 	}, UpdatePVC)
 }
 

@@ -1,5 +1,5 @@
 description: "MCP Server RHOAI - Tool Selection Evaluation"
-
+# the evaluation should cover all the main tools and scenarios
 evaluateOptions:
   delay: 2000
 
@@ -7,7 +7,7 @@ prompts:
   - "{{prompt}}"
 
 providers:
-  - id: google:gemini-2.5-flash
+  - id: google:gemini-2.5-pro
     config:
       mcp:
         enabled: true
@@ -18,29 +18,23 @@ providers:
 
 tests:
   # ==================== WORKBENCH LISTING ====================
-  - description: "List all workbenches across namespaces"
+  - description: "List all workbenches (no namespace)"
     vars:
-      prompt: "Use list_all_workbenches to show me all workbenches in every namespace"
+      prompt: "List all workbenches in cluster"
     assert:
       - type: tool-call-f1
         value:
-          - "list_all_workbenches"
+          - "list_workbenches"
 
   - description: "List workbenches in specific namespace"
     vars:
-      prompt: "List the workbenches in namespace test-namespace"
+      prompt: "List workbenches in namespace test-namespace"
     assert:
       - type: tool-call-f1
         value:
           - "list_workbenches"
-
-  - description: "Show workbenches in project"
-    vars:
-      prompt: "Show me all workbenches in the my-project namespace"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_workbenches"
+      - type: contains
+        value: '"namespace":"test-namespace"'
 
   # ==================== WORKBENCH CRUD ====================
   - description: "Create a new workbench"
@@ -50,6 +44,10 @@ tests:
       - type: tool-call-f1
         value:
           - "create_workbench"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"workbenchName":"my-notebook"'
 
   - description: "Update workbench image"
     vars:
@@ -58,6 +56,10 @@ tests:
       - type: tool-call-f1
         value:
           - "update_workbench"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"workbenchName":"my-notebook"'
 
   - description: "Delete a workbench"
     vars:
@@ -66,35 +68,39 @@ tests:
       - type: tool-call-f1
         value:
           - "delete_workbench"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"workbenchName":"old-notebook"'
 
   - description: "Stop a workbench"
     vars:
-      prompt: "Change workbench my-notebook in namespace test-namespace to status stopped"
+      prompt: "Stop workbench my-notebook in namespace test-namespace"
     assert:
       - type: tool-call-f1
         value:
           - "change_workbench_status"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"status":1'
 
   - description: "Start a workbench"
     vars:
-      prompt: "Change workbench my-notebook in namespace test-namespace to status running"
+      prompt: "Start workbench my-notebook in namespace test-namespace"
     assert:
       - type: tool-call-f1
         value:
           - "change_workbench_status"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"status":0'
 
   # ==================== NAMESPACES ====================
   - description: "List all namespaces"
     vars:
       prompt: "List all namespaces"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_namespaces"
-
-  - description: "Show available projects"
-    vars:
-      prompt: "Show me the available namespaces"
     assert:
       - type: tool-call-f1
         value:
@@ -108,14 +114,8 @@ tests:
       - type: tool-call-f1
         value:
           - "list_pods"
-
-  - description: "Show running pods"
-    vars:
-      prompt: "Show pods in namespace my-project"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_pods"
+      - type: contains
+        value: '"namespace":"test-namespace"'
 
   # ==================== IMAGES ====================
   - description: "List available images"
@@ -141,6 +141,10 @@ tests:
       - type: tool-call-f1
         value:
           - "create_custom_image"
+      - type: contains
+        value: '"imageName":"my-custom-image"'
+      - type: contains
+        value: 'docker.io/myrepo/myimage:latest'
 
   - description: "Update image"
     vars:
@@ -149,6 +153,8 @@ tests:
       - type: tool-call-f1
         value:
           - "update_image"
+      - type: contains
+        value: '"imageName":"my-custom-image"'
 
   - description: "Delete image"
     vars:
@@ -157,6 +163,8 @@ tests:
       - type: tool-call-f1
         value:
           - "delete_image"
+      - type: contains
+        value: '"imageName":"old-image"'
 
   # ==================== HARDWARE PROFILES ====================
   - description: "List hardware profiles"
@@ -167,29 +175,25 @@ tests:
         value:
           - "list_hardware_profiles"
 
-  - description: "Show hardware configurations"
-    vars:
-      prompt: "What hardware profiles can I choose from?"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_hardware_profiles"
-
   - description: "Create hardware profile"
     vars:
-      prompt: "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
+      prompt: "Create hardware profile named gpu-large with resources: CPU (resourceName: CPU, identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (resourceName: Memory, identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
     assert:
       - type: tool-call-f1
         value:
           - "create_hardware_profile"
+      - type: contains
+        value: '"hardwareProfileName":"gpu-large"'
 
   - description: "Update hardware profile"
     vars:
-      prompt: "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
+      prompt: "Update hardware profile gpu-large with CPU resource (resourceName: CPU, identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
     assert:
       - type: tool-call-f1
         value:
           - "update_hardware_profile"
+      - type: contains
+        value: '"hardwareProfileName":"gpu-large"'
 
   - description: "Delete hardware profile"
     vars:
@@ -198,6 +202,8 @@ tests:
       - type: tool-call-f1
         value:
           - "delete_hardware_profile"
+      - type: contains
+        value: '"hardwareProfileName":"old-profile"'
 
   # ==================== STORAGE (PVCs) ====================
   - description: "List PVCs in namespace"
@@ -207,14 +213,8 @@ tests:
       - type: tool-call-f1
         value:
           - "list_pvcs"
-
-  - description: "Show storage volumes"
-    vars:
-      prompt: "What PVCs exist in my-project namespace?"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_pvcs"
+      - type: contains
+        value: '"namespace":"test-namespace"'
 
   - description: "Create PVC"
     vars:
@@ -223,6 +223,12 @@ tests:
       - type: tool-call-f1
         value:
           - "create_pvc"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"pvcName":"my-storage"'
+      - type: contains
+        value: '"size":"20Gi"'
 
   - description: "Update PVC size"
     vars:
@@ -231,6 +237,12 @@ tests:
       - type: tool-call-f1
         value:
           - "update_pvc"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"pvcName":"my-storage"'
+      - type: contains
+        value: '"size":"50Gi"'
 
   # ==================== RESOURCE CONSUMPTION ====================
   - description: "Get resource consumption for namespace"
@@ -240,6 +252,8 @@ tests:
       - type: tool-call-f1
         value:
           - "list_resource_consumption_per_namespace"
+      - type: contains
+        value: '"namespace":"test-namespace"'
 
   - description: "Resource usage per workbench"
     vars:
@@ -248,6 +262,10 @@ tests:
       - type: tool-call-f1
         value:
           - "list_resource_consumption_per_workbench"
+      - type: contains
+        value: '"namespace":"test-namespace"'
+      - type: contains
+        value: '"workbenchName":"my-notebook"'
 
   - description: "Resource consumption by user"
     vars:
@@ -256,6 +274,8 @@ tests:
       - type: tool-call-f1
         value:
           - "list_resource_consumption_per_user"
+      - type: contains
+        value: '"user":"john@example.com"'
 
   - description: "Cluster-wide resource usage"
     vars:

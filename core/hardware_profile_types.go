@@ -25,8 +25,8 @@ type HardwareProfileResource struct {
 
 type UpdateHardwareProfileInput struct {
 	HardwareProfileName    string                    `json:"hardwareProfileName" jsonschema_description:"the name of the hardware profile to update"`
-	NewHardwareProfileName string                    `json:"newHardwareProfileName,omitempty" jsonschema_description:"the new name to rename the hardware profile to (optional)"`
-	Resources              []HardwareProfileResource `json:"resources" jsonschema_description:"the resources of the hardware profile"`
+	NewHardwareProfileName string                    `json:"newHardwareProfileName,omitempty" jsonschema_description:"optional - new name to rename the hardware profile to"`
+	Resources              []HardwareProfileResource `json:"resources,omitempty" jsonschema_description:"optional - resources to update/add (merged with existing)"`
 }
 
 type DeleteHardwareProfileInput struct {

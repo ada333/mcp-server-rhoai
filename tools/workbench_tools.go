@@ -162,14 +162,6 @@ func ListWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input core.L
 	return nil, core.ListWorkbenchesResult{Workbenches: workbenchesInfo}, nil
 }
 
-func ListAllWorkbenches(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
-	_, workbenches, err := ListWorkbenches(ctx, req, core.ListWorkbenchesInput{Namespace: ""})
-	if err != nil {
-		return nil, core.ListWorkbenchesResult{}, err
-	}
-	return nil, core.ListWorkbenchesResult{Workbenches: workbenches.Workbenches}, nil
-}
-
 func resolveHardwareProfile(input core.HardwareProfile) core.HardwareProfile {
 	if input.HardwareProfileName != "" {
 		return input

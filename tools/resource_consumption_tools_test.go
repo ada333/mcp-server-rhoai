@@ -10,9 +10,7 @@ import (
 
 func mockListWorkbenches(workbenches []core.WorkbenchInfo) func() {
 	origList := listWorkbenchesFn
-	origListAll := listAllWorkbenchesFn
 
-	result := core.ListWorkbenchesResult{Workbenches: workbenches}
 	listWorkbenchesFn = func(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
 		var filtered []core.WorkbenchInfo
 		for _, wb := range workbenches {
@@ -22,13 +20,9 @@ func mockListWorkbenches(workbenches []core.WorkbenchInfo) func() {
 		}
 		return nil, core.ListWorkbenchesResult{Workbenches: filtered}, nil
 	}
-	listAllWorkbenchesFn = func(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListWorkbenchesResult, error) {
-		return nil, result, nil
-	}
 
 	return func() {
 		listWorkbenchesFn = origList
-		listAllWorkbenchesFn = origListAll
 	}
 }
 

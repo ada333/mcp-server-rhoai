@@ -7,84 +7,270 @@ prompts:
   - "{{prompt}}"
 
 providers:
-  # Uncomment to test GPT-4o (more expensive, better quality)
-  # - id: openai:gpt-4o
-  #   config:
-  #     mcp:
-  #       enabled: true
-  #       server:
-  #         command: ./mcp-server-rhoai
-  #         args: []
-  #         name: rhoai
-  #         env:
-  #           MCP_RHOAI_MODE: write
-
-  # Uncomment to test GPT-4o-mini (requires OPENAI_API_KEY with credits)
-  # - id: openai:gpt-4o-mini
-  #   config:
-  #     mcp:
-  #       enabled: true
-  #       server:
-  #         command: ./mcp-server-rhoai
-  #         args: []
-  #         name: rhoai
-  #         env:
-  #           MCP_RHOAI_MODE: write
-
-  # Uncomment to test with Claude (requires ANTHROPIC_API_KEY with credits)
-  # - id: anthropic:claude-3-5-sonnet-20241022
-  #   config:
-  #     mcp:
-  #       enabled: true
-  #       server:
-  #         command: ./mcp-server-rhoai
-  #         args: []
-  #         name: rhoai
-  #         env:
-  #           MCP_RHOAI_MODE: write
-
-  - id: google:gemini-2.5-pro
+  - id: google:gemini-2.5-flash
     config:
       mcp:
         enabled: true
         server:
           command: ./mcp-server-rhoai
-          args: []
+          args: ["-mode", "write"]
           name: rhoai
-          env:
-            MCP_RHOAI_MODE: write
 
 tests:
+  # ==================== WORKBENCH LISTING ====================
   - description: "List all workbenches across namespaces"
     vars:
-      prompt: "Show me all workbenches across all namespaces"
+      prompt: "Use list_all_workbenches to show me all workbenches in every namespace"
     assert:
       - type: tool-call-f1
         value:
           - "list_all_workbenches"
 
-  - description: "Get resource consumption for namespace"
-    vars:
-      prompt: "What is the resource consumption in test-namespace?"
-    assert:
-      - type: tool-call-f1
-        value:
-          - "list_resource_consumption_per_namespace"
-
   - description: "List workbenches in specific namespace"
     vars:
-      prompt: "List workbenches in test-namespace"
+      prompt: "List the workbenches in namespace test-namespace"
     assert:
       - type: tool-call-f1
         value:
           - "list_workbenches"
 
+  - description: "Show workbenches in project"
+    vars:
+      prompt: "Show me all workbenches in the my-project namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_workbenches"
+
+  # ==================== WORKBENCH CRUD ====================
   - description: "Create a new workbench"
     vars:
-      prompt: "Create a workbench named my-notebook in namespace test-namespace using Jupyter image"
+      prompt: "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2"
     assert:
       - type: tool-call-f1
         value:
           - "create_workbench"
+
+  - description: "Update workbench image"
+    vars:
+      prompt: "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "update_workbench"
+
+  - description: "Delete a workbench"
+    vars:
+      prompt: "Delete workbench old-notebook in namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "delete_workbench"
+
+  - description: "Stop a workbench"
+    vars:
+      prompt: "Change workbench my-notebook in namespace test-namespace to status stopped"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "change_workbench_status"
+
+  - description: "Start a workbench"
+    vars:
+      prompt: "Change workbench my-notebook in namespace test-namespace to status running"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "change_workbench_status"
+
+  # ==================== NAMESPACES ====================
+  - description: "List all namespaces"
+    vars:
+      prompt: "List all namespaces"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_namespaces"
+
+  - description: "Show available projects"
+    vars:
+      prompt: "Show me the available namespaces"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_namespaces"
+
+  # ==================== PODS ====================
+  - description: "List pods in namespace"
+    vars:
+      prompt: "List pods in namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_pods"
+
+  - description: "Show running pods"
+    vars:
+      prompt: "Show pods in namespace my-project"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_pods"
+
+  # ==================== IMAGES ====================
+  - description: "List available images"
+    vars:
+      prompt: "List all notebook images"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_images"
+
+  - description: "Show notebook images"
+    vars:
+      prompt: "What images are available?"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_images"
+
+  - description: "Create custom image"
+    vars:
+      prompt: "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "create_custom_image"
+
+  - description: "Update image"
+    vars:
+      prompt: "Update image my-custom-image with new description 'Updated ML image for production'"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "update_image"
+
+  - description: "Delete image"
+    vars:
+      prompt: "Delete image old-image"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "delete_image"
+
+  # ==================== HARDWARE PROFILES ====================
+  - description: "List hardware profiles"
+    vars:
+      prompt: "Show me the available hardware profiles"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_hardware_profiles"
+
+  - description: "Show hardware configurations"
+    vars:
+      prompt: "What hardware profiles can I choose from?"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_hardware_profiles"
+
+  - description: "Create hardware profile"
+    vars:
+      prompt: "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "create_hardware_profile"
+
+  - description: "Update hardware profile"
+    vars:
+      prompt: "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "update_hardware_profile"
+
+  - description: "Delete hardware profile"
+    vars:
+      prompt: "Delete hardware profile old-profile"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "delete_hardware_profile"
+
+  # ==================== STORAGE (PVCs) ====================
+  - description: "List PVCs in namespace"
+    vars:
+      prompt: "List all PVCs in namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_pvcs"
+
+  - description: "Show storage volumes"
+    vars:
+      prompt: "What PVCs exist in my-project namespace?"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_pvcs"
+
+  - description: "Create PVC"
+    vars:
+      prompt: "Create a PVC named my-storage with size 20Gi in namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "create_pvc"
+
+  - description: "Update PVC size"
+    vars:
+      prompt: "Update PVC my-storage in namespace test-namespace to size 50Gi"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "update_pvc"
+
+  # ==================== RESOURCE CONSUMPTION ====================
+  - description: "Get resource consumption for namespace"
+    vars:
+      prompt: "Show resource consumption for namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_resource_consumption_per_namespace"
+
+  - description: "Resource usage per workbench"
+    vars:
+      prompt: "Show resource consumption for workbench my-notebook in namespace test-namespace"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_resource_consumption_per_workbench"
+
+  - description: "Resource consumption by user"
+    vars:
+      prompt: "Show resource consumption for user john@example.com"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_resource_consumption_per_user"
+
+  - description: "Cluster-wide resource usage"
+    vars:
+      prompt: "Show resource consumption for the entire cluster"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_resource_consumption_per_cluster"
+
+  - description: "Total cluster resources"
+    vars:
+      prompt: "What is the cluster-wide resource usage?"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_resource_consumption_per_cluster"
 
 outputPath: ./promptfoo-results.json

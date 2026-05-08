@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
 	"os"
 
@@ -12,12 +13,18 @@ import (
 )
 
 func main() {
+	modeFlag := flag.String("mode", "", "Server mode: 'write' to enable write tools")
+	flag.Parse()
+
 	server := mcp.NewServer(&mcp.Implementation{
 		Name:    "workbencheslist",
 		Version: "v1.0.0",
 	}, nil)
 
 	mode := os.Getenv("MCP_RHOAI_MODE")
+	if *modeFlag != "" {
+		mode = *modeFlag
+	}
 	if mode == "write" {
 		tools.RegisterWriteTools(server)
 	}

@@ -1,30 +1,30 @@
 {
-  "evalId": "eval-uDC-2026-04-17T11:01:43",
+  "evalId": "eval-NaL-2026-05-08T14:03:24",
   "results": {
     "version": 3,
-    "timestamp": "2026-04-17T11:01:43.032Z",
+    "timestamp": "2026-05-08T14:03:24.058Z",
     "prompts": [
       {
         "id": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
         "raw": "{{prompt}}",
         "label": "{{prompt}}",
-        "provider": "google:gemini-2.5-pro",
+        "provider": "google:gemini-2.5-flash",
         "metrics": {
-          "score": 2,
-          "testPassCount": 2,
-          "testFailCount": 2,
+          "score": 27,
+          "testPassCount": 27,
+          "testFailCount": 4,
           "testErrorCount": 0,
-          "assertPassCount": 2,
-          "assertFailCount": 2,
-          "totalLatencyMs": 20651,
+          "assertPassCount": 27,
+          "assertFailCount": 4,
+          "totalLatencyMs": 39311,
           "tokenUsage": {
-            "prompt": 1614,
-            "completion": 114,
-            "cached": 0,
-            "total": 3119,
-            "numRequests": 4,
+            "prompt": 54253,
+            "completion": 772,
+            "cached": 5849,
+            "total": 64166,
+            "numRequests": 28,
             "completionDetails": {
-              "reasoning": 1391,
+              "reasoning": 3292,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0,
               "cacheReadInputTokens": 0,
@@ -48,13 +48,13 @@
           "namedScores": {},
           "namedScoresCount": {},
           "namedScoreWeights": {},
-          "cost": 0.017067500000000003
+          "cost": 0.02643590000000001
         }
       }
     ],
     "results": [
       {
-        "cost": 0.007732500000000001,
+        "cost": 0.0014473,
         "error": "Tool Call F1 score 0.000 is below threshold 1. Expected: [list_all_workbenches], Called: [(none)]. Precision=0.000, Recall=0.000",
         "gradingResult": {
           "pass": false,
@@ -82,42 +82,42 @@
             }
           ]
         },
-        "id": "8d891eed-b0a5-4073-ad55-f7a85044d604",
-        "latencyMs": 7416,
+        "id": "59a0c613-548b-4853-983b-e315a8817b99",
+        "latencyMs": 2762,
         "namedScores": {},
         "prompt": {
-          "raw": "Show me all workbenches across all namespaces",
+          "raw": "Use list_all_workbenches to show me all workbenches in every namespace",
           "label": "{{prompt}}",
           "config": {}
         },
         "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
         "promptIdx": 0,
         "provider": {
-          "id": "google:gemini-2.5-pro",
+          "id": "google:gemini-2.5-flash",
           "label": ""
         },
         "response": {
-          "output": "I can only show all workbenches in a given project namespace. Please tell me the project namespace you are interested in.",
+          "output": "I can only list all workbenches in a given namespace, please provide the namespace you want me to list.",
           "tokenUsage": {
-            "prompt": 402,
-            "completion": 25,
-            "total": 1125,
+            "prompt": 1941,
+            "completion": 23,
+            "total": 2287,
             "numRequests": 1,
             "completionDetails": {
-              "reasoning": 698,
+              "reasoning": 323,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.007732500000000001,
+          "cost": 0.0014473,
           "raw": {
             "candidates": [
               {
                 "content": {
                   "parts": [
                     {
-                      "text": "I can only show all workbenches in a given project namespace. Please tell me the project namespace you are interested in.",
-                      "thoughtSignature": "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"
+                      "text": "I can only list all workbenches in a given namespace, please provide the namespace you want me to list.",
+                      "thoughtSignature": "CtIKAQw51sdAX77/RU/bX2f3tpR2mnRxX3TJTjldHkBnB2H0qKE7V8DX6ddg8hBWn1WbwjGwzYuWKgnkddyXdBx0ZJAn5c5wMNxBPuC9RydhqIQ2XzPSG7ibsKiElJypCm5a9iwgxMiCmr7CNw67fHCG8iXuJMLERnPpqpTEYB/70qQdfPIN7x7h6uuapIlHkBkUncwz4Vt85sdolEssX98f/rVkZLO2SawLn1p6F5poMHpbNKTS+9fM/BKtE64TnaCdcLn+SaqnTXYugn9oYDVA9DJtPjFtqjOzbiQA84hftVRWzQUnCng+zth9rb+1DNT1IS6YcOXvJzKN6G6B62Oz05xEiyADsipEXItxU5uuu/2Hbcjx8RbWoo6Qee84glQpDBlDXqsX8EVt+Wa1po45fcBZCIfg1d/eiviJbJMhCF0u+JTcwXJ4nGPg0DVerHs5y8Jne8pPIs4z38D3CH3cPBMbAJ+1gTIN5Ui9NzGTHKv3TK67qAMeLNUxn+JNtk1tYvln86Nusxod6lXVP+5Jhi97ocp23zxBQ3fFF4fPXHTLa+I3oWCsGTU5Oshhr2iI1+r73WkLsUQKShUiVAcfRMxaKgTAz+Y3RVv1QObksO1DqtHDQttcOIK2VnedLnJRRReiVk2rUhO3sB96RqimoMB/K19g7lzURMkI2lh6QwOp6wSrcS7mqJJNZ4A0iWhz6ZUk1WrcCIHh4xVFWGXmrpeTQw6Ha5iQzWCKAzfN+cUOTIwIRtilUkAjxZgowJchGhstd9LnNWyABeVnoUPhfRm6ZyXPku5OhVCJk8o63hJrT2NUnfnjrzsK7jhbxNF1EqLahGwN623zedbRb/gNzCMCppT0mRu33vGTB+d71pkCP9Gt4DpDUv2zzbDWi0PqbFcK3Gz00rFyJBvD3RzMBOHH3JY6DKWXhpMMsCKvjYuYS/7TRsckoOweopraTDpS0/1+J//BHC3g/xomEQMjnxYQdtfbWWC4FnwvtVXwBHCbSoZkshK8vmaeP75cGh/zNhvhrdxt69h6/RIcjkqz1TbbWrKtJ1E8MoYmK1YejeUgKQHeK568pgPzi8ssNgE71flp5S/csLVzUD0a51juFp7zB3kFP4XfpauoRJSjSK8sH9QviUNU9Owvkhfu54VJ4rh1z2GN166B0Yb/G16fw48xfFvK7qx9I4puKjsb7Ah6JuhiVQ+1E9Qs7r0zXFFF75/LRDZ3GxBvWQrIAT2qrV7v0FpBYx4eqmbKn9IoZvnXujDCrZ9Bi13t1ISpFhk/ENT+AKYhZYcqXOc2hoQXCHimg2GyOy/YiW6ld3dUqK0eM/kevSJmH5muBvXv1tET/PtkCW4PHjrmPb3DClwF3FwAIpXmKQ4bMEwMq9lWBGX1vF3bXZDJeY+lIXDF7opv+KiMwaYfvfuUS90c6ZGdNhaahcO9VSb+y0sxxhLBGWWlfeXRSw10H5tRHBZZw5isp0d5bAOh0gWwysxF9C0qeJygDi/pIo3KmoCDUwa/EMimN3wEp2vcA985KO1mtq4qMIMo4NGlJ8YOhALbGxkS4E4VGl2CP9Ef/fp8RVR/C4YQL7X7I8V1hnTCPkjJO7ueywFxT+HC2rsk+6AqcuOX2aUW3zxBkGo4GGM+PYEs/rvepWAj6ZhBop/8HAlnbfOFRDlJ3G1NcJ8ij7Qh+6gZ+L+wDYNJUhhk9Ej2FE7NZfoYJqUp9mvI0plKVjQd1kktowxySrk8UNvjqrjzsZhI+19ndJ3HiFEAgmwxsbHcLXVwY+gQDvqr0ZeOk2wmVlVTgYz7IW0NwHF78oV+O6mfjH0N"
                     }
                   ],
                   "role": "model"
@@ -127,19 +127,20 @@
               }
             ],
             "usageMetadata": {
-              "promptTokenCount": 402,
-              "candidatesTokenCount": 25,
-              "totalTokenCount": 1125,
+              "promptTokenCount": 1941,
+              "candidatesTokenCount": 23,
+              "totalTokenCount": 2287,
               "promptTokensDetails": [
                 {
                   "modality": "TEXT",
-                  "tokenCount": 402
+                  "tokenCount": 1941
                 }
               ],
-              "thoughtsTokenCount": 698
+              "thoughtsTokenCount": 323,
+              "serviceTier": "standard"
             },
-            "modelVersion": "gemini-2.5-pro",
-            "responseId": "HxPiaZf_Dq2o28oP-8yGkQo"
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "LO39ae6yG9_cnsEPqc-hgAo"
           },
           "cached": false,
           "metadata": {}
@@ -149,7 +150,7 @@
         "testCase": {
           "description": "List all workbenches across namespaces",
           "vars": {
-            "prompt": "Show me all workbenches across all namespaces"
+            "prompt": "Use list_all_workbenches to show me all workbenches in every namespace"
           },
           "assert": [
             {
@@ -164,7 +165,7 @@
         },
         "testIdx": 0,
         "vars": {
-          "prompt": "Show me all workbenches across all namespaces"
+          "prompt": "Use list_all_workbenches to show me all workbenches in every namespace"
         },
         "metadata": {
           "_promptfooFileMetadata": {}
@@ -172,140 +173,7 @@
         "failureReason": 1
       },
       {
-        "cost": 0.0029537500000000006,
-        "gradingResult": {
-          "pass": true,
-          "score": 1,
-          "reason": "All assertions passed",
-          "namedScores": {},
-          "tokensUsed": {
-            "total": 0,
-            "prompt": 0,
-            "completion": 0,
-            "cached": 0,
-            "numRequests": 0
-          },
-          "componentResults": [
-            {
-              "pass": true,
-              "score": 1,
-              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_namespace], Called: [list_resource_consumption_per_namespace]",
-              "assertion": {
-                "type": "tool-call-f1",
-                "value": [
-                  "list_resource_consumption_per_namespace"
-                ]
-              }
-            }
-          ]
-        },
-        "id": "d1b3c8b4-3b5d-4b50-ae36-025efa3cbee8",
-        "latencyMs": 4060,
-        "namedScores": {},
-        "prompt": {
-          "raw": "What is the resource consumption in test-namespace?",
-          "label": "{{prompt}}",
-          "config": {}
-        },
-        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
-        "promptIdx": 0,
-        "provider": {
-          "id": "google:gemini-2.5-pro",
-          "label": ""
-        },
-        "response": {
-          "output": [
-            {
-              "functionCall": {
-                "name": "list_resource_consumption_per_namespace",
-                "args": {
-                  "namespace": "test-namespace"
-                }
-              },
-              "thoughtSignature": "CsMHAQw51sfUExqtMXo3fIpS1Znu1+MpS4QJSiM1+VwsXmx26YoO2ifljmevkIibIQqMNiN1Kr9+dczOy+eEbWrqV+iYKIJRZMlAwaTVfnpLsfrgLm+2UVhIKFU/UyGnj1JF4nO+WPiYYqTyz8KMvKVTj+ceT147I4SgTPe9zdH9EEnGAPqs4QrkK1j20fbdpOdBGRddxsZkAsVP83P1+zQ6w0Lx3/5CadeYgsKNRTZhC5I3x5b1gSYM6keWnt5y56kmrM0nVESf+U7TFqdnz8DqfyxlIoVqcL72D6MdCU9FzPJE5DguhErLvBSgDyxD45PQ5wTGT84irc8eZ5oiuvOuavDBpvHGE+TTUeIb7GOkY99vlo8eeIRyGx2Gur5p/3X2WCbBZNkdeOIxdOQ68WoRAi2uXyRW6Y8bufMphyyOnBfmdcOMuhs1AlmdjKIciJXOGSAjaNh4GvqlXUY6GUOd8sXV6wkzdKHdJhGzt5h3EHkyqnGClHT1aUV8Xvib87ideCBPGgI2A8kssnibhWUf6JZbjsRQQvEGUrVR8wUtrE0gPzw2Y0kej772jLyBUONacFSBIUyfxlyw1OTknsvlsddlnhUwH336x4m9nDeMxl8RBZLklyPGFgjTG6ukRbLpNmSMj/Y5OEd8XhDEjMPuwiOWf2eRabE5zLXGNlM4uhsYigtKgsIGM1NLxfP4ysKy0HkIyJpznDvlXu1rV1+AbvrSvMvHhODNo+nECYYXHcLLU+73MKUBE6PKXSiuLBoq30tm7m6UV4jQq6Khao9ViDj9Pvdgohg0l/P8P2uf+zwTKVf4P1lCIc2i69835tR0k1o8J25yXsTeAbVGD6u+T64twij3JMZVAEZ+3uMBSxyXba0gyw8idyKrtRchzDbu/3n4+2eUGN8tuf8E0+7KYI7NzJe5IFv8jVd7mmTgyRGdWgDwpLqx3y0ACERth+DZWd9VAAxQmptHiooR1Nc/WM/XF/xPRH0bKqglXSn3WVYM97TUsgzf8X6ri24hR761FJX5xHp+z6cOY2vhbAvIe5xQvtDbI1vTPS2MYBuC6+t6/INj7T5gXM58bfLIuLkzj74OnxFgs4zVZezNf8coEMYfXQb7cASsaLibNfvpnctBr5cS2sJBkGEF+YYJOC0iEH6qnkJiig6Ds8IepWrWTy+VD3eZcHl+agZd6B3G1kfdGlOf5htHzgM9JmjrQp67e65jLqGVNnbQpFiRmHrvy/vDVD05Cpwfffh//Ng/2sn4LcGYqJIuWL3689td/ODxqwlF"
-            }
-          ],
-          "tokenUsage": {
-            "prompt": 403,
-            "completion": 23,
-            "total": 648,
-            "numRequests": 1,
-            "completionDetails": {
-              "reasoning": 222,
-              "acceptedPrediction": 0,
-              "rejectedPrediction": 0
-            }
-          },
-          "cost": 0.0029537500000000006,
-          "raw": {
-            "candidates": [
-              {
-                "content": {
-                  "parts": [
-                    {
-                      "functionCall": {
-                        "name": "list_resource_consumption_per_namespace",
-                        "args": {
-                          "namespace": "test-namespace"
-                        }
-                      },
-                      "thoughtSignature": "CsMHAQw51sfUExqtMXo3fIpS1Znu1+MpS4QJSiM1+VwsXmx26YoO2ifljmevkIibIQqMNiN1Kr9+dczOy+eEbWrqV+iYKIJRZMlAwaTVfnpLsfrgLm+2UVhIKFU/UyGnj1JF4nO+WPiYYqTyz8KMvKVTj+ceT147I4SgTPe9zdH9EEnGAPqs4QrkK1j20fbdpOdBGRddxsZkAsVP83P1+zQ6w0Lx3/5CadeYgsKNRTZhC5I3x5b1gSYM6keWnt5y56kmrM0nVESf+U7TFqdnz8DqfyxlIoVqcL72D6MdCU9FzPJE5DguhErLvBSgDyxD45PQ5wTGT84irc8eZ5oiuvOuavDBpvHGE+TTUeIb7GOkY99vlo8eeIRyGx2Gur5p/3X2WCbBZNkdeOIxdOQ68WoRAi2uXyRW6Y8bufMphyyOnBfmdcOMuhs1AlmdjKIciJXOGSAjaNh4GvqlXUY6GUOd8sXV6wkzdKHdJhGzt5h3EHkyqnGClHT1aUV8Xvib87ideCBPGgI2A8kssnibhWUf6JZbjsRQQvEGUrVR8wUtrE0gPzw2Y0kej772jLyBUONacFSBIUyfxlyw1OTknsvlsddlnhUwH336x4m9nDeMxl8RBZLklyPGFgjTG6ukRbLpNmSMj/Y5OEd8XhDEjMPuwiOWf2eRabE5zLXGNlM4uhsYigtKgsIGM1NLxfP4ysKy0HkIyJpznDvlXu1rV1+AbvrSvMvHhODNo+nECYYXHcLLU+73MKUBE6PKXSiuLBoq30tm7m6UV4jQq6Khao9ViDj9Pvdgohg0l/P8P2uf+zwTKVf4P1lCIc2i69835tR0k1o8J25yXsTeAbVGD6u+T64twij3JMZVAEZ+3uMBSxyXba0gyw8idyKrtRchzDbu/3n4+2eUGN8tuf8E0+7KYI7NzJe5IFv8jVd7mmTgyRGdWgDwpLqx3y0ACERth+DZWd9VAAxQmptHiooR1Nc/WM/XF/xPRH0bKqglXSn3WVYM97TUsgzf8X6ri24hR761FJX5xHp+z6cOY2vhbAvIe5xQvtDbI1vTPS2MYBuC6+t6/INj7T5gXM58bfLIuLkzj74OnxFgs4zVZezNf8coEMYfXQb7cASsaLibNfvpnctBr5cS2sJBkGEF+YYJOC0iEH6qnkJiig6Ds8IepWrWTy+VD3eZcHl+agZd6B3G1kfdGlOf5htHzgM9JmjrQp67e65jLqGVNnbQpFiRmHrvy/vDVD05Cpwfffh//Ng/2sn4LcGYqJIuWL3689td/ODxqwlF"
-                    }
-                  ],
-                  "role": "model"
-                },
-                "finishReason": "STOP",
-                "index": 0,
-                "finishMessage": "Model generated function call(s)."
-              }
-            ],
-            "usageMetadata": {
-              "promptTokenCount": 403,
-              "candidatesTokenCount": 23,
-              "totalTokenCount": 648,
-              "promptTokensDetails": [
-                {
-                  "modality": "TEXT",
-                  "tokenCount": 403
-                }
-              ],
-              "thoughtsTokenCount": 222
-            },
-            "modelVersion": "gemini-2.5-pro",
-            "responseId": "GxPiacHjMI3lxN8P29DpwAo"
-          },
-          "cached": false,
-          "metadata": {}
-        },
-        "score": 1,
-        "success": true,
-        "testCase": {
-          "description": "Get resource consumption for namespace",
-          "vars": {
-            "prompt": "What is the resource consumption in test-namespace?"
-          },
-          "assert": [
-            {
-              "type": "tool-call-f1",
-              "value": [
-                "list_resource_consumption_per_namespace"
-              ]
-            }
-          ],
-          "options": {},
-          "metadata": {}
-        },
-        "testIdx": 1,
-        "vars": {
-          "prompt": "What is the resource consumption in test-namespace?"
-        },
-        "metadata": {
-          "_promptfooFileMetadata": {}
-        },
-        "failureReason": 0
-      },
-      {
-        "cost": 0.00370125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -332,18 +200,18 @@
             }
           ]
         },
-        "id": "13d5c69f-623e-4057-bcee-d635b8e23e43",
-        "latencyMs": 4588,
+        "id": "28a21963-d41b-45d7-9828-b7d335dbee95",
+        "latencyMs": 175,
         "namedScores": {},
         "prompt": {
-          "raw": "List workbenches in test-namespace",
+          "raw": "List the workbenches in namespace test-namespace",
           "label": "{{prompt}}",
           "config": {}
         },
         "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
         "promptIdx": 0,
         "provider": {
-          "id": "google:gemini-2.5-pro",
+          "id": "google:gemini-2.5-flash",
           "label": ""
         },
         "response": {
@@ -354,22 +222,14 @@
                 "args": {
                   "namespace": "test-namespace"
                 }
-              },
-              "thoughtSignature": "CuIJAQw51scswL1z3xWx0sZR1xwRXI3FXBw4ihJU1z0LiAskhTnNBP8kBN46zJCdBrnUCka6i+XiXi053ovKfZmga59jyGCNLthvmPqi4A8oCqMvhBkFbnTr856kpYEX7TwcRcresiyB+Vx1gWIDaAAz8yHc41P8EoHAU+JerBCPEH8pix4hqFOLdsbxfnQ6sop5ZSIkiKCiSCZEUoW7SPFI3THDOH/B/rq+QpbcBuBOJK0WA77Cs6xnkwlfUCib/sMaMZ38McSe/lIy2RmxumY5P9obAojb92cMiaPSErCu0fvc5kkIJBd9IeBLUbXlMFx3tJKPSMv5B7lRbFfHDFzLKZjpZz82CbPkFkAizzUTOnK9T3V8aPO+hpGv5hFGwq+sqLqDRgg5fyD3Ytu0xZam0aYGjgyBgyp3mZcO6DHHb1GFfKLV1Ty+MZP2GnDRmum5tAVu9zHK6RUunNxyQ7qOPHP438dWNKxoE+BlSPQtBJfRsRL5qHjzWu6LBrBP2Qa7ijmH5wijhqgPww0Ae6AcsEjx3QbZkVjV4H5MpNJYpLWXOukogPg6v2OI4IIOfsN1F+n7qNLOutOM5flLSF/bZhT+Zmoo62pEtCI+NmVlQmAPSQQoYkosndOZ8iQnPi0o8WdF+7iF/0nGPhKgBKDiUso0zoCZERW5QBD+86Xs1RfYbwOiEROXdLC3vqceLMPo6o20BeybkeHhQsrm40WXJw29A13QTvq3tOT6ieBE97ciOpM4S519P4ns3pqikjzgTJq5NLwUXcATAGQNNOvk0iDKHKkfnf9AZhYZuhW3dp6PpkiXXd3KQ1COXummBICmkXVRlauLh3mpzzCrdNJN3QryH2rx2c/qd+4VX/PiVBjw2IpFLl2zOBmr747Ip7llyjhh6lk5AxlqA6H33GhxyYsXSZGDbjOhIHUIiIbsxvOQJQzwXVhWJd+Zmt+iPbScG6wy7+VSociBGYF6pIRb7Rpz4Fz50/G/z/zCe+VnVuVqrvBPot7sle5Qews1NmeVTsukpZ+NdHttRZydepmprxvVQBzx9sykhzeguqZlkbpSIcQgJjTDjlp6kYQlLoxqr6b6NVRaY6HqrCLCzANKcbLvLabtI+qmgqR4Nx7ZJQqWBegAy8BQNRL4BG0Mz+w1RH+hHZiqZJlhVfZUswPnCzMVpN9ZnqCk5szqgUnFnRK3yNNhxSAMHtCWG1tLKJzWukhgozwtvvRinjqBAcsqgthGs8lmMNcGGtUIQa1nFObtkTY8sjTyo7XFJHDIk6qsfZNaAvRLEtw4zpxcMSYDjM2NqF8JA1MGN1vNN0gLwUf2BS2btw7XoefBykoIG+QbqWGM2sXzNXK2QXgMk+QeHcoOVEkyLkBx664Brs78zIfUoSwcSHqBXHZl25JsoBrIJsfdv1vxFNMerMvfWRIwlNtDyMzwDGGzRG2jLC/FgSBAUzaBAe3wVc6znSjLhAahuUe4Ahu8J9pMCSlQwmEYe96X4vAE21DTY+IaYpRyd3AaTAK7REPZDv4mQr2HsgvOJ0Zrd6c3E3EFIAaFTKeJ+yPWM61RfJW7uy/3CpTsmIshcyhpig97UWmMVbVCKkjQpJAXmUFi4C6m8axikvq665CEPcDTyGBabCLjIeGi3wAoVUYToFTR//JOGKDNzMwrIbA="
+              }
             }
           ],
           "tokenUsage": {
-            "prompt": 401,
-            "completion": 19,
-            "total": 721,
-            "numRequests": 1,
-            "completionDetails": {
-              "reasoning": 301,
-              "acceptedPrediction": 0,
-              "rejectedPrediction": 0
-            }
+            "cached": 1952,
+            "total": 1952,
+            "numRequests": 0
           },
-          "cost": 0.00370125,
           "raw": {
             "candidates": [
               {
@@ -381,8 +241,7 @@
                         "args": {
                           "namespace": "test-namespace"
                         }
-                      },
-                      "thoughtSignature": "CuIJAQw51scswL1z3xWx0sZR1xwRXI3FXBw4ihJU1z0LiAskhTnNBP8kBN46zJCdBrnUCka6i+XiXi053ovKfZmga59jyGCNLthvmPqi4A8oCqMvhBkFbnTr856kpYEX7TwcRcresiyB+Vx1gWIDaAAz8yHc41P8EoHAU+JerBCPEH8pix4hqFOLdsbxfnQ6sop5ZSIkiKCiSCZEUoW7SPFI3THDOH/B/rq+QpbcBuBOJK0WA77Cs6xnkwlfUCib/sMaMZ38McSe/lIy2RmxumY5P9obAojb92cMiaPSErCu0fvc5kkIJBd9IeBLUbXlMFx3tJKPSMv5B7lRbFfHDFzLKZjpZz82CbPkFkAizzUTOnK9T3V8aPO+hpGv5hFGwq+sqLqDRgg5fyD3Ytu0xZam0aYGjgyBgyp3mZcO6DHHb1GFfKLV1Ty+MZP2GnDRmum5tAVu9zHK6RUunNxyQ7qOPHP438dWNKxoE+BlSPQtBJfRsRL5qHjzWu6LBrBP2Qa7ijmH5wijhqgPww0Ae6AcsEjx3QbZkVjV4H5MpNJYpLWXOukogPg6v2OI4IIOfsN1F+n7qNLOutOM5flLSF/bZhT+Zmoo62pEtCI+NmVlQmAPSQQoYkosndOZ8iQnPi0o8WdF+7iF/0nGPhKgBKDiUso0zoCZERW5QBD+86Xs1RfYbwOiEROXdLC3vqceLMPo6o20BeybkeHhQsrm40WXJw29A13QTvq3tOT6ieBE97ciOpM4S519P4ns3pqikjzgTJq5NLwUXcATAGQNNOvk0iDKHKkfnf9AZhYZuhW3dp6PpkiXXd3KQ1COXummBICmkXVRlauLh3mpzzCrdNJN3QryH2rx2c/qd+4VX/PiVBjw2IpFLl2zOBmr747Ip7llyjhh6lk5AxlqA6H33GhxyYsXSZGDbjOhIHUIiIbsxvOQJQzwXVhWJd+Zmt+iPbScG6wy7+VSociBGYF6pIRb7Rpz4Fz50/G/z/zCe+VnVuVqrvBPot7sle5Qews1NmeVTsukpZ+NdHttRZydepmprxvVQBzx9sykhzeguqZlkbpSIcQgJjTDjlp6kYQlLoxqr6b6NVRaY6HqrCLCzANKcbLvLabtI+qmgqR4Nx7ZJQqWBegAy8BQNRL4BG0Mz+w1RH+hHZiqZJlhVfZUswPnCzMVpN9ZnqCk5szqgUnFnRK3yNNhxSAMHtCWG1tLKJzWukhgozwtvvRinjqBAcsqgthGs8lmMNcGGtUIQa1nFObtkTY8sjTyo7XFJHDIk6qsfZNaAvRLEtw4zpxcMSYDjM2NqF8JA1MGN1vNN0gLwUf2BS2btw7XoefBykoIG+QbqWGM2sXzNXK2QXgMk+QeHcoOVEkyLkBx664Brs78zIfUoSwcSHqBXHZl25JsoBrIJsfdv1vxFNMerMvfWRIwlNtDyMzwDGGzRG2jLC/FgSBAUzaBAe3wVc6znSjLhAahuUe4Ahu8J9pMCSlQwmEYe96X4vAE21DTY+IaYpRyd3AaTAK7REPZDv4mQr2HsgvOJ0Zrd6c3E3EFIAaFTKeJ+yPWM61RfJW7uy/3CpTsmIshcyhpig97UWmMVbVCKkjQpJAXmUFi4C6m8axikvq665CEPcDTyGBabCLjIeGi3wAoVUYToFTR//JOGKDNzMwrIbA="
+                      }
                     }
                   ],
                   "role": "model"
@@ -393,21 +252,21 @@
               }
             ],
             "usageMetadata": {
-              "promptTokenCount": 401,
+              "promptTokenCount": 1933,
               "candidatesTokenCount": 19,
-              "totalTokenCount": 721,
+              "totalTokenCount": 1952,
               "promptTokensDetails": [
                 {
                   "modality": "TEXT",
-                  "tokenCount": 401
+                  "tokenCount": 1933
                 }
               ],
-              "thoughtsTokenCount": 301
+              "serviceTier": "standard"
             },
-            "modelVersion": "gemini-2.5-pro",
-            "responseId": "HBPiafmTGZuqkdUPkeu8-Qs"
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Uuz9afONJc2rnsEPvr-uGQ"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -415,7 +274,131 @@
         "testCase": {
           "description": "List workbenches in specific namespace",
           "vars": {
-            "prompt": "List workbenches in test-namespace"
+            "prompt": "List the workbenches in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_workbenches"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "prompt": "List the workbenches in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_workbenches], Called: [list_workbenches]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_workbenches"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "62944977-6ae4-4717-ab18-b79066856028",
+        "latencyMs": 175,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show me all workbenches in the my-project namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_workbenches",
+                "args": {
+                  "namespace": "my-project"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "cached": 1954,
+            "total": 1954,
+            "numRequests": 0
+          },
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_workbenches",
+                        "args": {
+                          "namespace": "my-project"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1935,
+              "candidatesTokenCount": 19,
+              "totalTokenCount": 1954,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1935
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Uuz9acvHI_3rvdIPgdDHkQE"
+          },
+          "cached": true,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show workbenches in project",
+          "vars": {
+            "prompt": "Show me all workbenches in the my-project namespace"
           },
           "assert": [
             {
@@ -430,7 +413,7 @@
         },
         "testIdx": 2,
         "vars": {
-          "prompt": "List workbenches in test-namespace"
+          "prompt": "Show me all workbenches in the my-project namespace"
         },
         "metadata": {
           "_promptfooFileMetadata": {}
@@ -438,7 +421,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00268,
+        "cost": 0.0010509,
         "error": "Tool Call F1 score 0.000 is below threshold 1. Expected: [create_workbench], Called: [(none)]. Precision=0.000, Recall=0.000",
         "gradingResult": {
           "pass": false,
@@ -466,42 +449,42 @@
             }
           ]
         },
-        "id": "46c2c563-80fe-4364-9485-529c29515928",
-        "latencyMs": 4587,
+        "id": "95dbde29-b5f0-48b0-babd-1a703e5ae64c",
+        "latencyMs": 2070,
         "namedScores": {},
         "prompt": {
-          "raw": "Create a workbench named my-notebook in namespace test-namespace using Jupyter image",
+          "raw": "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2",
           "label": "{{prompt}}",
           "config": {}
         },
         "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
         "promptIdx": 0,
         "provider": {
-          "id": "google:gemini-2.5-pro",
+          "id": "google:gemini-2.5-flash",
           "label": ""
         },
         "response": {
-          "output": "I am sorry, I cannot create a workbench. I can only list the following resources: workbenches, hardware profiles, images, and PVCs. I can also list resource consumption per cluster, namespace, user, or workbench.",
+          "output": "I can help with that, but I need some more information. Please provide the following:\n- Hardware profile for the workbench (e.g., name, and resources like CPU, memory, and GPU with their default, max, and min counts).\n- PVC (Persistent Volume Claim) name.",
           "tokenUsage": {
-            "prompt": 408,
-            "completion": 47,
-            "total": 625,
+            "prompt": 1953,
+            "completion": 61,
+            "total": 2139,
             "numRequests": 1,
             "completionDetails": {
-              "reasoning": 170,
+              "reasoning": 125,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00268,
+          "cost": 0.0010509,
           "raw": {
             "candidates": [
               {
                 "content": {
                   "parts": [
                     {
-                      "text": "I am sorry, I cannot create a workbench. I can only list the following resources: workbenches, hardware profiles, images, and PVCs. I can also list resource consumption per cluster, namespace, user, or workbench.",
-                      "thoughtSignature": "CukFAQw51sd2bUrDO3w8nfD0rvvgPgViTsAvXpz+U6MNIiD8YN5swSTjeYvZeOiz6XCcuKXEt5DhgLp5nzwAf38WOurBVT3zkWY9L7lrgFFFGd/S6rhTsxhjPwhAz7lIrACm4PIWbsoVoD6/6MwEKOqDX5xl2YRa7AVKbTCr30+D4eemkd9nVDDmqF/1zf8xC70XpzBRuKUZKHbXar3D971t/JlxlLYFlY1e0V1eEKmnn92jVUWJVNCkdzxFB7ExPtpIaKUkZ1descKI/g3riGGNOsuX37ElEfKpHir+1AdjkL4VDW22Qx634aMiFQWNUogI3LnWFQZqtksm38pn1Ie4J2k7+k+0yx5uZwH3dIKPMRVvvTO1u8xKp9zLTY6PMdFhPrFHZV6yWyWaQMPMBGGN4M75ejKCfqrDVQM86OJyV3jwokP411f4C6vVo8nGiQWMsssmCBpowsXg9+zCmWdlcHB2LuQbsafx/WCj9UUGnupIhPcp8fIdOhHutn6t1IaFinpejTq5q/1Nuf3haaBwumrEs6kdc6p28drcSKbEpr+giAnxCgHtI7Xzz3zq7MEjKhccPTB1lvrud21AaRM7ErrZ8wl+vRCQZQuVyhLRWogm4zyoKVrXlyGJeMu0oY/E/7Fzjd9I5ddxprjGNyAK+EkucJlyU74+/iYm6hqjsEmISfaWj+eh67bV8Fv8hdXeSe8wYt/inkX4pZdJSnT6I4LPPPwVqw8bNE7cghpt9XtE5DoKYXuTobFHZ7QMGDAOiTYeUqhzbZ5aOpDz3awwOKODTEnRnbfHmSvDRbOaEpI8ul5oySKYAQsz2uq9HsUadp0NXlv8ZqCPbTXMxBQSvGo/juMf7Sl9fzqDWW8CqxWzu/DrQ4y32T+/MKE1rWDzBBI98vEssJxHjBewUrdX0J4cmPwo24h8TirjCfocnb9Z+su17W9fon3Y6mPvFMSczGwCmbD9SQ4EEA1S3BoARizMGXUblUeipQ=="
+                      "text": "I can help with that, but I need some more information. Please provide the following:\n- Hardware profile for the workbench (e.g., name, and resources like CPU, memory, and GPU with their default, max, and min counts).\n- PVC (Persistent Volume Claim) name.",
+                      "thoughtSignature": "CtgDAQw51sdc9YEzrdoMTxKeBiYhAgsndnofzfLWuAB34PW6Z+VU06912cX//KIJ6fxFq3sX3doqFShd/6aawNjPfdTJ7mFuQMkFmucu1ZYMF0QqLQzOvQ4D5PWNXEpOzRP+N7AdQIaz/cSUBuybzZH3ROvgeIw9DFh8IgzqcuF6IVOTrsgEjBcKkxXWp4Yi0/qJT+UNTGV6YKCd2mbsoc3mRdQtFD+Y0j9t+G/MzW5C9uRwLE7YvvnTBX1bRz97CVQTPFrT7M0kamrqZZcsjst8rgRKUY5zwMENP3t71B5SRbB8Zl9HqrLQEAUu8no0vIRVkDgAmkLAj8++exQqYsiqTVpGeN38sGiae6dJmtN2YNOj+UQY7y6sf2cmr4gZCzudMXiUFXcmcyt6CEMkvzocf15h9gxHWEJCS9PHIvOgO+O6qhDbacXZiTUYM671JyPkwiYtgelIlxPj2p59BqIXV3AvnCkk9FBrl6p4uNO77cElD26xiGRf4bzDqrzB5H3FsaZV7XWgUEk4mOR7PiHwZf2aEpv16KMsRzsd323TV3OMS16pLKFf9JVf8FEMmc82chgvNhTIZidq+OkL7AU8LE6kOjp5UN0xQWXFDrQWwPMztuRUruvpPQ=="
                     }
                   ],
                   "role": "model"
@@ -511,19 +494,20 @@
               }
             ],
             "usageMetadata": {
-              "promptTokenCount": 408,
-              "candidatesTokenCount": 47,
-              "totalTokenCount": 625,
+              "promptTokenCount": 1953,
+              "candidatesTokenCount": 61,
+              "totalTokenCount": 2139,
               "promptTokensDetails": [
                 {
                   "modality": "TEXT",
-                  "tokenCount": 408
+                  "tokenCount": 1953
                 }
               ],
-              "thoughtsTokenCount": 170
+              "thoughtsTokenCount": 125,
+              "serviceTier": "standard"
             },
-            "modelVersion": "gemini-2.5-pro",
-            "responseId": "HBPiad6NE8_S28oP_ZrKUA"
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "LO39aZT5G_K9kdUPmsTzmAE"
           },
           "cached": false,
           "metadata": {}
@@ -533,7 +517,7 @@
         "testCase": {
           "description": "Create a new workbench",
           "vars": {
-            "prompt": "Create a workbench named my-notebook in namespace test-namespace using Jupyter image"
+            "prompt": "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2"
           },
           "assert": [
             {
@@ -548,26 +532,3552 @@
         },
         "testIdx": 3,
         "vars": {
-          "prompt": "Create a workbench named my-notebook in namespace test-namespace using Jupyter image"
+          "prompt": "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2"
         },
         "metadata": {
           "_promptfooFileMetadata": {}
         },
         "failureReason": 1
+      },
+      {
+        "cost": 0.0018272000000000002,
+        "error": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_workbench], Called: [(none)]. Precision=0.000, Recall=0.000",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_workbench], Called: [(none)]. Precision=0.000, Recall=0.000",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_workbench], Called: [(none)]. Precision=0.000, Recall=0.000",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "update_workbench"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "db3db788-b177-4d63-b140-4d1961bf1be1",
+        "latencyMs": 2959,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": "I need to know the hardware profile and PVC name to update the workbench. Can you please provide them?",
+          "tokenUsage": {
+            "prompt": 1949,
+            "completion": 21,
+            "total": 2446,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 476,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0018272000000000002,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "text": "I need to know the hardware profile and PVC name to update the workbench. Can you please provide them?",
+                      "thoughtSignature": "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"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1949,
+              "candidatesTokenCount": 21,
+              "totalTokenCount": 2446,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1949
+                }
+              ],
+              "thoughtsTokenCount": 476,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "LO39adbMG4b7nsEPmZjT6QI"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "Update workbench image",
+          "vars": {
+            "prompt": "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "update_workbench"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 4,
+        "vars": {
+          "prompt": "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0.0008049,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [delete_workbench], Called: [delete_workbench]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "delete_workbench"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "d7c4be2e-ffe7-4051-8f7f-23aa656e4860",
+        "latencyMs": 991,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Delete workbench old-notebook in namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "delete_workbench",
+                "args": {
+                  "workbenchName": "old-notebook",
+                  "namespace": "test-namespace"
+                }
+              },
+              "thoughtSignature": "Cq8CAQw51sd5EsK4YOHmB4BakwCEgIPo1b8PzYp82BQL5nffxHVGql/xBRctFMVHdffIy744/lmS8nkZijRzQCB9fffxq47B7OxRhCeUgbKkIAcdQBTSNSu54KLkjBkAzF3UJF6u5Z2GjaGXYdcBBVDNB8S0D6daFs8z7mIryXOvlwE881eG7CLvUrMzFB/XlZKy6Xhf9jOpXqLms2TIk8JX0DXdctMhamJJ4AR+xjjsgbqNPqJJJ0xxL5Pzf8VLYustdRrfgaFof/9OPOexeqSZP19zeDhwEfSv1DTn9gLmj7KKrwslNdzFjpEBMvuuWomHLLN5lEbZTubvBOfjCvWpRtYpj2mvTDp5LvESoDGXAbogbHbG7vDPuWj9bv93RpbMUXueniIvIbhKUENL9MKd"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1933,
+            "completion": 25,
+            "total": 2023,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 65,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0008049,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "delete_workbench",
+                        "args": {
+                          "workbenchName": "old-notebook",
+                          "namespace": "test-namespace"
+                        }
+                      },
+                      "thoughtSignature": "Cq8CAQw51sd5EsK4YOHmB4BakwCEgIPo1b8PzYp82BQL5nffxHVGql/xBRctFMVHdffIy744/lmS8nkZijRzQCB9fffxq47B7OxRhCeUgbKkIAcdQBTSNSu54KLkjBkAzF3UJF6u5Z2GjaGXYdcBBVDNB8S0D6daFs8z7mIryXOvlwE881eG7CLvUrMzFB/XlZKy6Xhf9jOpXqLms2TIk8JX0DXdctMhamJJ4AR+xjjsgbqNPqJJJ0xxL5Pzf8VLYustdRrfgaFof/9OPOexeqSZP19zeDhwEfSv1DTn9gLmj7KKrwslNdzFjpEBMvuuWomHLLN5lEbZTubvBOfjCvWpRtYpj2mvTDp5LvESoDGXAbogbHbG7vDPuWj9bv93RpbMUXueniIvIbhKUENL9MKd"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1933,
+              "candidatesTokenCount": 25,
+              "totalTokenCount": 2023,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1933
+                }
+              ],
+              "thoughtsTokenCount": 65,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "LO39acCgG4n5vdIPxbWgwQM"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Delete a workbench",
+          "vars": {
+            "prompt": "Delete workbench old-notebook in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "delete_workbench"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 5,
+        "vars": {
+          "prompt": "Delete workbench old-notebook in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0016908000000000001,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [change_workbench_status], Called: [change_workbench_status]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "change_workbench_status"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "0a28a729-1aad-4125-8a3f-60b0fa5365ac",
+        "latencyMs": 2796,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Change workbench my-notebook in namespace test-namespace to status stopped",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "change_workbench_status",
+                "args": {
+                  "status": 0,
+                  "workbenchName": "my-notebook",
+                  "namespace": "test-namespace"
+                }
+              },
+              "thoughtSignature": "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"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1936,
+            "completion": 32,
+            "total": 2380,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 412,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0016908000000000001,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "change_workbench_status",
+                        "args": {
+                          "status": 0,
+                          "workbenchName": "my-notebook",
+                          "namespace": "test-namespace"
+                        }
+                      },
+                      "thoughtSignature": "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"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1936,
+              "candidatesTokenCount": 32,
+              "totalTokenCount": 2380,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1936
+                }
+              ],
+              "thoughtsTokenCount": 412,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Le39aeKTF8XOvdIP54nEsQM"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Stop a workbench",
+          "vars": {
+            "prompt": "Change workbench my-notebook in namespace test-namespace to status stopped"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "change_workbench_status"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 6,
+        "vars": {
+          "prompt": "Change workbench my-notebook in namespace test-namespace to status stopped"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0009883000000000001,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [change_workbench_status], Called: [change_workbench_status]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "change_workbench_status"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "d8a5f157-f6ef-417a-ab0f-64f335b1a098",
+        "latencyMs": 1411,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Change workbench my-notebook in namespace test-namespace to status running",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "change_workbench_status",
+                "args": {
+                  "namespace": "test-namespace",
+                  "status": 1,
+                  "workbenchName": "my-notebook"
+                }
+              },
+              "thoughtSignature": "CsMEAQw51sf6OlwuKeYZftEoKklqIvp3PhCbM0lZWaWgtgDRSDI3OefFNyLWk1uyz2+j4EsUH110bL6A9GoRofNVGaWu33YSQnr3pOdB0y+ELd20GDiRpGeqczIuDMNyRV5g4r7Epo0ZM59+Gkvd4+2CWIutdKjLx88pRfW5rKnfdG31TTca8F6WqpRIQTQDh5zW12NxFOinORkwHFSJJQNBDi0Ax1y6PdAceNAFrKGRXfosXsrSJBlJI3pc5R+Mzu9Bp4rx+CeJkomseh55z18cc77HCTnnRJokljr8xlEllfGC82lze31GDE8qgDa2xZhmUPbyLl2ysrk+A28GwoWa++dNEPXsrCYiYsMvqeYlxfHieOx2F4tobqmeK8hzqi6OyRsY2cVJdscijwe0tqz0ho/gCVwSne0yKLPvOrJASYH82LuPa6W+fToiAholn/yMQazQjn3ZrH0QQINs4srFR1ubYJqByMAoRM/aLOqhsk8GDb1M6118ZSDyREAxI1v1GM8aEvHywtYFQnFa8Na8TLpGe02J+6zgzYYxtc2DCfDiKpBojbxLFShymo7iaXhzBvhlF4S1I7a2llayF2/1I+wjtAU/lCMMcZFJ/a3nNF5e85zcG61jM9MGKHwAfK1dopsMWdzhR7QUN9HITS+wb8YBXNIJWY1AUeZ+XjiG8s0Ps2xn+jpHqofHVRjOXxgPOnAFh3BpGJKimXxx3rAaTbc2Y2k1fxHaq/VK7wcSd6PidhtzD12fdqI52v8o/qSqjnFM"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1936,
+            "completion": 32,
+            "total": 2099,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 131,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0009883000000000001,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "change_workbench_status",
+                        "args": {
+                          "namespace": "test-namespace",
+                          "status": 1,
+                          "workbenchName": "my-notebook"
+                        }
+                      },
+                      "thoughtSignature": "CsMEAQw51sf6OlwuKeYZftEoKklqIvp3PhCbM0lZWaWgtgDRSDI3OefFNyLWk1uyz2+j4EsUH110bL6A9GoRofNVGaWu33YSQnr3pOdB0y+ELd20GDiRpGeqczIuDMNyRV5g4r7Epo0ZM59+Gkvd4+2CWIutdKjLx88pRfW5rKnfdG31TTca8F6WqpRIQTQDh5zW12NxFOinORkwHFSJJQNBDi0Ax1y6PdAceNAFrKGRXfosXsrSJBlJI3pc5R+Mzu9Bp4rx+CeJkomseh55z18cc77HCTnnRJokljr8xlEllfGC82lze31GDE8qgDa2xZhmUPbyLl2ysrk+A28GwoWa++dNEPXsrCYiYsMvqeYlxfHieOx2F4tobqmeK8hzqi6OyRsY2cVJdscijwe0tqz0ho/gCVwSne0yKLPvOrJASYH82LuPa6W+fToiAholn/yMQazQjn3ZrH0QQINs4srFR1ubYJqByMAoRM/aLOqhsk8GDb1M6118ZSDyREAxI1v1GM8aEvHywtYFQnFa8Na8TLpGe02J+6zgzYYxtc2DCfDiKpBojbxLFShymo7iaXhzBvhlF4S1I7a2llayF2/1I+wjtAU/lCMMcZFJ/a3nNF5e85zcG61jM9MGKHwAfK1dopsMWdzhR7QUN9HITS+wb8YBXNIJWY1AUeZ+XjiG8s0Ps2xn+jpHqofHVRjOXxgPOnAFh3BpGJKimXxx3rAaTbc2Y2k1fxHaq/VK7wcSd6PidhtzD12fdqI52v8o/qSqjnFM"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1936,
+              "candidatesTokenCount": 32,
+              "totalTokenCount": 2099,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1936
+                }
+              ],
+              "thoughtsTokenCount": 131,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Lu39aYeqD6KH7M8P1qSryA4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Start a workbench",
+          "vars": {
+            "prompt": "Change workbench my-notebook in namespace test-namespace to status running"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "change_workbench_status"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 7,
+        "vars": {
+          "prompt": "Change workbench my-notebook in namespace test-namespace to status running"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006027999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_namespaces], Called: [list_namespaces]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_namespaces"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "fbe8465e-a23f-4a38-a296-36e3c96466c4",
+        "latencyMs": 882,
+        "namedScores": {},
+        "prompt": {
+          "raw": "List all namespaces",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_namespaces",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1926,
+            "completion": 10,
+            "total": 1936,
+            "numRequests": 1
+          },
+          "cost": 0.0006027999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_namespaces",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1926,
+              "candidatesTokenCount": 10,
+              "totalTokenCount": 1936,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1926
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Lu39afyhOuminsEPxNCi0AY"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "List all namespaces",
+          "vars": {
+            "prompt": "List all namespaces"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_namespaces"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 8,
+        "vars": {
+          "prompt": "List all namespaces"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006033999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_namespaces], Called: [list_namespaces]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_namespaces"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "dab0fe34-eaf7-47e8-a297-d0b6dfbf8649",
+        "latencyMs": 663,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show me the available namespaces",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_namespaces",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1928,
+            "completion": 10,
+            "total": 1938,
+            "numRequests": 1
+          },
+          "cost": 0.0006033999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_namespaces",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1928,
+              "candidatesTokenCount": 10,
+              "totalTokenCount": 1938,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1928
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "L-39ab-_FYO5kdUPyJGN4Qw"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show available projects",
+          "vars": {
+            "prompt": "Show me the available namespaces"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_namespaces"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 9,
+        "vars": {
+          "prompt": "Show me the available namespaces"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006215,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_pods], Called: [list_pods]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_pods"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "fca1e2df-334c-4dc2-8e50-b43ca03d373b",
+        "latencyMs": 634,
+        "namedScores": {},
+        "prompt": {
+          "raw": "List pods in namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_pods",
+                "args": {
+                  "namespace": "test-namespace"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1930,
+            "completion": 17,
+            "total": 1947,
+            "numRequests": 1
+          },
+          "cost": 0.0006215,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_pods",
+                        "args": {
+                          "namespace": "test-namespace"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1930,
+              "candidatesTokenCount": 17,
+              "totalTokenCount": 1947,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1930
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "L-39aZmXKMyinsEPpcjb2QQ"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "List pods in namespace",
+          "vars": {
+            "prompt": "List pods in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_pods"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 10,
+        "vars": {
+          "prompt": "List pods in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006215,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_pods], Called: [list_pods]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_pods"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "2aba177e-ef26-48b0-ab99-09d48e46e002",
+        "latencyMs": 1173,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show pods in namespace my-project",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_pods",
+                "args": {
+                  "namespace": "my-project"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1930,
+            "completion": 17,
+            "total": 1947,
+            "numRequests": 1
+          },
+          "cost": 0.0006215,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_pods",
+                        "args": {
+                          "namespace": "my-project"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1930,
+              "candidatesTokenCount": 17,
+              "totalTokenCount": 1947,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1930
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "L-39aaPKNI7ynsEPhsiQiAw"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show running pods",
+          "vars": {
+            "prompt": "Show pods in namespace my-project"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_pods"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 11,
+        "vars": {
+          "prompt": "Show pods in namespace my-project"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006031,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_images], Called: [list_images]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_images"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "c7504848-9e16-43eb-a541-6acbda705a9f",
+        "latencyMs": 607,
+        "namedScores": {},
+        "prompt": {
+          "raw": "List all notebook images",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_images",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1927,
+            "completion": 10,
+            "total": 1937,
+            "numRequests": 1
+          },
+          "cost": 0.0006031,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_images",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1927,
+              "candidatesTokenCount": 10,
+              "totalTokenCount": 1937,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1927
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "MO39afmXAZeB3boP7N2YiAg"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "List available images",
+          "vars": {
+            "prompt": "List all notebook images"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_images"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 12,
+        "vars": {
+          "prompt": "List all notebook images"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006033999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_images], Called: [list_images]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_images"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "ae6eb0d8-5bf4-4d82-9412-9e53dfe4d1ca",
+        "latencyMs": 827,
+        "namedScores": {},
+        "prompt": {
+          "raw": "What images are available?",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_images",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1928,
+            "completion": 10,
+            "total": 1938,
+            "numRequests": 1
+          },
+          "cost": 0.0006033999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_images",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1928,
+              "candidatesTokenCount": 10,
+              "totalTokenCount": 1938,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1928
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "MO39aa_DC8-oxN8PyY6L0QQ"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show notebook images",
+          "vars": {
+            "prompt": "What images are available?"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_images"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 13,
+        "vars": {
+          "prompt": "What images are available?"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006992999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [create_custom_image], Called: [create_custom_image]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "create_custom_image"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "803d2f6d-bd4e-4d3b-8771-606154939d60",
+        "latencyMs": 1115,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "create_custom_image",
+                "args": {
+                  "imageName": "my-custom-image",
+                  "imageDescription": "Custom ML image",
+                  "imageLocation": "docker.io/myrepo/myimage:latest"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1956,
+            "completion": 45,
+            "total": 2001,
+            "numRequests": 1
+          },
+          "cost": 0.0006992999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "create_custom_image",
+                        "args": {
+                          "imageName": "my-custom-image",
+                          "imageDescription": "Custom ML image",
+                          "imageLocation": "docker.io/myrepo/myimage:latest"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1956,
+              "candidatesTokenCount": 45,
+              "totalTokenCount": 2001,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1956
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "MO39aZLLEtSCkdUP5sqY6A4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Create custom image",
+          "vars": {
+            "prompt": "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "create_custom_image"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 14,
+        "vars": {
+          "prompt": "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.000932,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [update_image], Called: [update_image]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "update_image"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "a67c0bb1-d723-437b-bdc7-f1d40589d910",
+        "latencyMs": 1183,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Update image my-custom-image with new description 'Updated ML image for production'",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "update_image",
+                "args": {
+                  "imageName": "my-custom-image",
+                  "imageDescription": "Updated ML image for production"
+                }
+              },
+              "thoughtSignature": "CvoDAQw51sfLALEDP4Gfz+kwFmA7CIA9mIlOy7Xb7uEO+mH8wj1NfeTAeaWe1qcVfis26GRQ0fQPiiG5FsRu6bkepGkgcCiXEUOB0jn4Wydgh8xIbXt0O4U9tBavtjHtbBeiMkhwmmGq/G7DNzRuCbOFcJogupM6VpSwiv6KYBN7lrKqKnPD7L8FbYBA0QAPusWUPIAHcrLVElgry61smbnioQFYrRCcKY9hXEF+FdI5ymD7unE/5uEkTUP/aHIPAwFanieJrmGu292gqnXC9JMyfuoAI95PfU2R44SkaIM/b/GbChwPZ6WzZEaLJL7g/6vzWq6y+sVSlOdLCWxcwtQFC+S3/8FynfJRl+JrU0EsvEJ5RCcQF0xMAGj+yHSDur6OKvRciOnWaCT+322YjTX5wwqijbiWa0Lrw+4VOpbBa+kqjqEtLDMw5Q3/BC/xiYLV7sfjuMFBP/4n5Tiow788bMkYOP7ZuJfoUVbaQia0XUy9DRdtmOxZZ7dVTuS8CpI5Klh/5etGh+Q0uYrBzwFdD21uTFSocNzdc3+Oxx9otFASk+sBQbOMRJ5DaFyuTshY402+d1dODD7/PpNbLbahYZo1+dbFvyp4r2d+XgMFQeWJGNyF07BS47WEdXUACM4bEFTIJstZEPaG1hDoZeNkWG2VRGv9kmUS/4s="
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1940,
+            "completion": 29,
+            "total": 2080,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 111,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.000932,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "update_image",
+                        "args": {
+                          "imageName": "my-custom-image",
+                          "imageDescription": "Updated ML image for production"
+                        }
+                      },
+                      "thoughtSignature": "CvoDAQw51sfLALEDP4Gfz+kwFmA7CIA9mIlOy7Xb7uEO+mH8wj1NfeTAeaWe1qcVfis26GRQ0fQPiiG5FsRu6bkepGkgcCiXEUOB0jn4Wydgh8xIbXt0O4U9tBavtjHtbBeiMkhwmmGq/G7DNzRuCbOFcJogupM6VpSwiv6KYBN7lrKqKnPD7L8FbYBA0QAPusWUPIAHcrLVElgry61smbnioQFYrRCcKY9hXEF+FdI5ymD7unE/5uEkTUP/aHIPAwFanieJrmGu292gqnXC9JMyfuoAI95PfU2R44SkaIM/b/GbChwPZ6WzZEaLJL7g/6vzWq6y+sVSlOdLCWxcwtQFC+S3/8FynfJRl+JrU0EsvEJ5RCcQF0xMAGj+yHSDur6OKvRciOnWaCT+322YjTX5wwqijbiWa0Lrw+4VOpbBa+kqjqEtLDMw5Q3/BC/xiYLV7sfjuMFBP/4n5Tiow788bMkYOP7ZuJfoUVbaQia0XUy9DRdtmOxZZ7dVTuS8CpI5Klh/5etGh+Q0uYrBzwFdD21uTFSocNzdc3+Oxx9otFASk+sBQbOMRJ5DaFyuTshY402+d1dODD7/PpNbLbahYZo1+dbFvyp4r2d+XgMFQeWJGNyF07BS47WEdXUACM4bEFTIJstZEPaG1hDoZeNkWG2VRGv9kmUS/4s="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1940,
+              "candidatesTokenCount": 29,
+              "totalTokenCount": 2080,
+              "cachedContentTokenCount": 1683,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1940
+                }
+              ],
+              "cacheTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1683
+                }
+              ],
+              "thoughtsTokenCount": 111,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "MO39adiQJ4HPnsEPr4a68Q4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Update image",
+          "vars": {
+            "prompt": "Update image my-custom-image with new description 'Updated ML image for production'"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "update_image"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 15,
+        "vars": {
+          "prompt": "Update image my-custom-image with new description 'Updated ML image for production'"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0009034,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [delete_image], Called: [delete_image]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "delete_image"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "dbf84272-f99b-48cb-a285-6fc010a11cc1",
+        "latencyMs": 1395,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Delete image old-image",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "delete_image",
+                "args": {
+                  "imageName": "old-image"
+                }
+              },
+              "thoughtSignature": "CsADAQw51se9UTzOAeEy/7omXQ3+B7HBX0oCHXHbd4YSYFbsSaqF8020p/pxQms/Fy6PrL7TbXIgaJ4MhPhXwleiVepNGCxvI/TElMRmuX8y/3E+ubpYgrkS6nlvSPLDLYNpToAypLo1p/Rlnilw+GZK3LDLpJ6md2Hs82EJ6IS6qw4Dn/r4o06QPSennw/Aub/E6sfQBGdLt5OCpK/N7MWUQy7PXFMjbVOWZonQ2qcSKYsTdREz4jS+cv2kz4Zicxd0zR4Ev2fWzGfY8ZjGlYB67REuS3EWKrMfhc76hKWKXYw91Sx7MLRuMSXiVkbje8vV1TKb8Mo7UE+GLagbOogNhd8rtyP8BZqQAYJixQ4M6z1riECl/zYhLhe9P6/X6Djhr/D1dm36nYC5H73t1307tNIotlSVgqbI0iWzftarPp+1+3T5rRWVO4jgkHiGxu/YToHaNKjOI2NidDRMsH6gqrVskrRjJIT+vogzAlJM0D7ybnmbNOY9Gxki0j++FziYUX1rf8M/83NNmKTRzCavhVhOjYbXCbNagk4upROIbk1oUr8kr3/tL3LhlxL/LLBUKCIhVB504yKSnPgiTtaNAQ=="
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1928,
+            "completion": 18,
+            "total": 2058,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 112,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0009034,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "delete_image",
+                        "args": {
+                          "imageName": "old-image"
+                        }
+                      },
+                      "thoughtSignature": "CsADAQw51se9UTzOAeEy/7omXQ3+B7HBX0oCHXHbd4YSYFbsSaqF8020p/pxQms/Fy6PrL7TbXIgaJ4MhPhXwleiVepNGCxvI/TElMRmuX8y/3E+ubpYgrkS6nlvSPLDLYNpToAypLo1p/Rlnilw+GZK3LDLpJ6md2Hs82EJ6IS6qw4Dn/r4o06QPSennw/Aub/E6sfQBGdLt5OCpK/N7MWUQy7PXFMjbVOWZonQ2qcSKYsTdREz4jS+cv2kz4Zicxd0zR4Ev2fWzGfY8ZjGlYB67REuS3EWKrMfhc76hKWKXYw91Sx7MLRuMSXiVkbje8vV1TKb8Mo7UE+GLagbOogNhd8rtyP8BZqQAYJixQ4M6z1riECl/zYhLhe9P6/X6Djhr/D1dm36nYC5H73t1307tNIotlSVgqbI0iWzftarPp+1+3T5rRWVO4jgkHiGxu/YToHaNKjOI2NidDRMsH6gqrVskrRjJIT+vogzAlJM0D7ybnmbNOY9Gxki0j++FziYUX1rf8M/83NNmKTRzCavhVhOjYbXCbNagk4upROIbk1oUr8kr3/tL3LhlxL/LLBUKCIhVB504yKSnPgiTtaNAQ=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1928,
+              "candidatesTokenCount": 18,
+              "totalTokenCount": 2058,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1928
+                }
+              ],
+              "thoughtsTokenCount": 112,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Me39ad6hAtKqnsEPvI22mQ8"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Delete image",
+          "vars": {
+            "prompt": "Delete image old-image"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "delete_image"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 16,
+        "vars": {
+          "prompt": "Delete image old-image"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006087,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_hardware_profiles], Called: [list_hardware_profiles]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_hardware_profiles"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "89db1165-702e-44ca-bd29-7be8afe76149",
+        "latencyMs": 567,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show me the available hardware profiles",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_hardware_profiles",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1929,
+            "completion": 12,
+            "total": 1941,
+            "numRequests": 1
+          },
+          "cost": 0.0006087,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_hardware_profiles",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1929,
+              "candidatesTokenCount": 12,
+              "totalTokenCount": 1941,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1929
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Me39aYfjAdnbxs0PirmJ6AE"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "List hardware profiles",
+          "vars": {
+            "prompt": "Show me the available hardware profiles"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_hardware_profiles"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 17,
+        "vars": {
+          "prompt": "Show me the available hardware profiles"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_hardware_profiles], Called: [list_hardware_profiles]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_hardware_profiles"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "7c52c6c0-8452-4ca3-b1a6-5b2e9c80d036",
+        "latencyMs": 4,
+        "namedScores": {},
+        "prompt": {
+          "raw": "What hardware profiles can I choose from?",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_hardware_profiles",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "cached": 1943,
+            "total": 1943,
+            "numRequests": 0
+          },
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_hardware_profiles",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1931,
+              "candidatesTokenCount": 12,
+              "totalTokenCount": 1943,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1931
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Wuz9aaGfFdj-xN8PvuKc8Ac"
+          },
+          "cached": true,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show hardware configurations",
+          "vars": {
+            "prompt": "What hardware profiles can I choose from?"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_hardware_profiles"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 18,
+        "vars": {
+          "prompt": "What hardware profiles can I choose from?"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0013541999999999998,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [create_hardware_profile], Called: [create_hardware_profile]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "create_hardware_profile"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "47e26182-d116-4f76-b3f2-9e690de7da0b",
+        "latencyMs": 1837,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "create_hardware_profile",
+                "args": {
+                  "hardwareProfileName": "gpu-large",
+                  "resources": [
+                    {
+                      "resourceType": "cpu",
+                      "defaultCount": "4",
+                      "minCount": "1",
+                      "maxCount": "8",
+                      "resourceIdentifier": "cpu",
+                      "resourceName": "CPU"
+                    },
+                    {
+                      "maxCount": "32Gi",
+                      "resourceIdentifier": "memory",
+                      "resourceName": "Memory",
+                      "minCount": "4Gi",
+                      "defaultCount": "16Gi",
+                      "resourceType": "memory"
+                    }
+                  ]
+                }
+              },
+              "thoughtSignature": "CoAFAQw51scIadQvGZ4TcIEdkKXJ/LpEbOl1wpxx69sOSJjLc0w1mkzqfgfL6B4JgropDp64eqgT5m+6F/IwDLjk80i5dTjnpMhh/+l8ekM3xM+r4VqLyDBzw7br6e5h1icMB/NK6l1JCTOC/yaw0BVa215eAbBYRj9tLrgafa6y6fGKMOYqCvmoyi+dE/jhyObP2gXTVFmeyX4ApAvX2EG1rfDBS2GQMA2PB/XWtIirl5tgUOXVgAHjoL8CMVYgS2q6KXP19KSL7kst/CMjxT3qeNCTEWdBUM21r97dQ6BYrZkHnZmUY6KOa2hXWKqeSNnj/3upzLv5Q9cHEEccaiT9ssFAsrklfRKMZ/3Hy2NegAg4dF2jTFzBWG0qocaVU1NFEMAKNf+7Bzd7GWvcmtpxzqjNPOnLC9blHZEEcf2swhuj4xZdDt2uN1rju33Av5NxHHjuZOZT1KMAtJMFDufZ6y4uTE8CQgzSn91hnOOq9UQvKefOYj2zdIx9uOK+rm0ZT4I2VVN+7WVX17aatopU3XJw23eRt/r4pkFhnBq98lr1CuUY55S5xfUjoZV2+3uSApf9BEiQAuw6ney7jAKA2WPMC1GcSk3eHHQMK+zhbBKFjPc1I2wE4inn3zAzWs1juECoIkTstYXumRXS25tN+b49XywdKNVbUAya1S1vs7m/smLHh7FWILTiwu5eYzBqkFruMO+/fjf4l2eshOY5IH3Xe9xtDbQIfqaLdJ3ni0UvTC9DBCd3bV63Jz760T6dzkvRKdDXcQmrtgbhhBaxZJoUmB3Z+Ccf9dZHoL3+7MRM3YGGKRWTX33Q7WgkbqSgQz9/7x86Th98RmR0pZv0ng=="
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1989,
+            "completion": 113,
+            "total": 2292,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 190,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0013541999999999998,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "create_hardware_profile",
+                        "args": {
+                          "hardwareProfileName": "gpu-large",
+                          "resources": [
+                            {
+                              "resourceType": "cpu",
+                              "defaultCount": "4",
+                              "minCount": "1",
+                              "maxCount": "8",
+                              "resourceIdentifier": "cpu",
+                              "resourceName": "CPU"
+                            },
+                            {
+                              "maxCount": "32Gi",
+                              "resourceIdentifier": "memory",
+                              "resourceName": "Memory",
+                              "minCount": "4Gi",
+                              "defaultCount": "16Gi",
+                              "resourceType": "memory"
+                            }
+                          ]
+                        }
+                      },
+                      "thoughtSignature": "CoAFAQw51scIadQvGZ4TcIEdkKXJ/LpEbOl1wpxx69sOSJjLc0w1mkzqfgfL6B4JgropDp64eqgT5m+6F/IwDLjk80i5dTjnpMhh/+l8ekM3xM+r4VqLyDBzw7br6e5h1icMB/NK6l1JCTOC/yaw0BVa215eAbBYRj9tLrgafa6y6fGKMOYqCvmoyi+dE/jhyObP2gXTVFmeyX4ApAvX2EG1rfDBS2GQMA2PB/XWtIirl5tgUOXVgAHjoL8CMVYgS2q6KXP19KSL7kst/CMjxT3qeNCTEWdBUM21r97dQ6BYrZkHnZmUY6KOa2hXWKqeSNnj/3upzLv5Q9cHEEccaiT9ssFAsrklfRKMZ/3Hy2NegAg4dF2jTFzBWG0qocaVU1NFEMAKNf+7Bzd7GWvcmtpxzqjNPOnLC9blHZEEcf2swhuj4xZdDt2uN1rju33Av5NxHHjuZOZT1KMAtJMFDufZ6y4uTE8CQgzSn91hnOOq9UQvKefOYj2zdIx9uOK+rm0ZT4I2VVN+7WVX17aatopU3XJw23eRt/r4pkFhnBq98lr1CuUY55S5xfUjoZV2+3uSApf9BEiQAuw6ney7jAKA2WPMC1GcSk3eHHQMK+zhbBKFjPc1I2wE4inn3zAzWs1juECoIkTstYXumRXS25tN+b49XywdKNVbUAya1S1vs7m/smLHh7FWILTiwu5eYzBqkFruMO+/fjf4l2eshOY5IH3Xe9xtDbQIfqaLdJ3ni0UvTC9DBCd3bV63Jz760T6dzkvRKdDXcQmrtgbhhBaxZJoUmB3Z+Ccf9dZHoL3+7MRM3YGGKRWTX33Q7WgkbqSgQz9/7x86Th98RmR0pZv0ng=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1989,
+              "candidatesTokenCount": 113,
+              "totalTokenCount": 2292,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1989
+                }
+              ],
+              "thoughtsTokenCount": 190,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Me39afehGvGFnsEP366jqQ8"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Create hardware profile",
+          "vars": {
+            "prompt": "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "create_hardware_profile"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 19,
+        "vars": {
+          "prompt": "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0028349000000000004,
+        "error": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_hardware_profile], Called: [(none)]. Precision=0.000, Recall=0.000",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_hardware_profile], Called: [(none)]. Precision=0.000, Recall=0.000",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Tool Call F1 score 0.000 is below threshold 1. Expected: [update_hardware_profile], Called: [(none)]. Precision=0.000, Recall=0.000",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "update_hardware_profile"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "7b99d507-da4a-43ff-a6c5-220e016a23c7",
+        "latencyMs": 5048,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": "Updating a hardware profile will replace all existing resources with the new ones provided. Do you want to replace all the existing resources of `gpu-large` with the new CPU resource? Or do you want to keep the existing resources and add/update the CPU resource?",
+          "tokenUsage": {
+            "prompt": 1958,
+            "completion": 53,
+            "total": 2857,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 846,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0028349000000000004,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Updating a hardware profile will replace all existing resources with the new ones provided. Do you want to replace all the existing resources of `gpu-large` with the new CPU resource? Or do you want to keep the existing resources and add/update the CPU resource?",
+                      "thoughtSignature": "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"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1958,
+              "candidatesTokenCount": 53,
+              "totalTokenCount": 2857,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1958
+                }
+              ],
+              "thoughtsTokenCount": 846,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Me39acHfI9rOvdIPjqWBYA"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "Update hardware profile",
+          "vars": {
+            "prompt": "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "update_hardware_profile"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 20,
+        "vars": {
+          "prompt": "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0.0007637000000000001,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [delete_hardware_profile], Called: [delete_hardware_profile]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "delete_hardware_profile"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "b413db13-bf65-4656-891d-c5949dd54733",
+        "latencyMs": 908,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Delete hardware profile old-profile",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "delete_hardware_profile",
+                "args": {
+                  "hardwareProfileName": "old-profile"
+                }
+              },
+              "thoughtSignature": "CpsCAQw51sfBkuxcmADuuLomTnY5TupqMeEwHwYGHGy4T1xdqX0l9e07ldu++kwDhC4mCvdItvwE7crzn5CWvya1s4krcpkqRPjEQHXPJHAscQIjiW+ihBx06VIPGtk65slFOM3xDE7LmtmO2+2Fz9jmCLoAiZf6UMuq++a9aE4mp0Y2uH2Rc7D7UFpV/9fwT03GiiWKBX4+mkKeH3ptpyXDczEz3QC+Up/0FVCGgxdJqCi4+TFkoWK8sLafs7I9pNqguAo0jIIQPAlYzpe7RXyDVdvRKhb4Lg3HPHfHendWEBrLrSSJb9IWPoanPeL/r8iyczG5d1j7LnBUKQ6PMD9jcuLxM3c9tD9DSzLLnxR+MSbO8ApcrybL241p9Q=="
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1929,
+            "completion": 21,
+            "total": 2003,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 53,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0007637000000000001,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "delete_hardware_profile",
+                        "args": {
+                          "hardwareProfileName": "old-profile"
+                        }
+                      },
+                      "thoughtSignature": "CpsCAQw51sfBkuxcmADuuLomTnY5TupqMeEwHwYGHGy4T1xdqX0l9e07ldu++kwDhC4mCvdItvwE7crzn5CWvya1s4krcpkqRPjEQHXPJHAscQIjiW+ihBx06VIPGtk65slFOM3xDE7LmtmO2+2Fz9jmCLoAiZf6UMuq++a9aE4mp0Y2uH2Rc7D7UFpV/9fwT03GiiWKBX4+mkKeH3ptpyXDczEz3QC+Up/0FVCGgxdJqCi4+TFkoWK8sLafs7I9pNqguAo0jIIQPAlYzpe7RXyDVdvRKhb4Lg3HPHfHendWEBrLrSSJb9IWPoanPeL/r8iyczG5d1j7LnBUKQ6PMD9jcuLxM3c9tD9DSzLLnxR+MSbO8ApcrybL241p9Q=="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1929,
+              "candidatesTokenCount": 21,
+              "totalTokenCount": 2003,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1929
+                }
+              ],
+              "thoughtsTokenCount": 53,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Me39aZC5MpumnsEPq_GTmA0"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Delete hardware profile",
+          "vars": {
+            "prompt": "Delete hardware profile old-profile"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "delete_hardware_profile"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 21,
+        "vars": {
+          "prompt": "Delete hardware profile old-profile"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006246,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_pvcs], Called: [list_pvcs]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_pvcs"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "2452860a-2b39-4c60-9656-463492ff226e",
+        "latencyMs": 859,
+        "namedScores": {},
+        "prompt": {
+          "raw": "List all PVCs in namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_pvcs",
+                "args": {
+                  "namespace": "test-namespace"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1932,
+            "completion": 18,
+            "total": 1950,
+            "numRequests": 1
+          },
+          "cost": 0.0006246,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_pvcs",
+                        "args": {
+                          "namespace": "test-namespace"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1932,
+              "candidatesTokenCount": 18,
+              "totalTokenCount": 1950,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1932
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Mu39aZrlG8W0nsEP2vmmiQ4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "List PVCs in namespace",
+          "vars": {
+            "prompt": "List all PVCs in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_pvcs"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 22,
+        "vars": {
+          "prompt": "List all PVCs in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006249,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_pvcs], Called: [list_pvcs]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_pvcs"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "7fb30dd8-089b-4578-aa46-f296905738d2",
+        "latencyMs": 708,
+        "namedScores": {},
+        "prompt": {
+          "raw": "What PVCs exist in my-project namespace?",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_pvcs",
+                "args": {
+                  "namespace": "my-project"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1933,
+            "completion": 18,
+            "total": 1951,
+            "numRequests": 1
+          },
+          "cost": 0.0006249,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_pvcs",
+                        "args": {
+                          "namespace": "my-project"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1933,
+              "candidatesTokenCount": 18,
+              "totalTokenCount": 1951,
+              "cachedContentTokenCount": 1682,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1933
+                }
+              ],
+              "cacheTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1682
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Mu39aZTQLNrZkdUPw-mj8Q4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Show storage volumes",
+          "vars": {
+            "prompt": "What PVCs exist in my-project namespace?"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_pvcs"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 23,
+        "vars": {
+          "prompt": "What PVCs exist in my-project namespace?"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0006648,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [create_pvc], Called: [create_pvc]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "create_pvc"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "e6391405-c401-484c-95ed-edb354d9cd5f",
+        "latencyMs": 783,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Create a PVC named my-storage with size 20Gi in namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "create_pvc",
+                "args": {
+                  "namespace": "test-namespace",
+                  "pvcName": "my-storage",
+                  "size": "20Gi"
+                }
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1941,
+            "completion": 33,
+            "total": 1974,
+            "numRequests": 1
+          },
+          "cost": 0.0006648,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "create_pvc",
+                        "args": {
+                          "namespace": "test-namespace",
+                          "pvcName": "my-storage",
+                          "size": "20Gi"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1941,
+              "candidatesTokenCount": 33,
+              "totalTokenCount": 1974,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1941
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "M-39adXlEbqFkdUPhdG46Qg"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Create PVC",
+          "vars": {
+            "prompt": "Create a PVC named my-storage with size 20Gi in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "create_pvc"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 24,
+        "vars": {
+          "prompt": "Create a PVC named my-storage with size 20Gi in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0010842,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [update_pvc], Called: [update_pvc]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "update_pvc"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "38cfb5b9-889a-4b1e-bcf0-7493d66af368",
+        "latencyMs": 1509,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Update PVC my-storage in namespace test-namespace to size 50Gi",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "update_pvc",
+                "args": {
+                  "size": "50Gi",
+                  "pvcName": "my-storage",
+                  "namespace": "test-namespace"
+                }
+              },
+              "thoughtSignature": "CpcFAQw51sdmIau/iO68VdmbDrRHh70u/TvleHug0mBMa6tXgMfcPWj5PbKMk1m4XEhcZeA53SxsOYAaegdQapOydoWjuaMbHDWj+T3jcfaydjMExeQeIEJwwFmcgkISlO584b9Tiik0c4A1t9KpwF4suNJhA/ZEr6cp4hbFru1x8nH7s60vL+lgHI0vnfiCwq0bGeu6ouJS5vAFV1008nHJB7pFFGtK9NjlV08mSZZXrZW1G78N1H3p/KAVETeebQNx9A2g880gIEenqHD4e5IeJa3yCDe8OBGwpX/dZI9jRGef046lWfiY+Jb0eEa2c5Z1B00bdeEQdzNE+q7qSTtK4qNk/BA6HT8o9Lgf6Rc8CU9OibLm/zi3K0IDkWaZBEqT93h2axzeKnAMjIS6KebMBnpNy2YmUlpDyA8L/NXtWWXmk+lfRMhfQ4hcKbtdxE9lEGfbHtHONUpIiD+KqPgvop0CHA/oq0UY8Nij0nBZy2u3Ij/jxYyHdciC4wFnGzf6zXSQx2wNqjnNQaq9coXklr2KtM4ovm1+GzZ2TjLg0cngtoEB8e0pejYOgyR5cjn8jiKP5MLU6phcgTIbo0KZfd6/vqIBHWyt8LGLMDsmw/K1cZi6jDvMyu+QNCa/gDYd7J2hfDyolnwnVDt3dWaZx30MnhDXwSlfuK0SdWIVe2yNs/khFUahqZ6t8n8/9/HAnR/fQdFABBtjlcx0NFVNjn8uBiW8sb1oF8WV6zjdlNz8Rd3Dlmqb8w7V/Mgl827Enq9XhZF5cpexitMuECHoo2yI02zLXuzJguwkPGG2EBfKLBamI3Ba9avVruoRS3XH9IhaFeaLY4OaJYMy3TaDXQr4au2xm68X88X9ICBdvibIkxeksbv1"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1939,
+            "completion": 33,
+            "total": 2140,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 168,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0010842,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "update_pvc",
+                        "args": {
+                          "size": "50Gi",
+                          "pvcName": "my-storage",
+                          "namespace": "test-namespace"
+                        }
+                      },
+                      "thoughtSignature": "CpcFAQw51sdmIau/iO68VdmbDrRHh70u/TvleHug0mBMa6tXgMfcPWj5PbKMk1m4XEhcZeA53SxsOYAaegdQapOydoWjuaMbHDWj+T3jcfaydjMExeQeIEJwwFmcgkISlO584b9Tiik0c4A1t9KpwF4suNJhA/ZEr6cp4hbFru1x8nH7s60vL+lgHI0vnfiCwq0bGeu6ouJS5vAFV1008nHJB7pFFGtK9NjlV08mSZZXrZW1G78N1H3p/KAVETeebQNx9A2g880gIEenqHD4e5IeJa3yCDe8OBGwpX/dZI9jRGef046lWfiY+Jb0eEa2c5Z1B00bdeEQdzNE+q7qSTtK4qNk/BA6HT8o9Lgf6Rc8CU9OibLm/zi3K0IDkWaZBEqT93h2axzeKnAMjIS6KebMBnpNy2YmUlpDyA8L/NXtWWXmk+lfRMhfQ4hcKbtdxE9lEGfbHtHONUpIiD+KqPgvop0CHA/oq0UY8Nij0nBZy2u3Ij/jxYyHdciC4wFnGzf6zXSQx2wNqjnNQaq9coXklr2KtM4ovm1+GzZ2TjLg0cngtoEB8e0pejYOgyR5cjn8jiKP5MLU6phcgTIbo0KZfd6/vqIBHWyt8LGLMDsmw/K1cZi6jDvMyu+QNCa/gDYd7J2hfDyolnwnVDt3dWaZx30MnhDXwSlfuK0SdWIVe2yNs/khFUahqZ6t8n8/9/HAnR/fQdFABBtjlcx0NFVNjn8uBiW8sb1oF8WV6zjdlNz8Rd3Dlmqb8w7V/Mgl827Enq9XhZF5cpexitMuECHoo2yI02zLXuzJguwkPGG2EBfKLBamI3Ba9avVruoRS3XH9IhaFeaLY4OaJYMy3TaDXQr4au2xm68X88X9ICBdvibIkxeksbv1"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1939,
+              "candidatesTokenCount": 33,
+              "totalTokenCount": 2140,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1939
+                }
+              ],
+              "thoughtsTokenCount": 168,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "M-39aYfsEOminsEPxNCi0AY"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Update PVC size",
+          "vars": {
+            "prompt": "Update PVC my-storage in namespace test-namespace to size 50Gi"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "update_pvc"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 25,
+        "vars": {
+          "prompt": "Update PVC my-storage in namespace test-namespace to size 50Gi"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0008292999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_namespace], Called: [list_resource_consumption_per_namespace]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_resource_consumption_per_namespace"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "0e38320e-254a-45ec-a2b4-b1f256a10bc6",
+        "latencyMs": 1355,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show resource consumption for namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_resource_consumption_per_namespace",
+                "args": {
+                  "namespace": "test-namespace"
+                }
+              },
+              "thoughtSignature": "CogDAQw51seFyvy5bRRbGW60l/MPGx+n27bVB3VckflN6GfwoytyVcN65z05u57EmkxFID56TViaPDcQKSwKNbuEyvJH0Ns04B3ybyhR7DaLdYvdTdWZU294VDnoCLcE8U17XDhN+XujxkNRBIXsuqqcZAuwij6XrJWNfnU73McEb/metXM2nH+03z6qgDhSQIPQNKj+5LFG6hVDOx/aIxbfLlZ0vQbjnsXPIofPIk1bTmgRYdt6UAJOeZg0eD7WArlB/mdExumj3OGyDrxrZyWlrqhfrJrditJUPjeQndUfWacLQlBPyU6ikFiqwL1cjIJv2a9E2q8eKSrgKQJZ8+GsoUOXAF+cK5MzX1coQyR/d1cR8yoeZdw+802zVBaF6tgMfJRyxSx2zYPKA1dofXX8tm/c3FGXs+0I8M1dOquHMqyQTctRx0aU4YOh5k+ZcniZef7+bPwJzpBqdg1FEVsYif2x+GgydCCN/8D0ij9Yvv657rTmdLf+M70YylYTOrCxiBwCTkvGODI="
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1931,
+            "completion": 23,
+            "total": 2031,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 77,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0008292999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_resource_consumption_per_namespace",
+                        "args": {
+                          "namespace": "test-namespace"
+                        }
+                      },
+                      "thoughtSignature": "CogDAQw51seFyvy5bRRbGW60l/MPGx+n27bVB3VckflN6GfwoytyVcN65z05u57EmkxFID56TViaPDcQKSwKNbuEyvJH0Ns04B3ybyhR7DaLdYvdTdWZU294VDnoCLcE8U17XDhN+XujxkNRBIXsuqqcZAuwij6XrJWNfnU73McEb/metXM2nH+03z6qgDhSQIPQNKj+5LFG6hVDOx/aIxbfLlZ0vQbjnsXPIofPIk1bTmgRYdt6UAJOeZg0eD7WArlB/mdExumj3OGyDrxrZyWlrqhfrJrditJUPjeQndUfWacLQlBPyU6ikFiqwL1cjIJv2a9E2q8eKSrgKQJZ8+GsoUOXAF+cK5MzX1coQyR/d1cR8yoeZdw+802zVBaF6tgMfJRyxSx2zYPKA1dofXX8tm/c3FGXs+0I8M1dOquHMqyQTctRx0aU4YOh5k+ZcniZef7+bPwJzpBqdg1FEVsYif2x+GgydCCN/8D0ij9Yvv657rTmdLf+M70YylYTOrCxiBwCTkvGODI="
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1931,
+              "candidatesTokenCount": 23,
+              "totalTokenCount": 2031,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1931
+                }
+              ],
+              "thoughtsTokenCount": 77,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "M-39aZ_rGaKH7M8P1qSryA4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Get resource consumption for namespace",
+          "vars": {
+            "prompt": "Show resource consumption for namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_resource_consumption_per_namespace"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 26,
+        "vars": {
+          "prompt": "Show resource consumption for namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0008633,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_workbench], Called: [list_resource_consumption_per_workbench]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_resource_consumption_per_workbench"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "166b63f5-244e-462a-8dc7-75508bb37e8d",
+        "latencyMs": 1111,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show resource consumption for workbench my-notebook in namespace test-namespace",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_resource_consumption_per_workbench",
+                "args": {
+                  "namespace": "test-namespace",
+                  "workbenchName": "my-notebook"
+                }
+              },
+              "thoughtSignature": "CqQDAQw51sesr5NzU00Z718ylMvo+oqPAlAzvn8l9j+gbEGFZprvH8Bpcnt8EMn85Pa/x9cJaXv5M1hMQFVpNh+xWiade94J/aPUuDqte8Py+Cw8RIqprzwsiqTki36DAGsmN+0KhTnmwewsACSeg/OJSdlRC3x4ry+fcj2XEMq/mbxQx3qYorruEbpej+ca+66ESALp6lSseJtQbRZhcBX03pfbaj/dtvlPx22C9Y/dLCZ1JO5jHkmH74zAq9vLYkXauNFhm9qxUQ6FdKHcQ3qF82vv79BuPWY2GBOuzslZLkB9NSE3X2ahqCPwQtOSvcdoPwCXBwVRll7cTyKaDZo5M3XiZAd68QzmZU9aqHy3eLU+hBvpMitlYwocYIIki2d1gQAMWh4xPUCs+rgnOrFISJF1ERJ45It4dROAB2TA/xpPZng9Rr6aZg+Ibc0rzWDZeYmwT/hiuYem14aDDCt4B0F3kj2PkfiqX6Qt3qRKRp8Rn57C2c305d1gl7XbPznFV0/YfzkmvN2qmC8g+mxWsIN0a8lBia6fRMBW6hyXPBtQaTW4"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1936,
+            "completion": 31,
+            "total": 2049,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 82,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0008633,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_resource_consumption_per_workbench",
+                        "args": {
+                          "namespace": "test-namespace",
+                          "workbenchName": "my-notebook"
+                        }
+                      },
+                      "thoughtSignature": "CqQDAQw51sesr5NzU00Z718ylMvo+oqPAlAzvn8l9j+gbEGFZprvH8Bpcnt8EMn85Pa/x9cJaXv5M1hMQFVpNh+xWiade94J/aPUuDqte8Py+Cw8RIqprzwsiqTki36DAGsmN+0KhTnmwewsACSeg/OJSdlRC3x4ry+fcj2XEMq/mbxQx3qYorruEbpej+ca+66ESALp6lSseJtQbRZhcBX03pfbaj/dtvlPx22C9Y/dLCZ1JO5jHkmH74zAq9vLYkXauNFhm9qxUQ6FdKHcQ3qF82vv79BuPWY2GBOuzslZLkB9NSE3X2ahqCPwQtOSvcdoPwCXBwVRll7cTyKaDZo5M3XiZAd68QzmZU9aqHy3eLU+hBvpMitlYwocYIIki2d1gQAMWh4xPUCs+rgnOrFISJF1ERJ45It4dROAB2TA/xpPZng9Rr6aZg+Ibc0rzWDZeYmwT/hiuYem14aDDCt4B0F3kj2PkfiqX6Qt3qRKRp8Rn57C2c305d1gl7XbPznFV0/YfzkmvN2qmC8g+mxWsIN0a8lBia6fRMBW6hyXPBtQaTW4"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1936,
+              "candidatesTokenCount": 31,
+              "totalTokenCount": 2049,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1936
+                }
+              ],
+              "thoughtsTokenCount": 82,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "NO39aa7CBLaQnsEP9aTDmQI"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Resource usage per workbench",
+          "vars": {
+            "prompt": "Show resource consumption for workbench my-notebook in namespace test-namespace"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_resource_consumption_per_workbench"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 27,
+        "vars": {
+          "prompt": "Show resource consumption for workbench my-notebook in namespace test-namespace"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0008248999999999999,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_user], Called: [list_resource_consumption_per_user]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_resource_consumption_per_user"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "72028cef-b730-4b85-951c-a64f347209aa",
+        "latencyMs": 1245,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show resource consumption for user john@example.com",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_resource_consumption_per_user",
+                "args": {
+                  "user": "john@example.com"
+                }
+              },
+              "thoughtSignature": "CtwCAQw51sfJjQEhsLSBIgTGgM5mHuq8gRO/5RQXrqGDFU556OHiBnNnZ1Hx6pht8yjGcpXAARuqbOVo5HUdO0jwYdwoajLXPBjSd13tjRgS8I0oHsdEr6J2jizfrCAUzOeUCuJld2DBAbKZRYWlKm+YkOWMn+lwNDmEqAFrT66XMk7Xsu1ie+XJuwASlLlvepzq48YeTabpVYhjf42BPOzFdXVA8tY5xNyeGfq/2QnCB13nGelC8gAsDjfMSSnkCiCZcuY7dY+7HlvL1rRz622SVKfLzXq635pmKNh6xRDt/pwfHUrnbp0uRe54T1LIACs3smQp0enKrDx32o/6z4f9+si6PJhmFIjYOJuNfmlriq2Vxc1OLelhdIWpHgVt7AfBk87XE0Q/F0dBUiEm5h9EHBNLpEyXaBQk9/56lRabRr2D66WER5w6CuKGgxpfEPfD5/KNocvXEhulq3Qj"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1933,
+            "completion": 25,
+            "total": 2031,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 73,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0008248999999999999,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_resource_consumption_per_user",
+                        "args": {
+                          "user": "john@example.com"
+                        }
+                      },
+                      "thoughtSignature": "CtwCAQw51sfJjQEhsLSBIgTGgM5mHuq8gRO/5RQXrqGDFU556OHiBnNnZ1Hx6pht8yjGcpXAARuqbOVo5HUdO0jwYdwoajLXPBjSd13tjRgS8I0oHsdEr6J2jizfrCAUzOeUCuJld2DBAbKZRYWlKm+YkOWMn+lwNDmEqAFrT66XMk7Xsu1ie+XJuwASlLlvepzq48YeTabpVYhjf42BPOzFdXVA8tY5xNyeGfq/2QnCB13nGelC8gAsDjfMSSnkCiCZcuY7dY+7HlvL1rRz622SVKfLzXq635pmKNh6xRDt/pwfHUrnbp0uRe54T1LIACs3smQp0enKrDx32o/6z4f9+si6PJhmFIjYOJuNfmlriq2Vxc1OLelhdIWpHgVt7AfBk87XE0Q/F0dBUiEm5h9EHBNLpEyXaBQk9/56lRabRr2D66WER5w6CuKGgxpfEPfD5/KNocvXEhulq3Qj"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1933,
+              "candidatesTokenCount": 25,
+              "totalTokenCount": 2031,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1933
+                }
+              ],
+              "thoughtsTokenCount": 73,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "NO39afigMsnz7M8Po8a7kAs"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Resource consumption by user",
+          "vars": {
+            "prompt": "Show resource consumption for user john@example.com"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_resource_consumption_per_user"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 28,
+        "vars": {
+          "prompt": "Show resource consumption for user john@example.com"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.000619,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_cluster], Called: [list_resource_consumption_per_cluster]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_resource_consumption_per_cluster"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "1d39ebee-c703-4486-96d0-6c9c4d47b050",
+        "latencyMs": 693,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Show resource consumption for the entire cluster",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_resource_consumption_per_cluster",
+                "args": {}
+              }
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1930,
+            "completion": 16,
+            "total": 1946,
+            "numRequests": 1
+          },
+          "cost": 0.000619,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_resource_consumption_per_cluster",
+                        "args": {}
+                      }
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1930,
+              "candidatesTokenCount": 16,
+              "totalTokenCount": 1946,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1930
+                }
+              ],
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "NO39acq0MvrOnsEPgvTN4Q4"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Cluster-wide resource usage",
+          "vars": {
+            "prompt": "Show resource consumption for the entire cluster"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_resource_consumption_per_cluster"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 29,
+        "vars": {
+          "prompt": "Show resource consumption for the entire cluster"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0.0007396,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Tool Call F1: 1.000 (precision=1.000, recall=1.000). Expected: [list_resource_consumption_per_cluster], Called: [list_resource_consumption_per_cluster]",
+              "assertion": {
+                "type": "tool-call-f1",
+                "value": [
+                  "list_resource_consumption_per_cluster"
+                ]
+              }
+            }
+          ]
+        },
+        "id": "9ba45ffd-c0d1-4c2e-b407-a1c55077ad99",
+        "latencyMs": 866,
+        "namedScores": {},
+        "prompt": {
+          "raw": "What is the cluster-wide resource usage?",
+          "label": "{{prompt}}",
+          "config": {}
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "google:gemini-2.5-flash",
+          "label": ""
+        },
+        "response": {
+          "output": [
+            {
+              "functionCall": {
+                "name": "list_resource_consumption_per_cluster",
+                "args": {}
+              },
+              "thoughtSignature": "Co4CAQw51scP5ImAVs2FmOVGldVZ551k/Z0//JUP7MUmRoeYHoKN5EltyxpGw5u/7SIxlElv2vNl+PizDz4BdStVH7T7wb6v8xakujGsUImZudPmuzxDnyMsF7UXV058pmNPeibhcjZHIJxv/6Zgq/ey/WhahBAWDjaVq4OOhhaD2ebkIo+oL1c9u0T5jNjoKTUISWmM18CwVjcA5OSFt7acUCgsQvGxBI57xR686DRKvg7HnRLo8bbYUVpZG9yTe21stNNRH2O4TQYpSJUwRThW8ru3gL2iR3z7FTLHo1NISiYhaKcXu1cZyRtGrXaGCm15aC+ZpO+US3mhXebmGUA6vDABJjc1+qhFHRcLs89m"
+            }
+          ],
+          "tokenUsage": {
+            "prompt": 1932,
+            "completion": 16,
+            "total": 1996,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 48,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            }
+          },
+          "cost": 0.0007396,
+          "raw": {
+            "candidates": [
+              {
+                "content": {
+                  "parts": [
+                    {
+                      "functionCall": {
+                        "name": "list_resource_consumption_per_cluster",
+                        "args": {}
+                      },
+                      "thoughtSignature": "Co4CAQw51scP5ImAVs2FmOVGldVZ551k/Z0//JUP7MUmRoeYHoKN5EltyxpGw5u/7SIxlElv2vNl+PizDz4BdStVH7T7wb6v8xakujGsUImZudPmuzxDnyMsF7UXV058pmNPeibhcjZHIJxv/6Zgq/ey/WhahBAWDjaVq4OOhhaD2ebkIo+oL1c9u0T5jNjoKTUISWmM18CwVjcA5OSFt7acUCgsQvGxBI57xR686DRKvg7HnRLo8bbYUVpZG9yTe21stNNRH2O4TQYpSJUwRThW8ru3gL2iR3z7FTLHo1NISiYhaKcXu1cZyRtGrXaGCm15aC+ZpO+US3mhXebmGUA6vDABJjc1+qhFHRcLs89m"
+                    }
+                  ],
+                  "role": "model"
+                },
+                "finishReason": "STOP",
+                "index": 0,
+                "finishMessage": "Model generated function call(s)."
+              }
+            ],
+            "usageMetadata": {
+              "promptTokenCount": 1932,
+              "candidatesTokenCount": 16,
+              "totalTokenCount": 1996,
+              "promptTokensDetails": [
+                {
+                  "modality": "TEXT",
+                  "tokenCount": 1932
+                }
+              ],
+              "thoughtsTokenCount": 48,
+              "serviceTier": "standard"
+            },
+            "modelVersion": "gemini-2.5-flash",
+            "responseId": "Ne39adHvCpumnsEPq_GTmA0"
+          },
+          "cached": false,
+          "metadata": {}
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "Total cluster resources",
+          "vars": {
+            "prompt": "What is the cluster-wide resource usage?"
+          },
+          "assert": [
+            {
+              "type": "tool-call-f1",
+              "value": [
+                "list_resource_consumption_per_cluster"
+              ]
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 30,
+        "vars": {
+          "prompt": "What is the cluster-wide resource usage?"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
       }
     ],
     "stats": {
-      "successes": 2,
-      "failures": 2,
+      "successes": 27,
+      "failures": 4,
       "errors": 0,
       "tokenUsage": {
-        "prompt": 1614,
-        "completion": 114,
-        "cached": 0,
-        "total": 3119,
-        "numRequests": 4,
+        "prompt": 54253,
+        "completion": 772,
+        "cached": 5849,
+        "total": 64166,
+        "numRequests": 28,
         "completionDetails": {
-          "reasoning": 1391,
+          "reasoning": 3292,
           "acceptedPrediction": 0,
           "rejectedPrediction": 0,
           "cacheReadInputTokens": 0,
@@ -588,8 +4098,8 @@
           }
         }
       },
-      "durationMs": 7446,
-      "evaluationDurationMs": 7446
+      "durationMs": 10501,
+      "evaluationDurationMs": 10501
     }
   },
   "config": {
@@ -600,17 +4110,17 @@
     ],
     "providers": [
       {
-        "id": "google:gemini-2.5-pro",
+        "id": "google:gemini-2.5-flash",
         "config": {
           "mcp": {
             "enabled": true,
             "server": {
               "command": "./mcp-server-rhoai",
-              "args": [],
-              "name": "rhoai",
-              "env": {
-                "MCP_RHOAI_MODE": "write"
-              }
+              "args": [
+                "-mode",
+                "write"
+              ],
+              "name": "rhoai"
             }
           }
         }
@@ -620,7 +4130,7 @@
       {
         "description": "List all workbenches across namespaces",
         "vars": {
-          "prompt": "Show me all workbenches across all namespaces"
+          "prompt": "Use list_all_workbenches to show me all workbenches in every namespace"
         },
         "assert": [
           {
@@ -632,23 +4142,23 @@
         ]
       },
       {
-        "description": "Get resource consumption for namespace",
+        "description": "List workbenches in specific namespace",
         "vars": {
-          "prompt": "What is the resource consumption in test-namespace?"
+          "prompt": "List the workbenches in namespace test-namespace"
         },
         "assert": [
           {
             "type": "tool-call-f1",
             "value": [
-              "list_resource_consumption_per_namespace"
+              "list_workbenches"
             ]
           }
         ]
       },
       {
-        "description": "List workbenches in specific namespace",
+        "description": "Show workbenches in project",
         "vars": {
-          "prompt": "List workbenches in test-namespace"
+          "prompt": "Show me all workbenches in the my-project namespace"
         },
         "assert": [
           {
@@ -662,13 +4172,391 @@
       {
         "description": "Create a new workbench",
         "vars": {
-          "prompt": "Create a workbench named my-notebook in namespace test-namespace using Jupyter image"
+          "prompt": "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2"
         },
         "assert": [
           {
             "type": "tool-call-f1",
             "value": [
               "create_workbench"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Update workbench image",
+        "vars": {
+          "prompt": "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "update_workbench"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Delete a workbench",
+        "vars": {
+          "prompt": "Delete workbench old-notebook in namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "delete_workbench"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Stop a workbench",
+        "vars": {
+          "prompt": "Change workbench my-notebook in namespace test-namespace to status stopped"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "change_workbench_status"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Start a workbench",
+        "vars": {
+          "prompt": "Change workbench my-notebook in namespace test-namespace to status running"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "change_workbench_status"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "List all namespaces",
+        "vars": {
+          "prompt": "List all namespaces"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_namespaces"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Show available projects",
+        "vars": {
+          "prompt": "Show me the available namespaces"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_namespaces"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "List pods in namespace",
+        "vars": {
+          "prompt": "List pods in namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_pods"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Show running pods",
+        "vars": {
+          "prompt": "Show pods in namespace my-project"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_pods"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "List available images",
+        "vars": {
+          "prompt": "List all notebook images"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_images"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Show notebook images",
+        "vars": {
+          "prompt": "What images are available?"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_images"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Create custom image",
+        "vars": {
+          "prompt": "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "create_custom_image"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Update image",
+        "vars": {
+          "prompt": "Update image my-custom-image with new description 'Updated ML image for production'"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "update_image"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Delete image",
+        "vars": {
+          "prompt": "Delete image old-image"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "delete_image"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "List hardware profiles",
+        "vars": {
+          "prompt": "Show me the available hardware profiles"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_hardware_profiles"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Show hardware configurations",
+        "vars": {
+          "prompt": "What hardware profiles can I choose from?"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_hardware_profiles"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Create hardware profile",
+        "vars": {
+          "prompt": "Create hardware profile named gpu-large with resources: CPU (identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "create_hardware_profile"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Update hardware profile",
+        "vars": {
+          "prompt": "Update hardware profile gpu-large with new CPU resource (identifier: cpu, type: cpu, default: 8, min: 2, max: 16)"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "update_hardware_profile"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Delete hardware profile",
+        "vars": {
+          "prompt": "Delete hardware profile old-profile"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "delete_hardware_profile"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "List PVCs in namespace",
+        "vars": {
+          "prompt": "List all PVCs in namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_pvcs"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Show storage volumes",
+        "vars": {
+          "prompt": "What PVCs exist in my-project namespace?"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_pvcs"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Create PVC",
+        "vars": {
+          "prompt": "Create a PVC named my-storage with size 20Gi in namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "create_pvc"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Update PVC size",
+        "vars": {
+          "prompt": "Update PVC my-storage in namespace test-namespace to size 50Gi"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "update_pvc"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Get resource consumption for namespace",
+        "vars": {
+          "prompt": "Show resource consumption for namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_resource_consumption_per_namespace"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Resource usage per workbench",
+        "vars": {
+          "prompt": "Show resource consumption for workbench my-notebook in namespace test-namespace"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_resource_consumption_per_workbench"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Resource consumption by user",
+        "vars": {
+          "prompt": "Show resource consumption for user john@example.com"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_resource_consumption_per_user"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Cluster-wide resource usage",
+        "vars": {
+          "prompt": "Show resource consumption for the entire cluster"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_resource_consumption_per_cluster"
+            ]
+          }
+        ]
+      },
+      {
+        "description": "Total cluster resources",
+        "vars": {
+          "prompt": "What is the cluster-wide resource usage?"
+        },
+        "assert": [
+          {
+            "type": "tool-call-f1",
+            "value": [
+              "list_resource_consumption_per_cluster"
             ]
           }
         ]
@@ -687,11 +4575,11 @@
   },
   "shareableUrl": null,
   "metadata": {
-    "promptfooVersion": "0.121.5",
+    "promptfooVersion": "0.121.11",
     "nodeVersion": "v22.22.2",
     "platform": "linux",
     "arch": "x64",
-    "exportedAt": "2026-04-17T11:01:50.551Z",
-    "evaluationCreatedAt": "2026-04-17T11:01:43.032Z"
+    "exportedAt": "2026-05-08T14:03:34.654Z",
+    "evaluationCreatedAt": "2026-05-08T14:03:24.058Z"
   }
 }

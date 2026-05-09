@@ -1,22 +1,22 @@
 package core
 
 type ListResourceConsumptionOutput struct {
-	CPUUsage    string `json:"cpuUsage" jsonschema_description:"the CPU usage"`
-	MemoryUsage string `json:"memoryUsage" jsonschema_description:"the memory usage"`
-	DiskUsage   string `json:"diskUsage" jsonschema_description:"the disk usage"`
-	GPUUsage    string `json:"gpuUsage" jsonschema_description:"the GPU usage"`
-	UpTime      string `json:"upTime" jsonschema_description:"the up time"`
+	CPUUsage    string `json:"cpuUsage" jsonschema:"the CPU usage"`
+	MemoryUsage string `json:"memoryUsage" jsonschema:"the memory usage"`
+	DiskUsage   string `json:"diskUsage" jsonschema:"the disk usage"`
+	GPUUsage    string `json:"gpuUsage" jsonschema:"the GPU usage"`
+	UpTime      string `json:"upTime" jsonschema:"the up time"`
 }
 
 type ListResourceConsumptionPerWorkbenchInput struct {
-	Namespace     string `json:"namespace" jsonschema_description:"the namespace of the workbench"`
-	WorkbenchName string `json:"workbenchName" jsonschema_description:"the name of the workbench"`
+	Namespace     string `json:"namespace" jsonschema:"the namespace of the workbench"`
+	WorkbenchName string `json:"workbenchName" jsonschema:"the name of the workbench"`
 }
 
 type ListResourceConsumptionPerNamespaceInput struct {
-	Namespace string `json:"namespace" jsonschema_description:"the namespace of the namespace"`
+	Namespace string `json:"namespace" jsonschema:"the namespace of the namespace"`
 }
 
 type ListResourceConsumptionPerUserInput struct {
-	User string `json:"user" jsonschema_description:"the user of the user"`
+	User string `json:"user" jsonschema:"the user of the user"`
 }

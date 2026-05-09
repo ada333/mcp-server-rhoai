@@ -3,7 +3,6 @@ package tools
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	core "github.com/amaly/mcp-server-rhoai/core"
 	"github.com/amaly/mcp-server-rhoai/resources"
@@ -18,22 +17,23 @@ func ListImages(ctx context.Context, req *mcp.CallToolRequest, input struct{}) (
 		return nil, core.ListImagesOutput{}, err
 	}
 
-	msg := ""
+	var imageInfos []core.ImageInfo
 	for _, image := range images {
-		var versions []string
+		var versions []core.ImageVersionInfo
 		for _, v := range image.Versions {
-			vInfo := v.Name
-			if v.PythonDependencies != "" {
-				vInfo += fmt.Sprintf(" (Python: %s)", v.PythonDependencies)
-			}
-			if v.Software != "" {
-				vInfo += fmt.Sprintf(" (Software: %s)", v.Software)
-			}
-			versions = append(versions, vInfo)
+			versions = append(versions, core.ImageVersionInfo{
+				Name:               v.Name,
+				PythonDependencies: v.PythonDependencies,
+				Software:           v.Software,
+			})
 		}
-		msg += fmt.Sprintf("Image: %s\n URL: %s\n Versions: %s\n", image.Annotations["opendatahub.io/notebook-image-name"], image.URL, strings.Join(versions, ", "))
+		imageInfos = append(imageInfos, core.ImageInfo{
+			Name:     image.Annotations["opendatahub.io/notebook-image-name"],
+			URL:      image.URL,
+			Versions: versions,
+		})
 	}
-	return nil, core.ListImagesOutput{Images: msg}, nil
+	return nil, core.ListImagesOutput{Images: imageInfos}, nil
 }
 
 func CreateCustomImage(ctx context.Context, req *mcp.CallToolRequest, input core.CreateCustomImageInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {

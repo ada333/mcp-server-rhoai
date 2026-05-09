@@ -247,17 +247,34 @@ func TestListImages(t *testing.T) {
 		t.Fatalf("ListImages returned error: %v", err)
 	}
 
-	if !strings.Contains(out.Images, "Image: PyTorch") {
-		t.Errorf("expected PyTorch in output, got: %q", out.Images)
-	}
-	if !strings.Contains(out.Images, "URL: quay.io/modh/pytorch") {
-		t.Errorf("expected PyTorch URL in output, got: %q", out.Images)
-	}
-	if !strings.Contains(out.Images, "v1") || !strings.Contains(out.Images, "v2") {
-		t.Errorf("expected versions v1 and v2 for PyTorch, got: %q", out.Images)
+	if len(out.Images) != 2 {
+		t.Fatalf("expected 2 images, got %d", len(out.Images))
 	}
 
-	if !strings.Contains(out.Images, "Image: TensorFlow") {
-		t.Errorf("expected TensorFlow in output, got: %q", out.Images)
+	// Find PyTorch image
+	var pytorch *core.ImageInfo
+	var tensorflow *core.ImageInfo
+	for i := range out.Images {
+		if out.Images[i].Name == "PyTorch" {
+			pytorch = &out.Images[i]
+		}
+		if out.Images[i].Name == "TensorFlow" {
+			tensorflow = &out.Images[i]
+		}
+	}
+
+	if pytorch == nil {
+		t.Errorf("expected PyTorch image in output")
+	} else {
+		if pytorch.URL != "quay.io/modh/pytorch" {
+			t.Errorf("expected PyTorch URL quay.io/modh/pytorch, got: %s", pytorch.URL)
+		}
+		if len(pytorch.Versions) != 2 {
+			t.Errorf("expected 2 versions for PyTorch, got %d", len(pytorch.Versions))
+		}
+	}
+
+	if tensorflow == nil {
+		t.Errorf("expected TensorFlow image in output")
 	}
 }

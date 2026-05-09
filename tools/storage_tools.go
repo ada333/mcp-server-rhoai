@@ -12,22 +12,46 @@ import (
 	"k8s.io/client-go/dynamic"
 )
 
-func ListPVCs(ctx context.Context, req *mcp.CallToolRequest, input core.ListPVCsInput) (*mcp.CallToolResult, core.PVCsOutput, error) {
+func ListPVCs(ctx context.Context, req *mcp.CallToolRequest, input core.ListPVCsInput) (*mcp.CallToolResult, core.ListPVCsOutput, error) {
 	dyn, err := GetDynamicClient()
 	if err != nil {
-		return nil, core.PVCsOutput{}, err
+		return nil, core.ListPVCsOutput{}, err
 	}
 
 	pvcs, err := dyn.Resource(core.PvcGVR).Namespace(input.Namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
-		return nil, core.PVCsOutput{}, fmt.Errorf("failed to list PVCs: %v", err)
+		return nil, core.ListPVCsOutput{}, fmt.Errorf("failed to list PVCs: %v", err)
 	}
 
-	msg := ""
+	var pvcInfos []core.PVCInfo
 	for _, pvc := range pvcs.Items {
-		msg += fmt.Sprintf("- %s\n", pvc.GetName())
+		// Extract size from spec.resources.requests.storage
+		size := ""
+		if spec, ok := pvc.Object["spec"].(map[string]interface{}); ok {
+			if resources, ok := spec["resources"].(map[string]interface{}); ok {
+				if requests, ok := resources["requests"].(map[string]interface{}); ok {
+					if storage, ok := requests["storage"].(string); ok {
+						size = storage
+					}
+				}
+			}
+		}
+
+		// Extract status from status.phase
+		status := "Unknown"
+		if statusObj, ok := pvc.Object["status"].(map[string]interface{}); ok {
+			if phase, ok := statusObj["phase"].(string); ok {
+				status = phase
+			}
+		}
+
+		pvcInfos = append(pvcInfos, core.PVCInfo{
+			Name:   pvc.GetName(),
+			Size:   size,
+			Status: status,
+		})
 	}
-	return nil, core.PVCsOutput{PVCs: msg}, nil
+	return nil, core.ListPVCsOutput{PVCs: pvcInfos}, nil
 }
 
 func CreatePVC(ctx context.Context, req *mcp.CallToolRequest, input core.PVCInput) (*mcp.CallToolResult, core.DefaultToolOutput, error) {

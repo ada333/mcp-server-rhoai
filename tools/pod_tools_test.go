@@ -2,7 +2,6 @@ package tools
 
 import (
 	"context"
-	"strings"
 	"testing"
 
 	core "github.com/amaly/mcp-server-rhoai/core"
@@ -33,10 +32,10 @@ func TestListPods_Success(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListPods returned error: %v", err)
 	}
-	if !strings.Contains(out.Pods, "- pod-a (Running)\n") {
-		t.Errorf("expected pod-a Running in output, got: %q", out.Pods)
+	if len(out.Pods) != 1 {
+		t.Fatalf("expected 1 pod, got %d", len(out.Pods))
 	}
-	if strings.Contains(out.Pods, "pod-other") {
-		t.Errorf("did not expect pod-other in output, got: %q", out.Pods)
+	if out.Pods[0].Name != "pod-a" || out.Pods[0].Status != "Running" {
+		t.Errorf("expected pod-a with Running status, got: %+v", out.Pods[0])
 	}
 }

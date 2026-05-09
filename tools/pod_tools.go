@@ -9,20 +9,23 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func ListPods(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.PodsOutput, error) {
+func ListPods(ctx context.Context, req *mcp.CallToolRequest, input core.ListWorkbenchesInput) (*mcp.CallToolResult, core.ListPodsOutput, error) {
 	clientset, err := GetClientSet()
 	if err != nil {
-		return nil, core.PodsOutput{}, err
+		return nil, core.ListPodsOutput{}, err
 	}
 
 	pods, err := clientset.CoreV1().Pods(input.Namespace).List(ctx, metav1.ListOptions{})
 	if err != nil {
-		return nil, core.PodsOutput{}, fmt.Errorf("failed to list pods: %v", err)
+		return nil, core.ListPodsOutput{}, fmt.Errorf("failed to list pods: %v", err)
 	}
 
-	msg := ""
+	var podInfos []core.PodInfo
 	for _, pod := range pods.Items {
-		msg += fmt.Sprintf("- %s (%s)\n", pod.Name, pod.Status.Phase)
+		podInfos = append(podInfos, core.PodInfo{
+			Name:   pod.Name,
+			Status: string(pod.Status.Phase),
+		})
 	}
-	return nil, core.PodsOutput{Pods: msg}, nil
+	return nil, core.ListPodsOutput{Pods: podInfos}, nil
 }

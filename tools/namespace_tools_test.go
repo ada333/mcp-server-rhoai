@@ -2,7 +2,6 @@ package tools
 
 import (
 	"context"
-	"strings"
 	"testing"
 
 	corev1 "k8s.io/api/core/v1"
@@ -21,9 +20,14 @@ func TestListNamespaces_Success(t *testing.T) {
 		t.Fatalf("ListNamespaces returned error: %v", err)
 	}
 
-	for _, name := range []string{"ns-alpha", "ns-beta", "ns-gamma"} {
-		if !strings.Contains(out.Namespaces, name) {
-			t.Errorf("expected %s in output, got: %q", name, out.Namespaces)
+	if len(out.Namespaces) != 3 {
+		t.Fatalf("expected 3 namespaces, got %d", len(out.Namespaces))
+	}
+
+	expected := map[string]bool{"ns-alpha": true, "ns-beta": true, "ns-gamma": true}
+	for _, ns := range out.Namespaces {
+		if !expected[ns] {
+			t.Errorf("unexpected namespace %s in output", ns)
 		}
 	}
 }
@@ -35,8 +39,8 @@ func TestListNamespaces_Empty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListNamespaces returned error: %v", err)
 	}
-	if out.Namespaces != "" {
-		t.Errorf("expected empty output for no namespaces, got: %q", out.Namespaces)
+	if len(out.Namespaces) != 0 {
+		t.Errorf("expected empty output for no namespaces, got: %v", out.Namespaces)
 	}
 }
 

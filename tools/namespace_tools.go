@@ -15,11 +15,7 @@ func ListNamespaces(ctx context.Context, req *mcp.CallToolRequest, input struct{
 		return nil, core.ListNamespacesOutput{}, err
 	}
 
-	msg := ""
-	for _, ns := range namespaces {
-		msg += fmt.Sprintf("- %s\n", ns)
-	}
-	return nil, core.ListNamespacesOutput{Namespaces: msg}, nil
+	return nil, core.ListNamespacesOutput{Namespaces: namespaces}, nil
 }
 
 func GetAllNamespaces(ctx context.Context) ([]string, error) {

@@ -41,14 +41,23 @@ func TestListPVCs_Success(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListPVCs returned error: %v", err)
 	}
-	if !strings.Contains(out.PVCs, "pvc-a") {
-		t.Errorf("expected pvc-a in output, got: %q", out.PVCs)
+	if len(out.PVCs) != 2 {
+		t.Fatalf("expected 2 PVCs, got %d", len(out.PVCs))
 	}
-	if !strings.Contains(out.PVCs, "pvc-b") {
-		t.Errorf("expected pvc-b in output, got: %q", out.PVCs)
+
+	pvcNames := make(map[string]bool)
+	for _, pvc := range out.PVCs {
+		pvcNames[pvc.Name] = true
 	}
-	if strings.Contains(out.PVCs, "pvc-other") {
-		t.Errorf("did not expect pvc-other (different namespace) in output, got: %q", out.PVCs)
+
+	if !pvcNames["pvc-a"] {
+		t.Errorf("expected pvc-a in output")
+	}
+	if !pvcNames["pvc-b"] {
+		t.Errorf("expected pvc-b in output")
+	}
+	if pvcNames["pvc-other"] {
+		t.Errorf("did not expect pvc-other (different namespace) in output")
 	}
 }
 
@@ -59,8 +68,8 @@ func TestListPVCs_Empty(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ListPVCs returned error: %v", err)
 	}
-	if out.PVCs != "" {
-		t.Errorf("expected empty output, got: %q", out.PVCs)
+	if len(out.PVCs) != 0 {
+		t.Errorf("expected empty output, got: %v", out.PVCs)
 	}
 }
 

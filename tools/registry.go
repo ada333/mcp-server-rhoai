@@ -120,6 +120,11 @@ func registerStorageTools(server *mcp.Server) {
 		Name:        "update_pvc",
 		Description: "update a persistent volume claim. Requires namespace and pvcName. Optionally provide size to resize (can only increase) or newPVCName to rename.",
 	}, UpdatePVC)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "delete_pvc",
+		Description: "delete a persistent volume claim. Requires namespace and pvcName.",
+	}, DeletePVC)
 }
 
 func registerStorageListingTools(server *mcp.Server) {

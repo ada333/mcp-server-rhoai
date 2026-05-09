@@ -102,9 +102,12 @@ func UpdatePVC(ctx context.Context, req *mcp.CallToolRequest, input core.PVCInpu
 		}
 	}
 	if input.NewPVCName != "" {
-		pvc.SetAnnotations(map[string]string{
-			"openshift.io/display-name": input.NewPVCName,
-		})
+		annotations := pvc.GetAnnotations()
+		if annotations == nil {
+			annotations = make(map[string]string)
+		}
+		annotations["openshift.io/display-name"] = input.NewPVCName
+		pvc.SetAnnotations(annotations)
 	}
 	_, err = dyn.Resource(core.PvcGVR).Namespace(input.Namespace).Update(ctx, pvc, metav1.UpdateOptions{})
 	if err != nil {

@@ -113,16 +113,17 @@ func UpdateImage(ctx context.Context, req *mcp.CallToolRequest, input core.Updat
 		return nil, core.DefaultToolOutput{}, fmt.Errorf("failed to get image: %v", err)
 	}
 
+	annotations := image.GetAnnotations()
+	if annotations == nil {
+		annotations = make(map[string]string)
+	}
 	if input.NewImageName != "" {
-		image.SetAnnotations(map[string]string{
-			"opendatahub.io/notebook-image-name": input.NewImageName,
-		})
+		annotations["opendatahub.io/notebook-image-name"] = input.NewImageName
 	}
 	if input.ImageDescription != "" {
-		image.SetAnnotations(map[string]string{
-			"opendatahub.io/notebook-image-desc": input.ImageDescription,
-		})
+		annotations["opendatahub.io/notebook-image-desc"] = input.ImageDescription
 	}
+	image.SetAnnotations(annotations)
 
 	_, err = dyn.Resource(core.ImagesGVR).Namespace(core.GetDefaultNamespace()).Update(ctx, image, metav1.UpdateOptions{})
 	if err != nil {

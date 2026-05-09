@@ -101,9 +101,12 @@ func UpdateHardwareProfile(ctx context.Context, req *mcp.CallToolRequest, input 
 	}
 
 	if input.NewHardwareProfileName != "" {
-		hardwareProfile.SetAnnotations(map[string]string{
-			"opendatahub.io/display-name": input.NewHardwareProfileName,
-		})
+		annotations := hardwareProfile.GetAnnotations()
+		if annotations == nil {
+			annotations = make(map[string]string)
+		}
+		annotations["opendatahub.io/display-name"] = input.NewHardwareProfileName
+		hardwareProfile.SetAnnotations(annotations)
 	}
 
 	if len(input.Resources) > 0 {

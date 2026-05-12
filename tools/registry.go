@@ -4,7 +4,6 @@ import "github.com/modelcontextprotocol/go-sdk/mcp"
 
 func RegisterWriteTools(server *mcp.Server) {
 	registerPodTools(server)
-	registerNamespaceTools(server)
 	registerWorkbenchTools(server)
 	registerImageTools(server)
 	registerHardwareProfileTools(server)
@@ -13,8 +12,6 @@ func RegisterWriteTools(server *mcp.Server) {
 
 func RegisterReadOnlyTools(server *mcp.Server) {
 	registerWorkbenchListingTools(server)
-	registerImageListingTools(server)
-	registerHardwareProfileListingTools(server)
 	registerStorageListingTools(server)
 	registerResourceConsumptionListingTools(server)
 }
@@ -24,13 +21,6 @@ func registerPodTools(server *mcp.Server) {
 		Name:        "list_pods",
 		Description: "list the pods in a namespace",
 	}, ListPods)
-}
-
-func registerNamespaceTools(server *mcp.Server) {
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "list_namespaces",
-		Description: "list all namespaces in the cluster",
-	}, ListNamespaces)
 }
 
 func registerWorkbenchTools(server *mcp.Server) {
@@ -79,13 +69,6 @@ func registerImageTools(server *mcp.Server) {
 	}, DeleteImage)
 }
 
-func registerImageListingTools(server *mcp.Server) {
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "list_images",
-		Description: "list all available notebook images",
-	}, ListImages)
-}
-
 func registerHardwareProfileTools(server *mcp.Server) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_hardware_profile",
@@ -101,13 +84,6 @@ func registerHardwareProfileTools(server *mcp.Server) {
 		Name:        "delete_hardware_profile",
 		Description: "delete a hardware profile by name",
 	}, DeleteHardwareProfile)
-}
-
-func registerHardwareProfileListingTools(server *mcp.Server) {
-	mcp.AddTool(server, &mcp.Tool{
-		Name:        "list_hardware_profiles",
-		Description: "list all available hardware profiles",
-	}, ListHardwareProfiles)
 }
 
 func registerStorageTools(server *mcp.Server) {

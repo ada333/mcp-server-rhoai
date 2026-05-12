@@ -11,9 +11,16 @@ func RegisterAllResources(server *mcp.Server) {
 	}, ImagesResourceHandler)
 
 	server.AddResource(&mcp.Resource{
-		URI:         "resource://mcp-server-rhoai/hardware-resources",
-		Name:        "Hardware Resources",
-		Description: "List of available hardware resources",
+		URI:         "resource://mcp-server-rhoai/hardware-profiles",
+		Name:        "Hardware Profiles",
+		Description: "List of available hardware profiles",
 		MIMEType:    "application/json",
 	}, DefaultHardwareResourceHandler)
+
+	server.AddResource(&mcp.Resource{
+		URI:         "resource://mcp-server-rhoai/namespaces",
+		Name:        "Namespaces",
+		Description: "List of all namespaces in the cluster",
+		MIMEType:    "application/json",
+	}, NamespacesResourceHandler)
 }

@@ -31,7 +31,7 @@ func registerWorkbenchTools(server *mcp.Server) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_workbench",
-		Description: "update a workbench. Requires namespace and workbenchName. Optionally update imageDisplayName, imageTag, hardwareProfile, or pvcName - only provide the fields you want to change.",
+		Description: "update a workbench. Requires namespace and workbenchName. Optionally update imageTag (uses current image if imageDisplayName not provided), imageDisplayName (requires imageTag), hardwareProfile, or pvcName - only provide the fields you want to change.",
 	}, UpdateWorkbench)
 
 	mcp.AddTool(server, &mcp.Tool{
@@ -94,7 +94,7 @@ func registerStorageTools(server *mcp.Server) {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "update_pvc",
-		Description: "update a persistent volume claim. Requires namespace and pvcName. Optionally provide size to resize (can only increase) or newPVCName to rename.",
+		Description: "update a persistent volume claim. Requires namespace and pvcName. Optionally provide size to resize (can only increase, and PVC must be bound - i.e. a workbench must be using it) or newPVCName to rename.",
 	}, UpdatePVC)
 
 	mcp.AddTool(server, &mcp.Tool{

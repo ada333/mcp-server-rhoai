@@ -463,6 +463,25 @@ func TestUpdateWorkbench_Image(t *testing.T) {
 	}
 }
 
+func TestUpdateWorkbench_ImageTagOnly(t *testing.T) {
+	mockWorkbenchHelpers(t)
+
+	wb := newDetailedWorkbench("update-wb", "ns1", "alice", "OldImage", "v1", "small", "pvc1", true)
+	setupFakeClient(t, wb)
+
+	_, out, err := UpdateWorkbench(context.Background(), nil, core.UpdateWorkbenchInput{
+		Namespace:     "ns1",
+		WorkbenchName: "update-wb",
+		ImageTag:      "v2",
+	})
+	if err != nil {
+		t.Fatalf("UpdateWorkbench with imageTag only returned error: %v", err)
+	}
+	if out.Message != "Workbench was successfully updated!" {
+		t.Errorf("unexpected message: %q", out.Message)
+	}
+}
+
 func TestUpdateWorkbench_NotFound(t *testing.T) {
 	mockWorkbenchHelpers(t)
 

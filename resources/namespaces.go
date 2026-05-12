@@ -5,18 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/amaly/mcp-server-rhoai/core"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
 )
 
 var GetClientSet = func() (*kubernetes.Clientset, error) {
-	config, err := rest.InClusterConfig()
-	if err != nil {
-		return nil, fmt.Errorf("failed to get in-cluster config: %v", err)
-	}
-	return kubernetes.NewForConfig(config)
+	return core.LogIntoClusterClientSet()
 }
 
 func GetAllNamespaces(ctx context.Context) ([]string, error) {

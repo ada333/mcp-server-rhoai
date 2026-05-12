@@ -87,8 +87,15 @@ func UpdateWorkbench(ctx context.Context, req *mcp.CallToolRequest, input core.U
 		return nil, core.DefaultToolOutput{}, fmt.Errorf("workbench %s: %v", input.WorkbenchName, err)
 	}
 
-	if input.ImageDisplayName != "" && input.ImageTag != "" {
-		if err := updateWorkbenchImage(ctx, container, annotations, input.ImageDisplayName, input.ImageTag); err != nil {
+	if input.ImageTag != "" {
+		imageDisplayName := input.ImageDisplayName
+		if imageDisplayName == "" {
+			imageDisplayName = annotations["opendatahub.io/image-display-name"]
+			if imageDisplayName == "" {
+				return nil, core.DefaultToolOutput{}, fmt.Errorf("cannot update image tag: current image display name not found in workbench annotations")
+			}
+		}
+		if err := updateWorkbenchImage(ctx, container, annotations, imageDisplayName, input.ImageTag); err != nil {
 			return nil, core.DefaultToolOutput{}, err
 		}
 	}

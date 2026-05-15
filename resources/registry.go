@@ -11,9 +11,9 @@ func RegisterAllResources(server *mcp.Server) {
 	}, ImagesResourceHandler)
 
 	server.AddResource(&mcp.Resource{
-		URI:         "resource://mcp-server-rhoai/hardware-profiles",
-		Name:        "Hardware Profiles",
-		Description: "Returns available hardware profiles with CPU, memory, and GPU resource limits. Use to find valid hardwareProfileName values for creating workbenches.",
+		URI:         "resource://mcp-server-rhoai/default-hardware-profile",
+		Name:        "Default Hardware Profile",
+		Description: "Returns the default hardware profile used when no profile is specified for a workbench. Use list_hardware_profiles tool to get all available profiles.",
 		MIMEType:    "application/json",
 	}, DefaultHardwareResourceHandler)
 

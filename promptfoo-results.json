@@ -1,8 +1,8 @@
 {
-  "evalId": "eval-3ha-2026-05-15T10:04:47",
+  "evalId": "eval-Cc8-2026-05-15T10:29:04",
   "results": {
     "version": 3,
-    "timestamp": "2026-05-15T10:04:47.627Z",
+    "timestamp": "2026-05-15T10:29:04.750Z",
     "prompts": [
       {
         "id": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
@@ -16,13 +16,13 @@
           "testErrorCount": 0,
           "assertPassCount": 54,
           "assertFailCount": 0,
-          "totalLatencyMs": 82683,
+          "totalLatencyMs": 856,
           "tokenUsage": {
-            "prompt": 65089,
-            "completion": 735,
-            "cached": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 69892,
             "total": 69892,
-            "numRequests": 24,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 4068,
               "acceptedPrediction": 0,
@@ -48,13 +48,13 @@
           "namedScores": {},
           "namedScoresCount": {},
           "namedScoreWeights": {},
-          "cost": 0.12939125000000004
+          "cost": 0
         }
       }
     ],
     "results": [
       {
-        "cost": 0.00481875,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -81,8 +81,8 @@
             }
           ]
         },
-        "id": "bce35b3f-6895-4c2e-bbfa-5c9889062f43",
-        "latencyMs": 5469,
+        "id": "5f85023c-30db-4f19-b59c-4a9468b0d7aa",
+        "latencyMs": 162,
         "namedScores": {},
         "prompt": {
           "raw": "List all workbenches in cluster",
@@ -106,17 +106,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2703,
-            "completion": 12,
+            "cached": 2847,
             "total": 2847,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 132,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00481875,
           "raw": {
             "candidates": [
               {
@@ -153,7 +151,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "xe8GarP-G5zYkdUP_cekwQY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -184,7 +182,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00433125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -220,8 +218,8 @@
             }
           ]
         },
-        "id": "99fca5b8-9246-4be7-8a9c-503abe1c8d87",
-        "latencyMs": 2606,
+        "id": "ba20ea6f-73da-4453-8072-c9c4a367a044",
+        "latencyMs": 163,
         "namedScores": {},
         "prompt": {
           "raw": "List workbenches in namespace test-namespace",
@@ -247,17 +245,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2705,
-            "completion": 19,
+            "cached": 2800,
             "total": 2800,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 76,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00433125,
           "raw": {
             "candidates": [
               {
@@ -296,7 +292,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "wu8GaqGcJunKkdUP79HD0A4"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -331,7 +327,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0046575,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -376,8 +372,8 @@
             }
           ]
         },
-        "id": "4f2e5b29-bc53-4435-bfa3-baa477b8626f",
-        "latencyMs": 2953,
+        "id": "75a3792c-2ab4-452f-a84c-2b09a43e9e88",
+        "latencyMs": 163,
         "namedScores": {},
         "prompt": {
           "raw": "Create a workbench with name my-notebook in namespace test-namespace using image 'Jupyter Data Science' with tag 2024.2",
@@ -406,17 +402,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2726,
-            "completion": 45,
+            "cached": 2851,
             "total": 2851,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 80,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0046575,
           "raw": {
             "candidates": [
               {
@@ -458,7 +452,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "wu8Gao2xPJCM7M8P27Gf-AU"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -497,7 +491,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.006682500000000001,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -542,8 +536,8 @@
             }
           ]
         },
-        "id": "45d51753-22c2-46ce-a2e9-6da25b9e3e82",
-        "latencyMs": 4434,
+        "id": "9d393c2d-7979-4025-ac13-a0d22222a4af",
+        "latencyMs": 163,
         "namedScores": {},
         "prompt": {
           "raw": "Update workbench my-notebook in namespace test-namespace to use image 'PyTorch' with tag 2024.1",
@@ -572,17 +566,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2722,
-            "completion": 43,
+            "cached": 3050,
             "total": 3050,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 285,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.006682500000000001,
           "raw": {
             "candidates": [
               {
@@ -624,7 +616,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "xO8Gaq6NHtbinsEPwJHN6A4"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -663,7 +655,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.004562500000000001,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -708,8 +700,8 @@
             }
           ]
         },
-        "id": "a7751b2d-bf45-4c8d-b595-c122f79b4da3",
-        "latencyMs": 2624,
+        "id": "b76b8f86-af2c-41e1-8bb5-f7bb5e6c7d1a",
+        "latencyMs": 23,
         "namedScores": {},
         "prompt": {
           "raw": "Delete workbench old-notebook in namespace test-namespace",
@@ -736,17 +728,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2706,
-            "completion": 25,
+            "cached": 2824,
             "total": 2824,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 93,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.004562500000000001,
           "raw": {
             "candidates": [
               {
@@ -786,7 +776,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "xe8GaqauFL6gnsEP6vqQ4QI"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -825,7 +815,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0046725000000000004,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -870,8 +860,8 @@
             }
           ]
         },
-        "id": "6ea7e55b-84c4-44b8-aaf4-ab58a6e1755a",
-        "latencyMs": 2293,
+        "id": "4f244ee7-41ca-46fe-8827-098b04d8b78e",
+        "latencyMs": 17,
         "namedScores": {},
         "prompt": {
           "raw": "Stop workbench my-notebook in namespace test-namespace",
@@ -899,17 +889,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2706,
-            "completion": 32,
+            "cached": 2835,
             "total": 2835,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 97,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0046725000000000004,
           "raw": {
             "candidates": [
               {
@@ -950,7 +938,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "xe8GarWVE9_6nsEPlbqViAc"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -989,7 +977,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0058725,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1034,8 +1022,8 @@
             }
           ]
         },
-        "id": "a924c988-5bc3-41a7-9ff2-bf98871eeb66",
-        "latencyMs": 5760,
+        "id": "e818183f-5742-44c3-b0f9-d7acf3632198",
+        "latencyMs": 9,
         "namedScores": {},
         "prompt": {
           "raw": "Start workbench my-notebook in namespace test-namespace",
@@ -1063,17 +1051,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2706,
-            "completion": 32,
+            "cached": 2955,
             "total": 2955,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 217,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0058725,
           "raw": {
             "candidates": [
               {
@@ -1114,7 +1100,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "yu8GasqXDq_NnsEP6fy_oAk"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1153,7 +1139,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.004248750000000001,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1189,8 +1175,8 @@
             }
           ]
         },
-        "id": "c6ad5bd0-5632-4289-9e4c-438c623edd7e",
-        "latencyMs": 2204,
+        "id": "7013d2df-6150-40cd-9461-1e954dc31fe1",
+        "latencyMs": 9,
         "namedScores": {},
         "prompt": {
           "raw": "List pods in namespace test-namespace",
@@ -1216,17 +1202,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2703,
-            "completion": 17,
+            "cached": 2790,
             "total": 2790,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 70,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.004248750000000001,
           "raw": {
             "candidates": [
               {
@@ -1265,7 +1249,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "x-8Gao6RIMO5kdUP5sWP4QU"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1300,7 +1284,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00437625,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1327,8 +1311,8 @@
             }
           ]
         },
-        "id": "78fa86a8-9ce8-42c3-b5a3-17f0a22b87c2",
-        "latencyMs": 3330,
+        "id": "1413ab35-20f2-4a77-a130-b8964cfce72c",
+        "latencyMs": 22,
         "namedScores": {},
         "prompt": {
           "raw": "List all available notebook images",
@@ -1352,17 +1336,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2701,
-            "completion": 10,
+            "cached": 2801,
             "total": 2801,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 90,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00437625,
           "raw": {
             "candidates": [
               {
@@ -1399,7 +1381,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "yO8GaqLCJ_CDkdUP4qi_yQs"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1430,7 +1412,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00608125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1475,8 +1457,8 @@
             }
           ]
         },
-        "id": "df895823-8853-436c-9348-b6673f79dd13",
-        "latencyMs": 4062,
+        "id": "b2b77893-0da0-4742-9b0b-5dbaef42e59d",
+        "latencyMs": 16,
         "namedScores": {},
         "prompt": {
           "raw": "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'",
@@ -1504,17 +1486,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2729,
-            "completion": 45,
+            "cached": 2996,
             "total": 2996,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 222,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00608125,
           "raw": {
             "candidates": [
               {
@@ -1555,7 +1535,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "ye8Gao3DI8CgnsEP4PeQmAg"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1594,7 +1574,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00527125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1630,8 +1610,8 @@
             }
           ]
         },
-        "id": "eaf05a10-8382-4973-9a7a-7f0b813b25ac",
-        "latencyMs": 2715,
+        "id": "681761f7-2f42-4bc0-ad95-fecc30c608c1",
+        "latencyMs": 16,
         "namedScores": {},
         "prompt": {
           "raw": "Update image my-custom-image with new description 'Updated ML image for production'",
@@ -1658,17 +1638,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2713,
-            "completion": 29,
+            "cached": 2901,
             "total": 2901,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 159,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00527125,
           "raw": {
             "candidates": [
               {
@@ -1708,7 +1686,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "yu8GaqGSEYHGsgLV5OmYDA"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1743,7 +1721,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.004996250000000001,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1779,8 +1757,8 @@
             }
           ]
         },
-        "id": "2f3b81e5-b9d1-4586-a2d1-4549893cef0d",
-        "latencyMs": 2694,
+        "id": "29af6bab-ca0e-4574-b4c4-2d2600af8534",
+        "latencyMs": 5,
         "namedScores": {},
         "prompt": {
           "raw": "Delete image old-image",
@@ -1806,17 +1784,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2701,
-            "completion": 18,
+            "cached": 2863,
             "total": 2863,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 144,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.004996250000000001,
           "raw": {
             "candidates": [
               {
@@ -1855,7 +1831,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "y-8GaqHnEPHp7M8Pju3d8Qo"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -1890,7 +1866,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0039562500000000006,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -1917,8 +1893,8 @@
             }
           ]
         },
-        "id": "d3552ba2-ff8d-4aa6-af28-e13110794612",
-        "latencyMs": 1766,
+        "id": "c1e2e226-76b3-46d1-916a-67df01e95a0f",
+        "latencyMs": 10,
         "namedScores": {},
         "prompt": {
           "raw": "List all available hardware profiles",
@@ -1942,17 +1918,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2701,
-            "completion": 12,
+            "cached": 2759,
             "total": 2759,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 46,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0039562500000000006,
           "raw": {
             "candidates": [
               {
@@ -1989,7 +1963,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "y-8Gaub5Ep3PnsEPjMOA0Qs"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2020,7 +1994,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.012035,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2056,8 +2030,8 @@
             }
           ]
         },
-        "id": "8b99ee32-7859-4fc2-a557-d8082a4ef1d5",
-        "latencyMs": 7782,
+        "id": "ff941584-bb4a-4f30-8827-b49273b133de",
+        "latencyMs": 10,
         "namedScores": {},
         "prompt": {
           "raw": "Create hardware profile named gpu-large with resources: CPU (resourceName: CPU, identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (resourceName: Memory, identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)",
@@ -2101,17 +2075,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2772,
-            "completion": 113,
+            "cached": 3629,
             "total": 3629,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 744,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.012035,
           "raw": {
             "candidates": [
               {
@@ -2168,7 +2140,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "0u8GavnIBKqOkdUP4v2lsAw"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2203,7 +2175,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00770875,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2239,8 +2211,8 @@
             }
           ]
         },
-        "id": "3f514e71-e439-4949-9aed-68530f5e043b",
-        "latencyMs": 5089,
+        "id": "6f6bcdaa-d4ca-4434-8c0c-2c5a00b36f2e",
+        "latencyMs": 10,
         "namedScores": {},
         "prompt": {
           "raw": "Update hardware profile gpu-large with CPU resource (resourceName: CPU, identifier: cpu, type: cpu, default: 8, min: 2, max: 16)",
@@ -2276,17 +2248,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2735,
-            "completion": 67,
+            "cached": 3164,
             "total": 3164,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 362,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00770875,
           "raw": {
             "candidates": [
               {
@@ -2335,7 +2305,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "z-8GaryCE9fTnsEPi-H9iAY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2370,7 +2340,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0050375,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2406,8 +2376,8 @@
             }
           ]
         },
-        "id": "7f0bb50b-c6dc-49b4-86f0-c663cf874786",
-        "latencyMs": 2664,
+        "id": "416e2746-8752-4170-8054-dbf011e3fcec",
+        "latencyMs": 9,
         "namedScores": {},
         "prompt": {
           "raw": "Delete hardware profile old-profile",
@@ -2433,17 +2403,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2702,
-            "completion": 21,
+            "cached": 2868,
             "total": 2868,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 145,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0050375,
           "raw": {
             "candidates": [
               {
@@ -2482,7 +2450,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "zu8GasiiCNW_nsEPh8rPiAY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2517,7 +2485,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00480125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2553,8 +2521,8 @@
             }
           ]
         },
-        "id": "ef468e5b-a55d-4753-b757-7606b6e06916",
-        "latencyMs": 2662,
+        "id": "b183e41d-c28a-4fbc-b4b4-d3330f840a62",
+        "latencyMs": 6,
         "namedScores": {},
         "prompt": {
           "raw": "List all PVCs in namespace test-namespace",
@@ -2580,17 +2548,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2705,
-            "completion": 18,
+            "cached": 2847,
             "total": 2847,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 124,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00480125,
           "raw": {
             "candidates": [
               {
@@ -2629,7 +2595,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "zu8GapSFAvCDkdUP__XDwQw"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2664,7 +2630,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0054225,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2718,8 +2684,8 @@
             }
           ]
         },
-        "id": "3a393e02-5fb0-4b99-a119-0341a2ba19bc",
-        "latencyMs": 3105,
+        "id": "80634f7d-bf78-4418-a08d-d315c79ad74c",
+        "latencyMs": 4,
         "namedScores": {},
         "prompt": {
           "raw": "Create a PVC named my-storage with size 20Gi in namespace test-namespace",
@@ -2747,17 +2713,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2714,
-            "completion": 33,
+            "cached": 2917,
             "total": 2917,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 170,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0054225,
           "raw": {
             "candidates": [
               {
@@ -2798,7 +2762,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "0e8Garr2CfrjnsEP-NXXoAY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -2841,7 +2805,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00525,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -2895,8 +2859,8 @@
             }
           ]
         },
-        "id": "60847f8b-5c46-4e31-b3de-5274fb156ef9",
-        "latencyMs": 3457,
+        "id": "c3a55f43-3aad-4500-aff2-64918fb25738",
+        "latencyMs": 9,
         "namedScores": {},
         "prompt": {
           "raw": "Update PVC my-storage in namespace test-namespace to size 50Gi",
@@ -2924,17 +2888,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2712,
-            "completion": 33,
+            "cached": 2898,
             "total": 2898,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 153,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00525,
           "raw": {
             "candidates": [
               {
@@ -2975,7 +2937,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "0e8GavjJHrbNnsEPoYySyAo"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3018,7 +2980,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0053300000000000005,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -3054,8 +3016,8 @@
             }
           ]
         },
-        "id": "585ddb33-a47d-4579-9db1-5100d4359a20",
-        "latencyMs": 3101,
+        "id": "c6fbd891-03a9-4756-9966-6189cca68ca2",
+        "latencyMs": 9,
         "namedScores": {},
         "prompt": {
           "raw": "Show resource consumption for namespace test-namespace",
@@ -3081,17 +3043,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2704,
-            "completion": 23,
+            "cached": 2899,
             "total": 2899,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 172,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0053300000000000005,
           "raw": {
             "candidates": [
               {
@@ -3130,7 +3090,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "0u8GasjxHZzYkdUP_cekwQY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3165,7 +3125,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.005636250000000001,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -3210,8 +3170,8 @@
             }
           ]
         },
-        "id": "14accca7-0655-4eae-917a-ccfb2c6b599f",
-        "latencyMs": 4297,
+        "id": "789c7f22-fbf7-4011-a11a-b6cba6b4a275",
+        "latencyMs": 4,
         "namedScores": {},
         "prompt": {
           "raw": "Show resource consumption for workbench my-notebook in namespace test-namespace",
@@ -3238,17 +3198,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2709,
-            "completion": 31,
+            "cached": 2934,
             "total": 2934,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 194,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.005636250000000001,
           "raw": {
             "candidates": [
               {
@@ -3288,7 +3246,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "1e8GauTMHrvmnsEP9ZvD-As"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3327,7 +3285,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.0046225,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -3363,8 +3321,8 @@
             }
           ]
         },
-        "id": "162f6dc5-d1b7-48a5-89e1-14ecde02d862",
-        "latencyMs": 2692,
+        "id": "3b3d8da6-1050-4e0c-9441-4ffc3706ec9c",
+        "latencyMs": 6,
         "namedScores": {},
         "prompt": {
           "raw": "Show resource consumption for user john@example.com",
@@ -3390,17 +3348,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2706,
-            "completion": 25,
+            "cached": 2830,
             "total": 2830,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 99,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.0046225,
           "raw": {
             "candidates": [
               {
@@ -3439,7 +3395,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "1O8GarDKD6_NnsEP6fy_oAk"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3474,7 +3430,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00411875,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -3501,8 +3457,8 @@
             }
           ]
         },
-        "id": "03183f7b-f494-4baf-83e3-bd4e3ab95c3b",
-        "latencyMs": 2157,
+        "id": "be20ba98-0ff0-4960-b6a1-ded296ca2653",
+        "latencyMs": 7,
         "namedScores": {},
         "prompt": {
           "raw": "Show resource consumption for the entire cluster",
@@ -3526,17 +3482,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2703,
-            "completion": 16,
+            "cached": 2777,
             "total": 2777,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 58,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00411875,
           "raw": {
             "candidates": [
               {
@@ -3573,7 +3527,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "1O8GavfqDd2C7M8P1ezqwQU"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3604,7 +3558,7 @@
         "failureReason": 0
       },
       {
-        "cost": 0.00490125,
+        "cost": 0,
         "gradingResult": {
           "pass": true,
           "score": 1,
@@ -3631,8 +3585,8 @@
             }
           ]
         },
-        "id": "7a4160c5-efcc-4e73-b5f2-d02fc39012f6",
-        "latencyMs": 2767,
+        "id": "f7bbeac1-8e9f-4f9a-8937-fb7a93b9b2cd",
+        "latencyMs": 4,
         "namedScores": {},
         "prompt": {
           "raw": "What is the cluster-wide resource usage?",
@@ -3656,17 +3610,15 @@
             }
           ],
           "tokenUsage": {
-            "prompt": 2705,
-            "completion": 16,
+            "cached": 2857,
             "total": 2857,
-            "numRequests": 1,
+            "numRequests": 0,
             "completionDetails": {
               "reasoning": 136,
               "acceptedPrediction": 0,
               "rejectedPrediction": 0
             }
           },
-          "cost": 0.00490125,
           "raw": {
             "candidates": [
               {
@@ -3703,7 +3655,7 @@
             "modelVersion": "gemini-2.5-pro",
             "responseId": "1e8GavnUDtfinsEPkvqzkAY"
           },
-          "cached": false,
+          "cached": true,
           "metadata": {}
         },
         "score": 1,
@@ -3739,11 +3691,11 @@
       "failures": 0,
       "errors": 0,
       "tokenUsage": {
-        "prompt": 65089,
-        "completion": 735,
-        "cached": 0,
+        "prompt": 0,
+        "completion": 0,
+        "cached": 69892,
         "total": 69892,
-        "numRequests": 24,
+        "numRequests": 0,
         "completionDetails": {
           "reasoning": 4068,
           "acceptedPrediction": 0,
@@ -3766,8 +3718,8 @@
           }
         }
       },
-      "durationMs": 21461,
-      "evaluationDurationMs": 21461
+      "durationMs": 433,
+      "evaluationDurationMs": 433
     }
   },
   "config": {
@@ -4269,7 +4221,7 @@
     "nodeVersion": "v22.22.2",
     "platform": "linux",
     "arch": "x64",
-    "exportedAt": "2026-05-15T10:05:09.183Z",
-    "evaluationCreatedAt": "2026-05-15T10:04:47.627Z"
+    "exportedAt": "2026-05-15T10:29:05.283Z",
+    "evaluationCreatedAt": "2026-05-15T10:29:04.750Z"
   }
 }

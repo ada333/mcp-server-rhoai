@@ -14,6 +14,8 @@ func RegisterReadOnlyTools(server *mcp.Server) {
 	registerWorkbenchListingTools(server)
 	registerStorageListingTools(server)
 	registerResourceConsumptionListingTools(server)
+	registerImageListingTools(server)
+	registerHardwareProfileListingTools(server)
 }
 
 func registerPodTools(server *mcp.Server) {
@@ -84,6 +86,20 @@ func registerHardwareProfileTools(server *mcp.Server) {
 		Name:        "delete_hardware_profile",
 		Description: "delete a hardware profile by name",
 	}, DeleteHardwareProfile)
+}
+
+func registerImageListingTools(server *mcp.Server) {
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "list_images",
+		Description: "list all available notebook images with their display names, URLs, versions/tags, and software dependencies",
+	}, ListImages)
+}
+
+func registerHardwareProfileListingTools(server *mcp.Server) {
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "list_hardware_profiles",
+		Description: "list all available hardware profiles with their CPU, memory, and GPU resource configurations",
+	}, ListHardwareProfiles)
 }
 
 func registerStorageTools(server *mcp.Server) {

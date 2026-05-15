@@ -109,6 +109,14 @@ tests:
         value: '"namespace":"test-namespace"'
 
   # ==================== IMAGES ====================
+  - description: "List available images"
+    vars:
+      prompt: "List all available notebook images"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_images"
+
   - description: "Create custom image"
     vars:
       prompt: "Create a custom notebook image with name my-custom-image, location docker.io/myrepo/myimage:latest, and description 'Custom ML image'"
@@ -142,6 +150,14 @@ tests:
         value: '"imageName":"old-image"'
 
   # ==================== HARDWARE PROFILES ====================
+  - description: "List hardware profiles"
+    vars:
+      prompt: "List all available hardware profiles"
+    assert:
+      - type: tool-call-f1
+        value:
+          - "list_hardware_profiles"
+
   - description: "Create hardware profile"
     vars:
       prompt: "Create hardware profile named gpu-large with resources: CPU (resourceName: CPU, identifier: cpu, type: cpu, default: 4, min: 1, max: 8) and Memory (resourceName: Memory, identifier: memory, type: memory, default: 16Gi, min: 4Gi, max: 32Gi)"
